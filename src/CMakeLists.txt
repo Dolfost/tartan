@@ -6,6 +6,7 @@ add_library(dchess STATIC
 	chessboard.cpp 
 	piece.cpp 
 	position.cpp 
+	turn.cpp 
 	pieces/pawn.cpp
 	pieces/knight.cpp
 	pieces/bishop.cpp
@@ -24,7 +25,7 @@ target_sources(dchess
 )
 
 configure_file(
-	"include/dchessversion.hpp.in" 
-	"dchessversion.hpp"
+	"include/dchess/version.hpp.in" 
+	"version.hpp"
 	@ONLY 
 )
