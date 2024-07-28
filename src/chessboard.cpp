@@ -8,7 +8,12 @@ namespace dchess {
 
 	Chessboard::Chessboard() {
 		std::for_each(b_board.begin(), b_board.end(), 
-				[](BoardT a){ a.fill(nullptr); });
+				[](BoardT& a){ a.fill(nullptr); });
+	}
+
+	bool Chessboard::placePiece(Piece* p) {
+		b_board[p->position().x()-1][p->position().y()-1] = p;
+		return true;
 	}
 
 	inline MoveMapT Chessboard::possibleMoves(const Piece::Position& p) const {

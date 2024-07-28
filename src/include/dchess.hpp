@@ -4,6 +4,7 @@
 #include <array>
 #include <forward_list>
 #include <list>
+#include <ostream>
 
 namespace dchess {
 
@@ -33,6 +34,10 @@ namespace dchess {
 					Position operator-(const Position&) const;
 					Position operator+=(const Position&);
 					Position operator-=(const Position&);
+					bool operator==(const Position&) const;
+					friend bool operator<(const Position&, const Position&);
+					friend bool operator>(const Position&, const Position&);
+					friend std::ostream& operator<<(std::ostream&, const Position&);
 			};
 			using MoveMapT = std::forward_list<Position>;
 			using MoveHistoryT = std::list<Position>;
@@ -53,8 +58,8 @@ namespace dchess {
 			MoveHistoryT moveHistory() { return p_moveHistory; };
 			std::size_t movesMade() const { return p_moveHistory.size(); }
 		public:
-			inline Piece(const Position&, const Color&, Chessboard&);
-			virtual ~Piece();
+			Piece(const Position&, const Color&, Chessboard&);
+			virtual ~Piece() = default;
 	};
 
 	class Chessboard {
@@ -72,6 +77,7 @@ namespace dchess {
 			Piece::Color currentTurnColor() const {return b_currentTurnColor; };
 			Piece::MoveMapT possibleMoves(const Piece*) const;
 			inline Piece::MoveMapT possibleMoves(const Piece::Position&) const;
+			bool placePiece(Piece*);
 
 			Piece* operator[](const Piece::Position& p);
 			const Piece* operator[](const Piece::Position& p) const ;
@@ -80,7 +86,11 @@ namespace dchess {
 
 	class Pawn : public Piece {
 		public: 
+			Pawn(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
 			virtual MoveMapT moveMap() const override;
+			using Piece::move;
+			virtual ~Pawn() = default;
 	};
 
 }
