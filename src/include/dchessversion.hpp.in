@@ -1,0 +1,30 @@
+#ifndef _DHCESS_VERSION_HPP_
+#define _DHCESS_VERSION_HPP_
+
+#include<string>
+
+namespace dchess {
+
+	inline std::string version() { 
+		return "@dchess_VERSION@";
+	}
+
+	inline int versionMajor() { 
+		return @dchess_VERSION_MAJOR@ + 0;
+	}
+
+	inline int versionMinor() { 
+		return @dchess_VERSION_MINOR@ + 0;
+	}
+
+	inline int versionPatch() { 
+		return @dchess_VERSION_PATCH@ + 0;
+	}
+
+	inline int versionTweak() { 
+		return @dchess_VERSION_TWEAK@ + 0;
+	}
+
+}
+
+#endif // !_DHCESS_VERSION_HPP_
