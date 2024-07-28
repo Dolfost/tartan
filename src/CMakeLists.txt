@@ -18,10 +18,13 @@ target_sources(dchess
 	INTERFACE
 		FILE_SET dchess_headers
 			TYPE HEADERS 
-			BASE_DIRS "./include"
+			BASE_DIRS 
+				"${CMAKE_CURRENT_BINARY_DIR}"
+				"./include"
 )
 
-target_include_directories(dchess
-	PUBLIC
-		"${CMAKE_CURRENT_BINARY_DIR}"
+configure_file(
+	"include/dchessversion.hpp.in" 
+	"dchessversion.hpp"
+	@ONLY 
 )
