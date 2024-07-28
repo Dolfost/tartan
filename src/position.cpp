@@ -7,7 +7,6 @@ using std::out_of_range;
 using std::string;
 using std::to_string;
 
-
 namespace dchess {
 	using Position = Piece::Position;
 
@@ -47,6 +46,14 @@ namespace dchess {
 		return ret;
 	}
 
+	Position Position::offset(int ox, int oy) const {
+		return {p_x + ox, p_y + oy};
+	}
+
+	inline Position Position::offset(char ol, int od) const {
+		return offset(ol - 'a' + 1, od);
+	}
+
 	Position Position::operator+(const Position& p) const {
 		return Position(p_x + p.p_x, p_y + p.p_y);
 	}
@@ -63,17 +70,20 @@ namespace dchess {
 		return *this - p;
 	}
 
-	bool Position::operator==(const Position& p) const {
-		return (p.p_x == p_x and p.p_y == p_y);
+	Position Position::operator()(int x, int y) const {
+		return offset(x, y);
 	}
 
-	bool operator<(const Position& l, const Position& r) {
-		return std::hypot(l.p_x - 1, l.p_y - 1) < 
-			std::hypot(r.p_x - 1, r.p_y - 1);
+	inline Position Position::operator()(char l, int d) const {
+		return offset(l, d);
+	}
+
+	bool Position::operator==(const Position& p) const {
+		return !(p.p_x == p_x and p.p_y == p_y);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Position& p) {
-		os << string(p.letter(), 1) + to_string(p.digit());
+		os << p.letter() << p.digit();
 		return os;
 	}
 

@@ -1,7 +1,6 @@
 #include "dchess.hpp"
 
 #include <iostream>
-#include <set>
 
 int main(int argc, char** argv) {
 	using namespace dchess;
@@ -12,14 +11,16 @@ int main(int argc, char** argv) {
 	Piece* pawn2 = new Pawn({'d', 3}, Piece::Color::Black, cb);
 
 	Piece::MoveMapT movemap = pawn1->moveMap();
-	set<Piece::Position> moveset = set<Piece::Position>(movemap.begin(), movemap.end());
-	set<Piece::Position> targetset = {{'c', 3}, {'c', 4}, {'d', 3}};
+	Piece::MoveMapT targetmap = {{'d', 3}, {'c', 4}, {'c', 3}};;
 
-	for (auto x : moveset) {
+	cout << "expected:" << endl;
+	for (auto x : targetmap)
 		cout << x << ' ';
-	}
+	cout << endl << "got:" << endl;
+	for (auto x : movemap)
+		cout << x << ' ';
 	
-	cout << endl;
+	cout << endl << cb << endl;
 
-	return moveset == targetset;
+	return movemap == targetmap;
 }
