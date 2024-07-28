@@ -54,28 +54,30 @@ namespace dchess {
 
 	std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
 		static const char* line = 
-			"  +------------------------\n";
+			"──────────────────────";
 		static const char* letters = 
 			"   a  b  c  d  e  f  g  h\n";
-		os << letters << line;
+		os << letters << "  ┌" << line << "┐\n";
 		for (int j = 8; j >= 1; j--) {
-			os << j << " |";
+			os << j << " │";
 			for (int i = 1; i <= 8; i++) {
 				const Piece* p = cb[{i, j}];
 
-				char letter = ' ';
+				char letter;
 				const Pawn* pawn;
 				if ((pawn = dynamic_cast<const Pawn*>(p)))
 					letter = 'p';
+				else 
+					letter = ((i+j)%2 ? '+' : '#');
 
-				if (letter != ' ' and p->color() == Color::White)
+				if (p != nullptr and p->color() == Color::White)
 					letter = toupper(letter);
 
 				os << letter << "  ";
 			}
-			os << "| " << j << '\n';
+			os << "\b\b│ " << j << '\n';
 		}
-		os << line << letters;
+		os << "  └" << line << "┘\n" << letters;
 		return os;
 	}
 

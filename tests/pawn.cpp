@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 	for (auto x : movemap)
 		cout << x << ' ';
 	
-	cout << endl << cb << endl;
+	cout << endl << cb;
 
 	return movemap == targetmap;
 }
