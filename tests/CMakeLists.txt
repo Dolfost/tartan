@@ -1,11 +1,16 @@
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(pawn 
-	pawn.cpp
+set(ONEFILE_TESTS
+	pawn
+	position
 )
 
-target_link_libraries(pawn dchess)
-
-add_test(NAME pawn
-	COMMAND pawn
-)
+foreach(T ${ONEFILE_TESTS})
+	add_executable(${T} 
+		${T}.cpp
+	)
+	target_link_libraries(${T} dchess)
+	add_test(NAME ${T}
+		COMMAND ${T}
+	)
+endforeach()
