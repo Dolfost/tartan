@@ -78,8 +78,8 @@ namespace dchess {
 		return offset(l, d);
 	}
 
-	bool Position::operator==(const Position& p) const {
-		return !(p.p_x == p_x and p.p_y == p_y);
+	bool operator==(const Position& lhs, const Position& rhs) {
+		return ((lhs.p_x == rhs.p_x) and (lhs.p_y == rhs.p_y));
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Position& p) {
