@@ -39,7 +39,7 @@ namespace dchess {
 					Position operator()(int, int) const;
 					Position operator()(char, int) const;
 					Position& operator=(const Position&) = default;
-					bool operator==(const Position&) const;
+					friend bool operator==(const Position&, const Position&);
 					friend std::ostream& operator<<(
 							std::ostream&, const Position&);
 			};
@@ -49,12 +49,14 @@ namespace dchess {
 					const Position& to() const { return m_to; };
 					const Piece* piece() const { return m_piece; };
 					const Piece* capture() const { return m_capture; };
+					friend bool operator==(const Turn&, const Turn&);
+					friend std::ostream& operator<<(std::ostream&, const Turn&);
 				private:
 					Position m_to;
 					const Piece* m_piece;
 					const Piece* m_capture;
 			};
-			using MoveMapT = std::forward_list<Position>;
+			using MoveMapT = std::forward_list<Turn>;
 			using MoveHistoryT = std::list<Turn>;
 			enum class Color {
 				Unknown, White, Black
