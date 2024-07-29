@@ -1,7 +1,5 @@
 #include "../include/dchess.hpp"
 
-#include<iostream>
-
 namespace dchess {
 	using Position = Piece::Position;
 	using MoveMapT = Piece::MoveMapT;
@@ -15,12 +13,12 @@ namespace dchess {
 		npos = p_position(0, 1);
 		// front piece
 		if (!p_chessboard[npos]) {
-			map.push_front(npos);
+			map.push_front({this, npos});
 			// two cell turn
 			if (movesMade() == 0) {
 				npos = npos(0, 1);
 				if (!p_chessboard[npos]) {
-					map.push_front(npos); 
+					map.push_front({this, npos}); 
 				}
 			}
 		}
@@ -33,7 +31,7 @@ namespace dchess {
 			if (enemy_pawn and 
 					enemy->movesMade() == 1 and 
 					enemy->position().y() ==  5)
-				map.push_front(npos(0, 1));
+				map.push_front({this, npos(0, 1), enemy});
 		}
 
 		// en passant right enemy
@@ -44,19 +42,19 @@ namespace dchess {
 			if (enemy_pawn and 
 					enemy->movesMade() == 1 and 
 					enemy->position().y() ==  5)
-				map.push_front(npos(0, 1));
+				map.push_front({this, npos(0, 1), enemy});
 		}
 
 		// defeat left/right pawn
 		if (p_position.x() > 1) {
 			npos = p_position(-1, 1);
 			if ((enemy = p_chessboard[npos]))
-				map.push_front(npos);
+				map.push_front({this, npos, enemy});
 		}
 		if (p_position.x() < 8) {
 			npos = p_position(1, 1);
-			if (p_chessboard[npos]) {
-				map.push_front(npos);
+			if ((enemy = p_chessboard[npos])) {
+				map.push_front({this, npos, enemy});
 			}
 		}
 		
