@@ -11,7 +11,11 @@ int main(int argc, char** argv) {
 	Piece* pawn2 = new Pawn({'d', 3}, Piece::Color::Black, cb);
 
 	Piece::MoveMapT movemap = pawn1->moveMap();
-	Piece::MoveMapT targetmap = {{'d', 3}, {'c', 4}, {'c', 3}};;
+	Piece::MoveMapT targetmap = {
+		{pawn1, {'d', 3}, pawn2},
+		{pawn1, {'c', 4}}, 
+		{pawn1, {'c', 3}},
+	};;
 
 	cout << "expected:" << endl;
 	for (auto x : targetmap)
@@ -22,5 +26,5 @@ int main(int argc, char** argv) {
 	
 	cout << endl << cb;
 
-	return movemap == targetmap;
+	return !(movemap == targetmap);
 }
