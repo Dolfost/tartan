@@ -1,7 +1,8 @@
 set(CMAKE_CXX_STANDARD 11)
 
 set(ONEFILE_TESTS
-	pawn
+	whitePawn
+	blackPawn
 	position
 )
 
