@@ -26,6 +26,15 @@ namespace dchess {
 				logic_error(what_arg) {};
 	};
 
+	class illegal_place : logic_error {
+		public:
+			using logic_error::what;
+			illegal_place(const string& what_arg) :
+				logic_error(what_arg) {};
+			illegal_place(const char* what_arg) :
+				logic_error(what_arg) {};
+	};
+
 }
 
-#endif // !_DCHESS_EXCEPTIONS_HPP_
+#endif // !_DCHESS_EXCEPTIONS_HP_

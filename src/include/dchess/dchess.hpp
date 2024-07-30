@@ -12,10 +12,19 @@ namespace dchess {
 
 	class Piece {
 		public:
+			enum class Color {
+				Unknown, White, Black
+			};
 			class Position {
+				public:
+					enum class Mode {
+						Normal = 1,
+						Reverse = -1,
+					};
 				private:
 					short p_x = 1;
 					short p_y = 1;
+					Mode p_mode = Mode::Normal;
 				public:
 					Position() = default;
 					Position(int, int);
@@ -31,6 +40,8 @@ namespace dchess {
 					int setDigit(short y) { return setY(y); };
 					Position offset(int, int) const;
 					Position offset(char, int) const;
+					Mode offsetMode() const { return p_mode; };
+					Mode setOffsetMode (Mode m);
 				public:
 					Position operator+(const Position&) const;
 					Position operator-(const Position&) const;
@@ -38,7 +49,7 @@ namespace dchess {
 					Position operator-=(const Position&);
 					Position operator()(int, int) const;
 					Position operator()(char, int) const;
-					Position& operator=(const Position&) = default;
+					Position& operator=(const Position&);
 					friend bool operator==(const Position&, const Position&);
 					friend std::ostream& operator<<(
 							std::ostream&, const Position&);
@@ -57,10 +68,7 @@ namespace dchess {
 					const Piece* m_capture;
 			};
 			using MoveMapT = std::forward_list<Turn>;
-			using MoveHistoryT = std::list<Turn>;
-			enum class Color {
-				Unknown, White, Black
-			};
+			using MoveHistoryT = std::list<Position>;
 		protected:
 			Color p_color;
 			Position p_position;
@@ -71,8 +79,8 @@ namespace dchess {
 			Position position() const { return p_position; };
 			virtual Position move(const Position&);
 			virtual MoveMapT moveMap() const = 0;
-			const MoveHistoryT moveHistory() const { return p_moveHistory; };
-			MoveHistoryT moveHistory() { return p_moveHistory; };
+			const MoveHistoryT history() const { return p_moveHistory; };
+			MoveHistoryT history() { return p_moveHistory; };
 			std::size_t movesMade() const { return p_moveHistory.size(); }
 		public:
 			Piece(const Position&, const Color&, Chessboard&);
@@ -83,19 +91,19 @@ namespace dchess {
 		public:
 			Chessboard();
 		public:
-			using BoardTT = std::array<std::array<Piece*, 8>, 8>;
 			using BoardT = std::array<Piece*, 8>;
+			using BoardTT = std::array<std::array<Piece*, 8>, 8>;
 			using CapturedT = std::forward_list<Piece*>;
 		private:
 			Piece::Color b_currentTurnColor = Piece::Color::White;
 			BoardTT b_board;
-			CapturedT b_capturedPieces = CapturedT(32);
+			CapturedT b_capturedPieces;
 		public:
 			Piece::Color currentTurnColor() const {
 				return b_currentTurnColor; 
 			};
-			inline Piece::MoveMapT possibleMoves(const Piece*) const;
-			inline Piece::MoveMapT possibleMoves(
+			Piece::MoveMapT possibleMoves(const Piece*) const;
+			Piece::MoveMapT possibleMoves(
 					const Piece::Position&) const;
 			Piece::Turn makeTurn(const Piece::Position&, 
 					const Piece::Position&);
@@ -115,6 +123,51 @@ namespace dchess {
 			virtual MoveMapT moveMap() const override;
 			using Piece::move;
 			virtual ~Pawn() = default;
+	};
+
+	class Knight : public Piece {
+		public: 
+			Knight(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
+			virtual MoveMapT moveMap() const override { return {}; };
+			using Piece::move;
+			virtual ~Knight() = default;
+	};
+
+	class Bishop : public Piece {
+		public: 
+		 Bishop(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
+			virtual MoveMapT moveMap() const override { return {}; };
+			using Piece::move;
+			virtual ~Bishop() = default;
+	};
+
+	class Rook : public Piece {
+		public: 
+		 Rook(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
+			virtual MoveMapT moveMap() const override { return {}; };
+			using Piece::move;
+			virtual ~Rook() = default;
+	};
+
+	class Queen : public Piece {
+		public: 
+		 Queen(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
+			virtual MoveMapT moveMap() const override { return {}; };
+			using Piece::move;
+			virtual ~Queen() = default;
+	};
+
+	class King : public Piece {
+		public: 
+		 King(const Position& p, const Color& c, Chessboard& cb) :
+				Piece(p, c, cb) {};
+			virtual MoveMapT moveMap() const override { return {}; };
+			using Piece::move;
+			virtual ~King() = default;
 	};
 
 }

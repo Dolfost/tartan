@@ -47,12 +47,19 @@ namespace dchess {
 	}
 
 	Position Position::offset(int ox, int oy) const {
-		return {p_x + ox, p_y + oy};
+		int k = static_cast<int>(p_mode);
+		return {p_x + k*ox, p_y + k*oy};
 	}
 
-	inline Position Position::offset(char ol, int od) const {
+	Position Position::offset(char ol, int od) const {
 		return offset(ol - 'a' + 1, od);
 	}
+
+	Position::Mode Position::setOffsetMode(Position::Mode m) { 
+		Position::Mode r = p_mode; 
+		p_mode = m; 
+		return r; 
+	};
 
 	Position Position::operator+(const Position& p) const {
 		return Position(p_x + p.p_x, p_y + p.p_y);
@@ -74,7 +81,7 @@ namespace dchess {
 		return offset(x, y);
 	}
 
-	inline Position Position::operator()(char l, int d) const {
+	Position Position::operator()(char l, int d) const {
 		return offset(l, d);
 	}
 
@@ -85,6 +92,12 @@ namespace dchess {
 	std::ostream& operator<<(std::ostream& os, const Position& p) {
 		os << p.letter() << p.digit();
 		return os;
+	}
+
+	Position& Position::operator=(const Position& other) {
+		p_x = other.p_x;
+		p_y = other.p_y;
+		return *this;
 	}
 
 }

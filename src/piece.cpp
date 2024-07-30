@@ -12,7 +12,7 @@ namespace dchess {
 	Position Piece::move(const Position& p) {
 		Position ret = p_position;
 		p_position = p;
-		// p_moveHistory.push_back(p);
+		p_moveHistory.push_back(p);
 		return ret;
 	}
 

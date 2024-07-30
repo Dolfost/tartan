@@ -2,7 +2,6 @@
 #include "include/dchess/exceptions.hpp"
 
 #include <algorithm>
-#include <ios>
 #include <ostream>
 
 namespace dchess {
@@ -18,7 +17,11 @@ namespace dchess {
 	}
 
 	void Chessboard::placePiece(Piece* p) {
-		b_board[p->position().x()-1][p->position().y()-1] = p;
+		Piece*& dest = 
+			b_board[p->position().x()-1][p->position().y()-1];
+		if (dest)
+			throw illegal_place("Two pieces can't be placed on same tile.");
+		dest = p;
 	}
 
 	inline MoveMapT Chessboard::possibleMoves(const Position& p) const {
@@ -64,11 +67,20 @@ namespace dchess {
 				const Piece* p = cb[{i, j}];
 
 				char letter;
-				const Pawn* pawn;
-				if ((pawn = dynamic_cast<const Pawn*>(p)))
+				if (dynamic_cast<const Pawn*>(p))
 					letter = 'p';
+				else if (dynamic_cast<const Knight*>(p))
+					letter = 'k';
+				else if (dynamic_cast<const Bishop*>(p))
+					letter = 'b';
+				else if (dynamic_cast<const Rook*>(p))
+					letter = 'r';
+				else if (dynamic_cast<const Queen*>(p))
+					letter = 'q';
+				else if (dynamic_cast<const King*>(p))
+					letter = 'k';
 				else 
-					letter = ((i+j)%2 ? '+' : '#');
+					letter = ((i + j)%2 ? '+' : '#');
 
 				if (p != nullptr and p->color() == Color::White)
 					letter = toupper(letter);
