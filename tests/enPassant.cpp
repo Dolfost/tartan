@@ -1,8 +1,6 @@
 #include "dchess.hpp"
 #include "testutils.hpp"
 
-#include <iostream>
-
 int main(int argc, char** argv) {
 	using namespace dchess;
 	using  Position = dchess::Piece::Position;
@@ -33,7 +31,7 @@ int main(int argc, char** argv) {
 		{{'b', 4}, {'a', 3}},
 	};
 
-	play(cb, turns);
+	play(cb, turns, false);
 
 	return 0;
 }
