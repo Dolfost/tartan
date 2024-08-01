@@ -9,6 +9,7 @@ namespace dchess {
 			throw illegal_turn("Turn piece cannot be nullptr.");
 		m_piece = p;
 		m_to = t;
+		m_from = p->position();
 		m_capture = c;
 	}
 

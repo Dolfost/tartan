@@ -64,6 +64,7 @@ namespace dchess {
 					friend std::ostream& operator<<(std::ostream&, const Turn&);
 				private:
 					Position m_to;
+					Position m_from;
 					const Piece* m_piece;
 					const Piece* m_capture;
 			};
