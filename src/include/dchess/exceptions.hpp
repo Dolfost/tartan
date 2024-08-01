@@ -8,7 +8,7 @@ namespace dchess {
 using string = std::string;
 using logic_error = std::logic_error;
 
-class illegal_move : logic_error {
+class illegal_move : public logic_error {
 public:
 	using logic_error::what;
 	illegal_move(const string& what_arg) :
@@ -17,7 +17,7 @@ public:
 		logic_error(what_arg) {};
 };
 
-class illegal_turn : logic_error {
+class illegal_turn : public logic_error {
 public:
 	using logic_error::what;
 	illegal_turn(const string& what_arg) :
@@ -26,7 +26,7 @@ public:
 		logic_error(what_arg) {};
 };
 
-class illegal_place : logic_error {
+class illegal_place : public logic_error {
 public:
 	using logic_error::what;
 	illegal_place(const string& what_arg) :

@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 		{pawn1, {'e', 6}, pawn3},
 		{pawn1, {'d', 5}},
 		{pawn1, {'d', 6}},
-	};;
+	};
 
 	cout << "expected:" << endl;
 	for (auto x : targetmap)

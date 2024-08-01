@@ -57,16 +57,19 @@ public:
 	class Turn {
 	public:
 		Turn(const Piece*, const Position&, const Piece* = nullptr);
-		const Position& to() const { return m_to; };
+		Position to() const { return m_to; };
+		Position from() const { return m_from; };
 		const Piece* piece() const { return m_piece; };
 		const Piece* capture() const { return m_capture; };
+		Piece* piece() { return m_piece; };
+		Piece* capture() { return m_capture; };
 		friend bool operator==(const Turn&, const Turn&);
 		friend std::ostream& operator<<(std::ostream&, const Turn&);
 	private:
-		Position m_to;
 		Position m_from;
-		const Piece* m_piece;
-		const Piece* m_capture;
+		Position m_to;
+		Piece* m_piece;
+		Piece* m_capture;
 	};
 	using MoveMapT = std::forward_list<Turn>;
 	using MoveHistoryT = std::list<Position>;
@@ -94,11 +97,8 @@ public:
 public:
 	using BoardT = std::array<Piece*, 8>;
 	using BoardTT = std::array<std::array<Piece*, 8>, 8>;
-	using CapturedT = std::forward_list<Piece*>;
-private:
-	Piece::Color b_currentTurnColor = Piece::Color::White;
-	BoardTT b_board;
-	CapturedT b_capturedPieces;
+	using CapturedT = std::forward_list<const Piece*>;
+	using HistoryT = std::list<const Piece::Turn>;
 public:
 	Piece::Color currentTurnColor() const {
 		return b_currentTurnColor; 
@@ -106,15 +106,26 @@ public:
 	Piece::MoveMapT possibleMoves(const Piece*) const;
 	Piece::MoveMapT possibleMoves(
 		const Piece::Position&) const;
-	Piece::Turn makeTurn(const Piece::Position&, 
+	const Piece::Turn makeTurn(const Piece::Position&, 
 											const Piece::Position&);
 	void placePiece(Piece*);
 	const BoardTT& board() const { return b_board; };
+	BoardTT& board() { return b_board; };
+	std::size_t movesMade() const { return b_history.size(); }
 
-	Piece* operator[](const Piece::Position& p);
-	const Piece* operator[](const Piece::Position& p) const;
+	Piece*& operator[](const Piece::Position&);
+	const Piece* operator[](const Piece::Position&) const;
+	Piece*& at(const Piece::Position&);
+	const Piece* at(const Piece::Position&) const;
 	friend std::ostream& operator<<(std::ostream&, const Chessboard&);
 	~Chessboard();
+private:
+	Piece::Color b_currentTurnColor = Piece::Color::White;
+	BoardTT b_board;
+	CapturedT b_capturedPieces;
+	HistoryT b_history;
+private:
+	void apply_turn(Piece::Turn&);
 };
 
 class Pawn : public Piece {

@@ -4,6 +4,7 @@ set(ONEFILE_TESTS
 	whitePawn
 	blackPawn
 	position
+	makeMove
 )
 
 foreach(T ${ONEFILE_TESTS})

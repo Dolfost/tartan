@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <ostream>
+#include <iostream>
 
 namespace dchess {
 using BoardT = Chessboard::BoardT;
@@ -32,27 +33,64 @@ inline MoveMapT Chessboard::possibleMoves(const Piece* p) const {
 	return p->moveMap();
 };
 
-Turn Chessboard::makeTurn(const Position& from, const Position& to) {
+const Turn Chessboard::makeTurn(const Position& from, const Position& to) {
 	Piece* turnpiece = operator[](from);
 	if (turnpiece->color() != b_currentTurnColor)
 		throw illegal_move("Selected piece is in wrong color.");
 
 	MoveMapT possible = possibleMoves(from);
 
+	if (possible.empty())
+		throw illegal_move("Selected piece can't move.");
+
+	MoveMapT::iterator turn = find_if(
+		possible.begin(), 
+		possible.end(), 
+		[&](Turn& v) { 
+			return (v.from() == from and v.to() == to);
+		}
+	);
+
+	if (turn == possible.end())
+		throw illegal_move("Selected piece can't perform such move.");
+						
+	apply_turn(*turn);
+
 	if (b_currentTurnColor == Color::White)
 		b_currentTurnColor = Color::Black;
 	else
 		b_currentTurnColor = Color::White;
 
-	return Turn(nullptr, Position(), nullptr);
+	return *turn;
+}
+
+void Chessboard::apply_turn(Turn& t) {
+	b_history.push_back(t);
+	
+	if (t.capture()) {
+		at(t.capture()->position()) = nullptr;
+		b_capturedPieces.push_front(t.capture());
+	}
+
+	at(t.from()) = nullptr;
+	at(t.to()) = t.piece();
+	t.piece()->move(t.to());
 }
 
 const Piece* Chessboard::operator[](const Position& p) const { 
 	return b_board[p.x()-1][p.y()-1]; 
 }
 
-Piece* Chessboard::operator[](const Position& p) { 
+Piece*& Chessboard::operator[](const Position& p) { 
 	return b_board[p.x()-1][p.y()-1]; 
+}
+
+Piece*& Chessboard::at(const Position& p) {
+	return operator[](p);
+}
+
+const Piece* Chessboard::at(const Position& p) const {
+	return operator[](p);
 }
 
 std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
