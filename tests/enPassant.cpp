@@ -1,4 +1,5 @@
 #include "dchess.hpp"
+#include "testutils.hpp"
 
 #include <iostream>
 
@@ -21,23 +22,18 @@ int main(int argc, char** argv) {
 		{{'c', 4}, {'c', 5}},
 		{{'d', 7}, {'d', 5}},
 		{{'c', 5}, {'d', 6}},
+		{{'e', 7}, {'d', 6}},
+		{{'g', 2}, {'g', 3}},
+		{{'b', 7}, {'b', 6}},
+		{{'g', 3}, {'g', 4}},
+		{{'b', 6}, {'b', 5}},
+		{{'g', 4}, {'g', 5}},
+		{{'b', 5}, {'b', 4}},
+		{{'a', 2}, {'a', 4}},
+		{{'b', 4}, {'a', 3}},
 	};
 
-		cout << "start state:\n" << cb;
-
-	int no = 1;
-	for (auto& t : turns) {
-		cout << "\nperforming turn " << no++ << ": " 
-			<< t.first << "->" << t.second << endl;
-		try {
-			cb.makeTurn(t.first, t.second);
-		} catch (logic_error& e) {
-			cout << e.what() << endl;
-			continue;
-		}
-		cout << cb << flush;
-	}
-	
+	play(cb, turns);
 
 	return 0;
 }

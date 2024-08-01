@@ -1,5 +1,7 @@
 #include "dchess.hpp"
 
+#include "testutils.hpp"
+
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -17,22 +19,8 @@ int main(int argc, char** argv) {
 		{{'e', 4}, {'e', 5}},
 		{{'d', 6}, {'e', 5}},
 	};
-
-		cout << "start state:\n" << cb;
-
-	int no = 1;
-	for (auto& t : turns) {
-		cout << "\nperforming turn " << no++ << ": " 
-			<< t.first << "->" << t.second << endl;
-		try {
-			cb.makeTurn(t.first, t.second);
-		} catch (logic_error& e) {
-			cout << e.what() << endl;
-			continue;
-		}
-		cout << cb << flush;
-	}
 	
+	play(cb, turns);
 
 	return 0;
 }
