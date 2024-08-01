@@ -99,6 +99,7 @@ public:
 	using BoardTT = std::array<std::array<Piece*, 8>, 8>;
 	using CapturedT = std::forward_list<const Piece*>;
 	using HistoryT = std::list<const Piece::Turn>;
+	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
 public:
 	Piece::Color currentTurnColor() const {
 		return b_currentTurnColor; 
@@ -135,8 +136,12 @@ public:
 	Pawn(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
 	virtual MoveMapT moveMap() const override;
-	using Piece::move;
+	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
+private:
+	bool p_enPassant = false;
+public:
+	bool enPassant() const { return p_enPassant; };
 };
 
 class Knight : public Piece {
