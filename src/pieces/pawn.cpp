@@ -34,7 +34,7 @@ MoveMapT Pawn::moveMap() const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
-			p_chessboard.history().back().piece() == enemy_pawn)
+			enemy_pawn->enPassant())
 			map.push_front({this, tpos(0, 1), enemy_pawn});
 	}
 
@@ -44,7 +44,7 @@ MoveMapT Pawn::moveMap() const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
-			p_chessboard.history().back().piece() == enemy_pawn)
+			enemy_pawn->enPassant())
 			map.push_front({this, tpos(0, 1), enemy_pawn});
 	}
 
@@ -62,6 +62,14 @@ MoveMapT Pawn::moveMap() const {
 	}
 
 	return map;
+}
+
+Position Pawn::move(const Position& p) {
+	if (movesMade() == 0 and std::abs(p.y()-p_position.y()) == 2)
+		p_enPassant = true;
+	else 
+		p_enPassant = false;
+	return Piece::move(p);
 }
 
 }
