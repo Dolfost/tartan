@@ -8,96 +8,96 @@ using std::string;
 using std::to_string;
 
 namespace dchess {
-	using Position = Piece::Position;
+using Position = Piece::Position;
 
-	Position::Position(int x, int y) {
-		setX(x);
-		setY(y);
+Position::Position(int x, int y) {
+	setX(x);
+	setY(y);
+}
+
+Position::Position(char l, int d) {
+	setLetter(l);
+	setDigit(d);
+}
+
+int Position::setX(int x) {
+	if (x < 1 or x >  8) {
+		throw out_of_range(
+			string("Chess piece x position can't be ") + 
+			to_string(x) + ".");
 	}
 
-	Position::Position(char l, int d) {
-		setLetter(l);
-		setDigit(d);
+	short ret = p_x;
+	p_x = x;
+
+	return ret;
+}
+
+int Position::setY(int y) {
+	if (y < 1 or y >  8) {
+		throw out_of_range(
+			string("Chess piece y position can't be ") + 
+			to_string(y) + ".");
 	}
 
-	int Position::setX(int x) {
-		if (x < 1 or x >  8) {
-			throw out_of_range(
-					string("Chess piece x position can't be ") + 
-					to_string(x) + ".");
-		}
+	short ret = p_y;
+	p_y = y;
 
-		short ret = p_x;
-		p_x = x;
+	return ret;
+}
 
-		return ret;
-	}
+Position Position::offset(int ox, int oy) const {
+	int k = static_cast<int>(p_mode);
+	return {p_x + k*ox, p_y + k*oy};
+}
 
-	int Position::setY(int y) {
-		if (y < 1 or y >  8) {
-			throw out_of_range(
-					string("Chess piece y position can't be ") + 
-					to_string(y) + ".");
-		}
+Position Position::offset(char ol, int od) const {
+	return offset(ol - 'a' + 1, od);
+}
 
-		short ret = p_y;
-		p_y = y;
+Position::Mode Position::setOffsetMode(Position::Mode m) { 
+	Position::Mode r = p_mode; 
+	p_mode = m; 
+	return r; 
+};
 
-		return ret;
-	}
+Position Position::operator+(const Position& p) const {
+	return Position(p_x + p.p_x, p_y + p.p_y);
+}
 
-	Position Position::offset(int ox, int oy) const {
-		int k = static_cast<int>(p_mode);
-		return {p_x + k*ox, p_y + k*oy};
-	}
+Position Position::operator-(const Position& p) const {
+	return Position(p_x - p.p_x, p_y - p.p_y);
+}
 
-	Position Position::offset(char ol, int od) const {
-		return offset(ol - 'a' + 1, od);
-	}
+Position Position::operator+=(const Position& p) {
+	return *this + p;
+}
 
-	Position::Mode Position::setOffsetMode(Position::Mode m) { 
-		Position::Mode r = p_mode; 
-		p_mode = m; 
-		return r; 
-	};
+Position Position::operator-=(const Position& p) {
+	return *this - p;
+}
 
-	Position Position::operator+(const Position& p) const {
-		return Position(p_x + p.p_x, p_y + p.p_y);
-	}
+Position Position::operator()(int x, int y) const {
+	return offset(x, y);
+}
 
-	Position Position::operator-(const Position& p) const {
-		return Position(p_x - p.p_x, p_y - p.p_y);
-	}
+Position Position::operator()(char l, int d) const {
+	return offset(l, d);
+}
 
-	Position Position::operator+=(const Position& p) {
-		return *this + p;
-	}
+bool operator==(const Position& lhs, const Position& rhs) {
+	return ((lhs.p_x == rhs.p_x) and (lhs.p_y == rhs.p_y));
+}
 
-	Position Position::operator-=(const Position& p) {
-		return *this - p;
-	}
+std::ostream& operator<<(std::ostream& os, const Position& p) {
+	os << p.letter() << p.digit();
+	return os;
+}
 
-	Position Position::operator()(int x, int y) const {
-		return offset(x, y);
-	}
-
-	Position Position::operator()(char l, int d) const {
-		return offset(l, d);
-	}
-
-	bool operator==(const Position& lhs, const Position& rhs) {
-		return ((lhs.p_x == rhs.p_x) and (lhs.p_y == rhs.p_y));
-	}
-
-	std::ostream& operator<<(std::ostream& os, const Position& p) {
-		os << p.letter() << p.digit();
-		return os;
-	}
-
-	Position& Position::operator=(const Position& other) {
-		p_x = other.p_x;
-		p_y = other.p_y;
-		return *this;
-	}
+Position& Position::operator=(const Position& other) {
+	p_x = other.p_x;
+	p_y = other.p_y;
+	return *this;
+}
 
 }
