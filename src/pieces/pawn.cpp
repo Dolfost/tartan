@@ -34,9 +34,8 @@ MoveMapT Pawn::moveMap() const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
-			enemy->movesMade() == 1 and 
-			enemy->position().y() ==  5)
-			map.push_front({this, tpos(0, 1), enemy});
+			p_chessboard.history().back().piece() == enemy_pawn)
+			map.push_front({this, tpos(0, 1), enemy_pawn});
 	}
 
 	// en passant right enemy
@@ -45,9 +44,8 @@ MoveMapT Pawn::moveMap() const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
-			enemy->movesMade() == 1 and 
-			enemy->position().y() ==  5)
-			map.push_front({this, tpos(0, 1), enemy});
+			p_chessboard.history().back().piece() == enemy_pawn)
+			map.push_front({this, tpos(0, 1), enemy_pawn});
 	}
 
 	// defeat left/right pawn

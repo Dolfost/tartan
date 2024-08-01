@@ -111,6 +111,8 @@ public:
 	void placePiece(Piece*);
 	const BoardTT& board() const { return b_board; };
 	BoardTT& board() { return b_board; };
+	HistoryT& history() { return b_history; };
+	const HistoryT& history() const { return b_history; };
 	std::size_t movesMade() const { return b_history.size(); }
 
 	Piece*& operator[](const Piece::Position&);

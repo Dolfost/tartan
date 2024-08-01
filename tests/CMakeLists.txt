@@ -5,6 +5,7 @@ set(ONEFILE_TESTS
 	blackPawn
 	position
 	makeMove
+	enPassant
 )
 
 foreach(T ${ONEFILE_TESTS})
