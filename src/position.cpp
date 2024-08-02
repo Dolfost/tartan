@@ -69,6 +69,34 @@ Position Position::offset(char ol, int od) const {
 	return offset(ol - 'a' + 1, od);
 }
 
+bool Position::atLeft() const {
+	if (p_mode == Mode::Normal)
+		return p_x == 1;
+	else
+		return p_x == 8;
+}
+
+bool Position::atRight() const {
+	if (p_mode == Mode::Normal)
+		return p_x == 8;
+	else
+		return p_x == 1;
+}
+
+bool Position::atTop() const {
+	if (p_mode == Mode::Normal)
+		return p_y == 8;
+	else
+		return p_y == 1;
+}
+
+bool Position::atBottom() const {
+	if (p_mode == Mode::Normal)
+		return p_y == 1;
+	else
+		return p_y == 8;
+}
+
 Position::Mode Position::setOffsetMode(Position::Mode m) { 
 	Position::Mode r = p_mode; 
 	p_mode = m; 

@@ -35,6 +35,9 @@ inline MoveMapT Chessboard::possibleMoves(const Piece* p) const {
 
 const Turn Chessboard::makeTurn(const Position& from, const Position& to) {
 	Piece* turnpiece = operator[](from);
+	if (!turnpiece) 
+		throw illegal_move("Selected tile is empty.");
+
 	if (turnpiece->color() != b_currentTurnColor)
 		throw illegal_move("Selected piece is in wrong color.");
 

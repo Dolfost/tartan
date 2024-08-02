@@ -29,7 +29,7 @@ MoveMapT Pawn::moveMap() const {
 	}
 
 	// en passant left enemy
-	if (p_position.x() > 1) {
+	if (!pos.atLeft()) {
 		tpos = pos(-1, 0);
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
@@ -39,7 +39,7 @@ MoveMapT Pawn::moveMap() const {
 	}
 
 	// en passant right enemy
-	if (p_position.x() < 8) {
+	if (!pos.atRight()) {
 		tpos = pos(1, 0);
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
@@ -49,12 +49,12 @@ MoveMapT Pawn::moveMap() const {
 	}
 
 	// defeat left/right pawn
-	if (p_position.x() > 1) {
+	if (!pos.atLeft()) {
 		tpos = pos(-1, 1);
 		if ((enemy = p_chessboard[tpos]))
 			map.push_front({this, tpos, enemy});
 	}
-	if (p_position.x() < 8) {
+	if (!pos.atRight()) {
 		tpos = pos(1, 1);
 		if ((enemy = p_chessboard[tpos])) {
 			map.push_front({this, tpos, enemy});

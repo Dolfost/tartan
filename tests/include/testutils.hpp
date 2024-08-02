@@ -10,16 +10,6 @@ using namespace dchess;
 #include <stdexcept>
 using namespace std;
 
-inline void clearline() {
-	static int l = 100;
-	for (int i = 0; i < l; i += 1)
-		cout << '\b';
-	for (int i = 0; i < l; i += 1)
-		cout << ' ';
-	for (int i = 0; i < l; i += 1)
-		cout << '\b';
-}
-
 inline void move(Chessboard& cb,
 								 Piece::Position from,
 								 Piece::Position to,
@@ -71,7 +61,6 @@ inline void interactive_play(Chessboard& cb, bool rethrow = false) {
 			cerr << "Error: " << ex.what() << endl;
 			continue;
 		}
-		clearline();
 		cout << "Turn №" << ++no << ": " 
 			<< from << "->" << to << endl;
 		move(cb, from, to, rethrow);

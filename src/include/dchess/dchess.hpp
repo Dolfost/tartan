@@ -42,6 +42,10 @@ public:
 		int setDigit(short y) { return setY(y); };
 		Position offset(int, int) const;
 		Position offset(char, int) const;
+		bool atLeft() const;
+		bool atRight() const;
+		bool atTop() const;
+		bool atBottom() const;
 		Mode offsetMode() const { return p_mode; };
 		Mode setOffsetMode (Mode m);
 	public:
