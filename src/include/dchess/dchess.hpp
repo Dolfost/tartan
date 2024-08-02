@@ -29,6 +29,8 @@ public:
 		Position() = default;
 		Position(int, int);
 		Position(char, int);
+		Position(const std::string&);
+		Position(const char* s) : Position(std::string(s)) {};
 	public:
 		int x() const { return p_x; };
 		int y() const { return p_y; };

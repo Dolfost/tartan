@@ -1,7 +1,9 @@
 #include "include/dchess.hpp"
 
+#include <iostream>
 #include<stdexcept>
 using std::out_of_range;
+using std::invalid_argument;
 
 #include<string>
 using std::string;
@@ -18,6 +20,18 @@ Position::Position(int x, int y) {
 Position::Position(char l, int d) {
 	setLetter(l);
 	setDigit(d);
+}
+
+Position::Position(const string& s) {
+	if (s.length() != 2)
+		throw invalid_argument("Could not get position from string.");
+	string str = s;
+	std::transform(s.begin(), s.end(), str.begin(), [](unsigned char c) { 
+		return std::tolower(c); }
+	);
+
+	setLetter(str[0]);
+	setDigit(str[1] - '1' + 1);
 }
 
 int Position::setX(int x) {

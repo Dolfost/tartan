@@ -26,3 +26,12 @@ foreach(T ${ONEFILE_TESTS})
 		COMMAND ${T}
 	)
 endforeach()
+
+# interactive play
+add_executable(interactivePlay
+		interactivePlay.cpp
+)
+target_link_libraries(interactivePlay dchess testutils)
+add_custom_target(iplay 
+	COMMAND interactivePlay
+)
