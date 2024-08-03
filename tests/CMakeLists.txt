@@ -8,7 +8,9 @@ set(ONEFILE_TESTS
 	enPassant
 )
 
-add_library(testutils INTERFACE)
+add_library(testutils STATIC
+	testutils/testutils.cpp
+)
 target_sources(testutils
 	INTERFACE
 		FILE_SET testutils_headers
@@ -16,12 +18,15 @@ target_sources(testutils
 			BASE_DIRS 
 				"./include"
 )
+target_link_libraries(testutils
+	dchess
+)
 
 foreach(T ${ONEFILE_TESTS})
 	add_executable(${T} 
 		${T}.cpp
 	)
-	target_link_libraries(${T} dchess testutils)
+	target_link_libraries(${T} testutils)
 	add_test(NAME ${T}
 		COMMAND ${T}
 	)
@@ -31,7 +36,7 @@ endforeach()
 add_executable(interactivePlay
 		interactivePlay.cpp
 )
-target_link_libraries(interactivePlay dchess testutils)
+target_link_libraries(interactivePlay testutils)
 add_custom_target(iplay 
 	COMMAND interactivePlay
 )
