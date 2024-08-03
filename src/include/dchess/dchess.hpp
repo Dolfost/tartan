@@ -84,7 +84,6 @@ public:
 	class TurnMap : public std::forward_list<Turn*> {
 	public:
 		using std::forward_list<Turn*>::forward_list;
-		TurnMap(std::initializer_list<Turn>);
 		~TurnMap();
 		friend bool operator==(const TurnMap&, const TurnMap&);
 	};

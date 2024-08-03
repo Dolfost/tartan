@@ -11,12 +11,6 @@ TurnMap::~TurnMap() {
 	});
 }
 
-TurnMap::TurnMap(std::initializer_list<Turn> turns) {
-	for (auto& turn : turns) {
-		push_front(new Turn(turn));
-	}
-}
-
 bool operator==(const TurnMap& lhs, const TurnMap& rhs) {
 	auto lit = lhs.begin();
 	auto rit = rhs.begin();
