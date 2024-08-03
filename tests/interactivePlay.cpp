@@ -9,9 +9,9 @@ int main(int argc, char** argv) {
 	using namespace std;
 	
 	cerr << "dchess v" 
-		<< versionMajor() << ' ' 
-		<< versionMinor() << ' ' 
-		<< versionPatch() << ' ' 
+		<< versionMajor() << '.' 
+		<< versionMinor() << '.' 
+		<< versionPatch() << '.' 
 		<< versionTweak() << endl;
 
 	Chessboard cb;
