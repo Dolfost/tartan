@@ -131,6 +131,10 @@ Chessboard::~Chessboard() {
 	for (auto & p : b_board) {
 		std::for_each(p.begin(), p.end(), [](Piece* p){ delete p; });
 	}
+	for (auto& p : b_capturedPieces) {
+		delete p;
+	}
+	
 }
 
 }
