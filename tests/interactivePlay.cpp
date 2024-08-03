@@ -1,9 +1,18 @@
 #include "dchess.hpp"
+#include "dchess/version.hpp"
 #include "testutils.hpp"
+
+#include <iostream>
 
 int main(int argc, char** argv) {
 	using namespace dchess;
 	using namespace std;
+	
+	cerr << "dchess v" 
+		<< versionMajor() << ' ' 
+		<< versionMinor() << ' ' 
+		<< versionPatch() << ' ' 
+		<< versionTweak() << endl;
 
 	Chessboard cb;
 	cb.setPieceGetter(getPiece);
