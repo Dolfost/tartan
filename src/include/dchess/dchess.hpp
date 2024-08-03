@@ -5,6 +5,7 @@
 #include <forward_list>
 #include <list>
 #include <ostream>
+#include <typeindex>
 
 namespace dchess {
 
@@ -63,21 +64,30 @@ public:
 	class Turn {
 	public:
 		Turn(const Piece*, const Position&, const Piece* = nullptr);
-		Position to() const { return m_to; };
-		Position from() const { return m_from; };
-		const Piece* piece() const { return m_piece; };
-		const Piece* capture() const { return m_capture; };
-		Piece* piece() { return m_piece; };
-		Piece* capture() { return m_capture; };
+		Position to() const { return t_to; };
+		Position from() const { return t_from; };
+		const Piece* piece() const { return t_piece; };
+		const Piece* capture() const { return t_capture; };
+		Piece* piece() { return t_piece; };
+		Piece* capture() { return t_capture; };
+		virtual void apply();
+		virtual bool isEqual(const Turn&) const;
 		friend bool operator==(const Turn&, const Turn&);
+		friend bool operator!=(const Turn&, const Turn&);
 		friend std::ostream& operator<<(std::ostream&, const Turn&);
-	private:
-		Position m_from;
-		Position m_to;
-		Piece* m_piece;
-		Piece* m_capture;
+	protected:
+		Position t_from;
+		Position t_to;
+		Piece* t_piece;
+		Piece* t_capture;
 	};
-	using MoveMapT = std::forward_list<Turn>;
+	class TurnMap : public std::forward_list<Turn*> {
+	public:
+		using std::forward_list<Turn*>::forward_list;
+		TurnMap(std::initializer_list<Turn>);
+		~TurnMap();
+		friend bool operator==(const TurnMap&, const TurnMap&);
+	};
 	using MoveHistoryT = std::list<Position>;
 protected:
 	Color p_color;
@@ -88,7 +98,9 @@ public:
 	Color color() const { return p_color; };
 	Position position() const { return p_position; };
 	virtual Position move(const Position&);
-	virtual MoveMapT moveMap() const = 0;
+	virtual TurnMap moveMap() const = 0;
+	const Chessboard& chessboard() const { return p_chessboard; };
+	Chessboard& chessboard() { return p_chessboard; };
 	const MoveHistoryT history() const { return p_moveHistory; };
 	MoveHistoryT history() { return p_moveHistory; };
 	std::size_t movesMade() const { return p_moveHistory.size(); }
@@ -106,14 +118,17 @@ public:
 	using CapturedT = std::forward_list<const Piece*>;
 	using HistoryT = std::list<const Piece::Turn>;
 	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
+	using PieceTypesArgT = std::list<std::type_index>;
+	using PieceTypesRetT = std::type_index;
+	using PieceGetterT = std::function<PieceTypesRetT(PieceTypesArgT)>;
 public:
 	Piece::Color currentTurnColor() const {
 		return b_currentTurnColor; 
 	};
-	Piece::MoveMapT possibleMoves(const Piece*) const;
-	Piece::MoveMapT possibleMoves(
+	Piece::TurnMap possibleMoves(const Piece*) const;
+	Piece::TurnMap possibleMoves(
 		const Piece::Position&) const;
-	const Piece::Turn makeTurn(const Piece::Position&, 
+	const Piece::Turn& makeTurn(const Piece::Position&, 
 											const Piece::Position&);
 	void placePiece(Piece*);
 	const BoardTT& board() const { return b_board; };
@@ -126,6 +141,9 @@ public:
 	const Piece* operator[](const Piece::Position&) const;
 	Piece*& at(const Piece::Position&);
 	const Piece* at(const Piece::Position&) const;
+	void setPieceGetter(PieceGetterT g) { b_pieceGetter = g; };
+	PieceGetterT& pieceGetter() { return b_pieceGetter; };
+	const PieceGetterT& pieceGetter() const  { return b_pieceGetter; };
 	friend std::ostream& operator<<(std::ostream&, const Chessboard&);
 	~Chessboard();
 private:
@@ -133,17 +151,26 @@ private:
 	BoardTT b_board;
 	CapturedT b_capturedPieces;
 	HistoryT b_history;
-private:
-	void apply_turn(Piece::Turn&);
+	PieceGetterT b_pieceGetter;
 };
 
 class Pawn : public Piece {
 public: 
 	Pawn(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override;
+	virtual TurnMap moveMap() const override;
 	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
+	class Turn : public Piece::Turn {
+	public:
+		using Piece::Turn::Turn;
+	private:
+		std::type_index t_promoteTo = typeid(nullptr);
+	public:
+		bool isEqual(const Piece::Turn &) const override;
+		virtual void apply() override;
+		const std::type_index& promoteTo() const { return t_promoteTo; };
+	};
 private:
 	bool p_enPassant = false;
 public:
@@ -154,7 +181,8 @@ class Knight : public Piece {
 public: 
 	Knight(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override { return {}; };
+public:
 	using Piece::move;
 	virtual ~Knight() = default;
 };
@@ -163,7 +191,8 @@ class Bishop : public Piece {
 public: 
 	Bishop(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override { return {}; };
+public:
 	using Piece::move;
 	virtual ~Bishop() = default;
 };
@@ -172,7 +201,8 @@ class Rook : public Piece {
 public: 
 	Rook(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override { return {}; };
+public:
 	using Piece::move;
 	virtual ~Rook() = default;
 };
@@ -181,7 +211,8 @@ class Queen : public Piece {
 public: 
 	Queen(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override { return {}; };
+public:
 	using Piece::move;
 	virtual ~Queen() = default;
 };
@@ -190,7 +221,8 @@ class King : public Piece {
 public: 
 	King(const Position& p, const Color& c, Chessboard& cb) :
 		Piece(p, c, cb) {};
-	virtual MoveMapT moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override { return {}; };
+public:
 	using Piece::move;
 	virtual ~King() = default;
 };

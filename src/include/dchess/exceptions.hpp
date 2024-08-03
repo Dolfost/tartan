@@ -7,6 +7,7 @@
 namespace dchess {
 using string = std::string;
 using logic_error = std::logic_error;
+using bad_typeid = std::bad_typeid;
 
 class illegal_move : public logic_error {
 public:
@@ -33,6 +34,12 @@ public:
 		logic_error(what_arg) {};
 	illegal_place(const char* what_arg) :
 		logic_error(what_arg) {};
+};
+
+class illegal_getter_type : public bad_typeid {
+public:
+	illegal_getter_type() :
+		bad_typeid() {};
 };
 
 }

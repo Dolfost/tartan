@@ -1,11 +1,11 @@
-#include "../include/dchess.hpp"
+#include <dchess.hpp>
 
 namespace dchess {
 using Position = Piece::Position;
-using MoveMapT = Piece::MoveMapT;
+using TurnMap = Piece::TurnMap;
 
-MoveMapT Pawn::moveMap() const {
-	MoveMapT map;
+TurnMap Pawn::moveMap() const {
+	TurnMap map;
 	Position tpos, pos = p_position;
 	Pawn* enemy_pawn;
 	Piece* enemy;
@@ -18,12 +18,12 @@ MoveMapT Pawn::moveMap() const {
 	tpos = pos(0, 1);
 	// front piece
 	if (!p_chessboard[tpos]) {
-		map.push_front({this, tpos});
+		map.push_front(new Turn{this, tpos});
 		// two cell turn
 		if (movesMade() == 0) {
 			tpos = tpos(0, 1);
 			if (!p_chessboard[tpos]) {
-				map.push_front({this, tpos}); 
+				map.push_front(new Turn{this, tpos}); 
 			}
 		}
 	}
@@ -35,7 +35,7 @@ MoveMapT Pawn::moveMap() const {
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
 			enemy_pawn->enPassant())
-			map.push_front({this, tpos(0, 1), enemy_pawn});
+			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
 
 	// en passant right enemy
@@ -45,19 +45,19 @@ MoveMapT Pawn::moveMap() const {
 			dynamic_cast<Pawn*>(p_chessboard[tpos]);
 		if (enemy_pawn and 
 			enemy_pawn->enPassant())
-			map.push_front({this, tpos(0, 1), enemy_pawn});
+			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
 
 	// defeat left/right pawn
 	if (!pos.atLeft()) {
 		tpos = pos(-1, 1);
 		if ((enemy = p_chessboard[tpos]))
-			map.push_front({this, tpos, enemy});
+			map.push_front(new Turn{this, tpos, enemy});
 	}
 	if (!pos.atRight()) {
 		tpos = pos(1, 1);
 		if ((enemy = p_chessboard[tpos])) {
-			map.push_front({this, tpos, enemy});
+			map.push_front(new Turn{this, tpos, enemy});
 		}
 	}
 
@@ -65,7 +65,12 @@ MoveMapT Pawn::moveMap() const {
 }
 
 Position Pawn::move(const Position& p) {
-	if (movesMade() == 0 and std::abs(p.y()-p_position.y()) == 2)
+	Position pos = p;
+
+	if (p_color == Color::Black)
+		pos.setOffsetMode(Position::Mode::Reverse);
+
+	if (movesMade() == 0 and std::abs(pos.y()-p_position.y()) == 2)
 		p_enPassant = true;
 	else 
 		p_enPassant = false;

@@ -6,8 +6,10 @@ add_library(dchess STATIC
 	chessboard.cpp 
 	piece.cpp 
 	position.cpp 
+	turnMap.cpp 
 	turn.cpp 
-	pieces/pawn.cpp
+	pieces/pawn/pawn.cpp
+	pieces/pawn/pawnTurn.cpp
 	pieces/knight.cpp
 	pieces/bishop.cpp
 	pieces/rook.cpp
@@ -16,7 +18,7 @@ add_library(dchess STATIC
 )
 
 target_sources(dchess 
-	INTERFACE
+	PUBLIC
 		FILE_SET dchess_headers
 			TYPE HEADERS 
 			BASE_DIRS 

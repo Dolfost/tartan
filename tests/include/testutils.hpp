@@ -10,6 +10,7 @@ using namespace dchess;
 #include <stdexcept>
 using namespace std;
 
+
 inline void move(Chessboard& cb,
 								 Piece::Position from,
 								 Piece::Position to,

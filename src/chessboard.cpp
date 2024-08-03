@@ -1,5 +1,5 @@
-#include "include/dchess.hpp"
-#include "include/dchess/exceptions.hpp"
+#include "dchess.hpp"
+#include "dchess/exceptions.hpp"
 
 #include <algorithm>
 #include <ostream>
@@ -7,7 +7,7 @@
 
 namespace dchess {
 using BoardT = Chessboard::BoardT;
-using MoveMapT = Piece::MoveMapT;
+using TurnMap = Piece::TurnMap;
 using Position = Piece::Position;
 using Turn = Piece::Turn;
 using Color = Piece::Color;
@@ -25,15 +25,15 @@ void Chessboard::placePiece(Piece* p) {
 	dest = p;
 }
 
-inline MoveMapT Chessboard::possibleMoves(const Position& p) const {
+inline TurnMap Chessboard::possibleMoves(const Position& p) const {
 	return possibleMoves(operator[](p));
 };
 
-inline MoveMapT Chessboard::possibleMoves(const Piece* p) const {
+inline TurnMap Chessboard::possibleMoves(const Piece* p) const {
 	return p->moveMap();
 };
 
-const Turn Chessboard::makeTurn(const Position& from, const Position& to) {
+const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
 	Piece* turnpiece = operator[](from);
 	if (!turnpiece) 
 		throw illegal_move("Selected tile is empty.");
@@ -41,44 +41,37 @@ const Turn Chessboard::makeTurn(const Position& from, const Position& to) {
 	if (turnpiece->color() != b_currentTurnColor)
 		throw illegal_move("Selected piece is in wrong color.");
 
-	MoveMapT possible = possibleMoves(from);
+	TurnMap possible = possibleMoves(from);
 
 	if (possible.empty())
 		throw illegal_move("Selected piece can't move.");
 
-	MoveMapT::iterator turn = find_if(
+	TurnMap::iterator turn = find_if(
 		possible.begin(), 
 		possible.end(), 
-		[&](Turn& v) { 
-			return (v.from() == from and v.to() == to);
+		[&](Turn*& v) { 
+			return (v->from() == from and v->to() == to);
 		}
 	);
 
 	if (turn == possible.end())
 		throw illegal_move("Selected piece can't perform such move.");
-						
-	apply_turn(*turn);
+
+	Turn* t = *turn; 
+
+	b_history.push_back(*t);
+	if (t->capture())
+		b_capturedPieces.push_front(t->capture());
+	t->apply();
 
 	if (b_currentTurnColor == Color::White)
 		b_currentTurnColor = Color::Black;
 	else
 		b_currentTurnColor = Color::White;
 
-	return *turn;
+	return *t;
 }
 
-void Chessboard::apply_turn(Turn& t) {
-	b_history.push_back(t);
-	
-	if (t.capture()) {
-		at(t.capture()->position()) = nullptr;
-		b_capturedPieces.push_front(t.capture());
-	}
-
-	at(t.from()) = nullptr;
-	at(t.to()) = t.piece();
-	t.piece()->move(t.to());
-}
 
 const Piece* Chessboard::operator[](const Position& p) const { 
 	return b_board[p.x()-1][p.y()-1]; 
