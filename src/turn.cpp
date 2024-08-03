@@ -14,7 +14,7 @@ Turn::Turn(const Piece* p, const Position& t, const Piece* c) {
 }
 
 void Turn::apply() {
-	Chessboard& cb = t_piece->p_chessboard;
+	Chessboard& cb = *t_piece->p_chessboard;
 	if (t_capture) {
 		cb[t_capture->position()] = nullptr;
 	}

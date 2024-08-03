@@ -92,19 +92,20 @@ protected:
 	Color p_color;
 	Position p_position;
 	MoveHistoryT p_moveHistory;
-	Chessboard& p_chessboard;
+	Chessboard* p_chessboard;
 public:
 	Color color() const { return p_color; };
 	Position position() const { return p_position; };
 	virtual Position move(const Position&);
 	virtual TurnMap moveMap() const = 0;
-	const Chessboard& chessboard() const { return p_chessboard; };
-	Chessboard& chessboard() { return p_chessboard; };
+	const Chessboard* chessboard() const { return p_chessboard; };
+	Chessboard* chessboard() { return p_chessboard; };
+	Chessboard* setChessboard(Chessboard*);
 	const MoveHistoryT history() const { return p_moveHistory; };
 	MoveHistoryT history() { return p_moveHistory; };
 	std::size_t movesMade() const { return p_moveHistory.size(); }
 public:
-	Piece(const Position&, const Color&, Chessboard&);
+	Piece(const Position&, const Color&, Chessboard* = nullptr);
 	virtual ~Piece() = default;
 };
 
@@ -125,11 +126,10 @@ public:
 		return b_currentTurnColor; 
 	};
 	Piece::TurnMap possibleMoves(const Piece*) const;
-	Piece::TurnMap possibleMoves(
-		const Piece::Position&) const;
+	Piece::TurnMap possibleMoves(const Piece::Position&) const;
 	const Piece::Turn& makeTurn(const Piece::Position&, 
-											const Piece::Position&);
-	void placePiece(Piece*);
+														 const Piece::Position&);
+	Piece* insertPiece(Piece*);
 	const BoardTT& board() const { return b_board; };
 	BoardTT& board() { return b_board; };
 	HistoryT& history() { return b_history; };
@@ -155,8 +155,8 @@ private:
 
 class Pawn : public Piece {
 public: 
-	Pawn(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	Pawn(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override;
 	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
@@ -178,8 +178,8 @@ public:
 
 class Knight : public Piece {
 public: 
-	Knight(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	Knight(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -188,8 +188,8 @@ public:
 
 class Bishop : public Piece {
 public: 
-	Bishop(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	Bishop(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -198,8 +198,8 @@ public:
 
 class Rook : public Piece {
 public: 
-	Rook(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	Rook(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -208,8 +208,8 @@ public:
 
 class Queen : public Piece {
 public: 
-	Queen(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	Queen(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -218,8 +218,8 @@ public:
 
 class King : public Piece {
 public: 
-	King(const Position& p, const Color& c, Chessboard& cb) :
-		Piece(p, c, cb) {};
+	King(const Position& p, const Color& c) :
+		Piece(p, c) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;

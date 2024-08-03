@@ -17,12 +17,12 @@ TurnMap Pawn::moveMap() const {
 
 	tpos = pos(0, 1);
 	// front piece
-	if (!p_chessboard[tpos]) {
+	if (!p_chessboard->at(tpos)) {
 		map.push_front(new Turn{this, tpos});
 		// two cell turn
 		if (movesMade() == 0) {
 			tpos = tpos(0, 1);
-			if (!p_chessboard[tpos]) {
+			if (!p_chessboard->at(tpos)) {
 				map.push_front(new Turn{this, tpos}); 
 			}
 		}
@@ -32,7 +32,7 @@ TurnMap Pawn::moveMap() const {
 	if (!pos.atLeft()) {
 		tpos = pos(-1, 0);
 		enemy_pawn = 
-			dynamic_cast<Pawn*>(p_chessboard[tpos]);
+			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
 			enemy_pawn->enPassant())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
@@ -42,7 +42,7 @@ TurnMap Pawn::moveMap() const {
 	if (!pos.atRight()) {
 		tpos = pos(1, 0);
 		enemy_pawn = 
-			dynamic_cast<Pawn*>(p_chessboard[tpos]);
+			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
 			enemy_pawn->enPassant())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
@@ -51,12 +51,12 @@ TurnMap Pawn::moveMap() const {
 	// defeat left/right pawn
 	if (!pos.atLeft()) {
 		tpos = pos(-1, 1);
-		if ((enemy = p_chessboard[tpos]))
+		if ((enemy = p_chessboard->at(tpos)))
 			map.push_front(new Turn{this, tpos, enemy});
 	}
 	if (!pos.atRight()) {
 		tpos = pos(1, 1);
-		if ((enemy = p_chessboard[tpos])) {
+		if ((enemy = p_chessboard->at(tpos))) {
 			map.push_front(new Turn{this, tpos, enemy});
 		}
 	}

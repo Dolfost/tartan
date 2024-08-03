@@ -13,26 +13,28 @@ void Turn::apply() {
 
 	t_promoteTo = typeid(nullptr);
 	if (pos.atTop()) {
-		Chessboard& cb = t_piece->chessboard();
-		t_promoteTo = cb.pieceGetter()({
+		Chessboard* cb = t_piece->chessboard();
+		t_promoteTo = cb->pieceGetter()({
 			typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
 		});
 
-		Piece* tmp = cb[pos];
-		cb[pos] = nullptr;
+		Piece* tmp = cb->at(pos);
+		Piece* newPiece;
+		cb->at(pos) = nullptr;
 		if (t_promoteTo == typeid(Queen))
-			new Queen(pos, t_piece->color(), cb);
+			newPiece = new Queen(pos, t_piece->color());
 		else if (t_promoteTo == typeid(Bishop))
-			new Bishop(pos, t_piece->color(), cb);
+			newPiece = new Bishop(pos, t_piece->color());
 		else if (t_promoteTo == typeid(Rook))
-			new Rook(pos, t_piece->color(), cb);
+			newPiece = new Rook(pos, t_piece->color());
 		else if (t_promoteTo == typeid(Knight))
-			new Knight(pos, t_piece->color(), cb);
+			newPiece = new Knight(pos, t_piece->color());
 		else {
 			t_promoteTo = typeid(nullptr);
-			cb[pos] = tmp;
+			cb->at(pos) = tmp;
 			throw illegal_getter_type();
 		}
+		cb->insertPiece(newPiece);
 		delete tmp;
 	}
 }

@@ -17,12 +17,18 @@ Chessboard::Chessboard() {
 							 [](BoardT& a){ a.fill(nullptr); });
 }
 
-void Chessboard::placePiece(Piece* p) {
+Piece* Chessboard::insertPiece(Piece* p) {
+	if (p->chessboard())
+		throw std::logic_error("Piece belongs to other chessboard already.");
+	p->setChessboard(this);
+		
 	Piece*& dest = 
 		b_board[p->position().x()-1][p->position().y()-1];
 	if (dest)
 		throw illegal_place("Two pieces can't be placed on same tile.");
 	dest = p;
+
+	return p;
 }
 
 inline TurnMap Chessboard::possibleMoves(const Position& p) const {

@@ -7,9 +7,12 @@ int main(int argc, char** argv) {
 	using namespace std;
 
 	Chessboard cb;
-	Piece* pawn1 = new Pawn({'d', 7}, Piece::Color::Black, cb);
-	Piece* pawn2 = new Pawn({'c', 6}, Piece::Color::White, cb);
-	Piece* pawn3 = new Pawn({'e', 6}, Piece::Color::White, cb);
+	Piece* pawn1 = new Pawn({'d', 7}, Piece::Color::Black);
+	Piece* pawn2 = new Pawn({'c', 6}, Piece::Color::White);
+	Piece* pawn3 = new Pawn({'e', 6}, Piece::Color::White);
+	cb.insertPiece(pawn1);
+	cb.insertPiece(pawn2);
+	cb.insertPiece(pawn3);
 
 	Piece::TurnMap movemap = cb.possibleMoves({'d', 7});
 	Piece::TurnMap targetmap = {
