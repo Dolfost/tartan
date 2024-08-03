@@ -28,6 +28,6 @@ target_sources(dchess
 
 configure_file(
 	"include/dchess/version.hpp.in" 
-	"version.hpp"
+	"dchess/version.hpp"
 	@ONLY 
 )
