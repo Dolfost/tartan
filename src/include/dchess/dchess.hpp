@@ -142,6 +142,7 @@ public:
 	const Piece* at(const Piece::Position&) const;
 	void setPieceGetter(PieceGetterT g) { b_pieceGetter = g; };
 	PieceGetterT& pieceGetter() { return b_pieceGetter; };
+	PieceTypesRetT getPieceType(PieceTypesArgT);
 	const PieceGetterT& pieceGetter() const  { return b_pieceGetter; };
 	friend std::ostream& operator<<(std::ostream&, const Chessboard&);
 	~Chessboard();
@@ -155,8 +156,8 @@ private:
 
 class Pawn : public Piece {
 public: 
-	Pawn(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	Pawn(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override;
 	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
@@ -178,8 +179,8 @@ public:
 
 class Knight : public Piece {
 public: 
-	Knight(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	Knight(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -188,8 +189,8 @@ public:
 
 class Bishop : public Piece {
 public: 
-	Bishop(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	Bishop(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -198,8 +199,8 @@ public:
 
 class Rook : public Piece {
 public: 
-	Rook(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	Rook(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -208,8 +209,8 @@ public:
 
 class Queen : public Piece {
 public: 
-	Queen(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	Queen(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;
@@ -218,8 +219,8 @@ public:
 
 class King : public Piece {
 public: 
-	King(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	King(const Position& p, const Color& c, Chessboard* cb = nullptr) :
+		Piece(p, c, cb) {};
 	virtual TurnMap moveMap() const override { return {}; };
 public:
 	using Piece::move;

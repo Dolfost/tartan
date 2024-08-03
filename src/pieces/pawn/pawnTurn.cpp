@@ -14,9 +14,9 @@ void Turn::apply() {
 	t_promoteTo = typeid(nullptr);
 	if (pos.atTop()) {
 		Chessboard* cb = t_piece->chessboard();
-		t_promoteTo = cb->pieceGetter()({
-			typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
-		});
+			t_promoteTo = cb->getPieceType({
+				typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
+			});
 
 		Piece* tmp = cb->at(pos);
 		Piece* newPiece;

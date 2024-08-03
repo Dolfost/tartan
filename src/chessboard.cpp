@@ -78,6 +78,17 @@ const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
 	return *t;
 }
 
+Chessboard::PieceTypesRetT Chessboard::getPieceType(
+	Chessboard::PieceTypesArgT types) {
+	if (!b_pieceGetter)
+		throw std::runtime_error("Piece getter is not set.");
+
+	if (types.size() == 0)
+		return typeid(nullptr);
+
+	return b_pieceGetter(types);
+}
+
 
 const Piece* Chessboard::operator[](const Position& p) const { 
 	return b_board[p.x()-1][p.y()-1]; 
