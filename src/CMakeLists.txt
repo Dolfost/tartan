@@ -10,8 +10,9 @@ add_library(dchess STATIC
 	turn.cpp 
 	pieces/pawn/pawn.cpp
 	pieces/pawn/pawnTurn.cpp
+	pieces/bishop/bishop.cpp
+	pieces/bishop/bishopTurn.cpp
 	pieces/knight.cpp
-	pieces/bishop.cpp
 	pieces/rook.cpp
 	pieces/queen.cpp
 	pieces/king.cpp

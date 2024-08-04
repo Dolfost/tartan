@@ -62,7 +62,9 @@ int Position::setY(int y) {
 
 Position Position::offset(int ox, int oy) const {
 	int k = static_cast<int>(p_mode);
-	return {p_x + k*ox, p_y + k*oy};
+	Position ret = {p_x + k*ox, p_y + k*oy};
+	ret.p_mode = p_mode;
+	return ret;
 }
 
 Position Position::offset(char ol, int od) const {

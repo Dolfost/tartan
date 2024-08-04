@@ -191,7 +191,13 @@ class Bishop : public Piece {
 public: 
 	Bishop(const Position& p, const Color& c, Chessboard* cb = nullptr) :
 		Piece(p, c, cb) {};
-	virtual TurnMap moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override;
+	class Turn : public Piece::Turn {
+	public:
+		using Piece::Turn::Turn;
+	public:
+		bool isEqual(const Piece::Turn &) const override;
+	};
 public:
 	using Piece::move;
 	virtual ~Bishop() = default;

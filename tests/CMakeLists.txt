@@ -7,6 +7,7 @@ set(ONEFILE_TESTS
 	makeMove
 	enPassant
 	noPieceGetter
+	bishop
 )
 
 add_library(testutils STATIC
