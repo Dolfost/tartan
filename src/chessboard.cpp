@@ -19,13 +19,17 @@ Chessboard::Chessboard() {
 
 Piece* Chessboard::insertPiece(Piece* p) {
 	if (p->chessboard())
-		throw std::logic_error("Piece belongs to other chessboard already.");
+		throw piece_belongs_to_board_already(
+			p, "Piece belongs to other chessboard already."
+		);
 	p->setChessboard(this);
 		
 	Piece*& dest = 
 		b_board[p->position().x()-1][p->position().y()-1];
 	if (dest)
-		throw illegal_place("Two pieces can't be placed on same tile.");
+		throw insertion_position_is_taken(
+			p, "Two pieces can't be placed on same tile."
+		);
 	dest = p;
 
 	return p;
@@ -42,15 +46,18 @@ inline TurnMap Chessboard::possibleMoves(const Piece* p) const {
 const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
 	Piece* turnpiece = operator[](from);
 	if (!turnpiece) 
-		throw illegal_move("Selected tile is empty.");
+		throw tile_is_empty(
+			from, to, "Selected tile is empty."
+		);
 
 	if (turnpiece->color() != b_currentTurnColor)
-		throw illegal_move("Selected piece is in wrong color.");
+		throw piece_in_wrong_color(
+			turnpiece, to, "Selected piece is in wrong color.");
 
 	TurnMap possible = possibleMoves(from);
 
 	if (possible.empty())
-		throw illegal_move("Selected piece can't move.");
+		throw can_not_move(turnpiece, to, "Selected piece can't move.");
 
 	TurnMap::iterator turn = find_if(
 		possible.begin(), 
@@ -61,7 +68,11 @@ const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
 	);
 
 	if (turn == possible.end())
-		throw illegal_move("Selected piece can't perform such move.");
+		throw no_such_move(
+			turnpiece, 
+			to, 
+			"Selected piece can't perform such move."
+		);
 
 	Turn* t = *turn; 
 
