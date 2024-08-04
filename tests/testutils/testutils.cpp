@@ -12,7 +12,6 @@ Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT types) {
 		cout << "Enter Piece for exchange: ";
 		cin >> piece;
 		piece = tolower(piece);
-		cout << endl << piece << endl;
 		switch (piece) {
 			case 'p':
 				type = typeid(Pawn);
