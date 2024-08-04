@@ -16,52 +16,28 @@ TurnMap Bishop::moveMap() const {
 		tpos.setOffsetMode(Position::Mode::Reverse);
 	}
 
+	using func = bool (Position::*)(void) const;
+	std::tuple<func, func, std::pair<int, int>> conds[4] = {
+		{&Position::atRight, &Position::atBottom, {1, -1}},
+		{&Position::atRight, &Position::atTop, {1, 1}},
+		{&Position::atLeft, &Position::atBottom, {-1, -1}},
+		{&Position::atLeft, &Position::atTop, {-1, 1}},
+	};
 
-	tpos = pos;
-	while (!tpos.atRight() and !tpos.atBottom()) {
-		tpos = tpos.offset(1, -1);
-		enemy = p_chessboard->at(tpos);
-		if (enemy) {
-			map.push_front(new Turn(this, tpos, enemy));
-			break;
+	for (auto& v: conds) {
+		tpos = pos;
+		while (!(tpos.*std::get<0>(v))() and !(tpos.*std::get<1>(v))()) {
+			std::pair<int, int> of = std::get<2>(v);
+			tpos = tpos.offset(of.first, of.second);
+			enemy = p_chessboard->at(tpos);
+			if (enemy) {
+				map.push_front(new Turn(this, tpos, enemy));
+				break;
+			}
+			map.push_front(new Turn(this, tpos));
 		}
-		map.push_front(new Turn(this, tpos));
-	}
-
-	tpos = pos;
-	while (!tpos.atRight() and !tpos.atTop()) {
-		tpos = tpos.offset(1, 1);
-		enemy = p_chessboard->at(tpos);
-		if (enemy) {
-			map.push_front(new Turn(this, tpos, enemy));
-			break;
-		}
-		map.push_front(new Turn(this, tpos));
-	}
-
-	tpos = pos;
-	while (!tpos.atLeft() and !tpos.atBottom()) {
-		tpos = tpos.offset(-1, -1);
-		enemy = p_chessboard->at(tpos);
-		if (enemy) {
-			map.push_front(new Turn(this, tpos, enemy));
-			break;
-		}
-		map.push_front(new Turn(this, tpos));
-	}
-
-	tpos = pos;
-	while (!tpos.atLeft() and !tpos.atTop()) {
-		tpos = tpos.offset(-1, 1);
-		enemy = p_chessboard->at(tpos);
-		if (enemy) {
-			map.push_front(new Turn(this, tpos, enemy));
-			break;
-		}
-		map.push_front(new Turn(this, tpos));
 	}
 	
-
 	return map;
 }
 
