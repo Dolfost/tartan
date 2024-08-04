@@ -1,5 +1,4 @@
 #include "include/dchess.hpp"
-#include <iostream>
 
 namespace dchess {
 using Turn = Piece::Turn;

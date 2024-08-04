@@ -1,5 +1,4 @@
 #include <dchess.hpp>
-#include <iostream>
 
 namespace dchess {
 using Position = Piece::Position;
