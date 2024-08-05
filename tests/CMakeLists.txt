@@ -8,6 +8,7 @@ set(ONEFILE_TESTS
 	enPassant
 	noPieceGetter
 	bishop
+	knight
 )
 
 add_library(testutils STATIC
