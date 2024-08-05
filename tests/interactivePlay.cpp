@@ -30,6 +30,11 @@ int main(int argc, char** argv) {
 	new Knight("b8", Piece::Color::Black, &cb);
 	new Knight("g8", Piece::Color::Black, &cb);
 
+	new Rook("a1", Piece::Color::White, &cb);
+	new Rook("h1", Piece::Color::White, &cb);
+	new Rook("a8", Piece::Color::Black, &cb);
+	new Rook("h8", Piece::Color::Black, &cb);
+
 	interactive_play(cb);
 
 	return 0;
