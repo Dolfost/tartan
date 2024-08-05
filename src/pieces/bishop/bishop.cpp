@@ -7,7 +7,6 @@ using TurnMap = Piece::TurnMap;
 TurnMap Bishop::moveMap() const {
 	TurnMap map;
 	Position tpos, pos = p_position;
-	Pawn* enemy_pawn;
 	Piece* enemy;
 
 	if (p_color == Piece::Color::Black) {
