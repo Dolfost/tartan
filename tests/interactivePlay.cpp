@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
 	new Bishop("f1", Piece::Color::White, &cb);
 	new Bishop("c8", Piece::Color::Black, &cb);
 	new Bishop("f8", Piece::Color::Black, &cb);
+
 	new Knight("b1", Piece::Color::White, &cb);
 	new Knight("g1", Piece::Color::White, &cb);
 	new Knight("b8", Piece::Color::Black, &cb);
@@ -34,6 +35,9 @@ int main(int argc, char** argv) {
 	new Rook("h1", Piece::Color::White, &cb);
 	new Rook("a8", Piece::Color::Black, &cb);
 	new Rook("h8", Piece::Color::Black, &cb);
+
+	new Queen("d1", Piece::Color::White, &cb);
+	new Queen("d8", Piece::Color::Black, &cb);
 
 	interactive_play(cb);
 
