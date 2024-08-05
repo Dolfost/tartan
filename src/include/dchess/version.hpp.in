@@ -1,5 +1,5 @@
-#ifndef _DHCESS_VERSION_HPP_
-#define _DHCESS_VERSION_HPP_
+#ifndef _DCHESS_VERSION_HPP_
+#define _DCHESS_VERSION_HPP_
 
 #include<string>
 
@@ -27,4 +27,4 @@ namespace dchess {
 
 }
 
-#endif // !_DHCESS_VERSION_HPP_
+#endif // !_DCHESS_VERSION_HPP_
