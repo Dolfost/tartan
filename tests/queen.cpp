@@ -44,8 +44,6 @@ int main(int argc, char** argv) {
 		new Queen::Turn{queen, "g1"},
 		new Queen::Turn{queen, "f2"},
 		new Queen::Turn{queen, "e3"},
-
-
 	};
 
 	cout << "expected:" << endl;
