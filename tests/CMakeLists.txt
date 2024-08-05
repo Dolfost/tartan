@@ -10,6 +10,7 @@ set(ONEFILE_TESTS
 	bishop
 	knight
 	rook
+	queen
 )
 
 add_library(testutils STATIC

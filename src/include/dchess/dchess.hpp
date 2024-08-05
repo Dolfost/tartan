@@ -84,6 +84,10 @@ public:
 	class TurnMap : public std::forward_list<Turn*> {
 	public:
 		using std::forward_list<Turn*>::forward_list;
+		TurnMap(const TurnMap&);
+		TurnMap(const TurnMap&&);
+		TurnMap& operator=(const TurnMap&);
+		TurnMap& operator=(TurnMap&&);
 		~TurnMap();
 		friend bool operator==(const TurnMap&, const TurnMap&);
 	};
@@ -104,6 +108,9 @@ public:
 	const MoveHistoryT history() const { return p_moveHistory; };
 	MoveHistoryT history() { return p_moveHistory; };
 	std::size_t movesMade() const { return p_moveHistory.size(); }
+public:
+	static TurnMap diagonalMoves(const Piece*);
+	static TurnMap straightMoves(const Piece*);
 public:
 	Piece(const Position&, const Color&, Chessboard* = nullptr);
 	virtual ~Piece() = default;
@@ -229,7 +236,13 @@ class Queen : public Piece {
 public: 
 	Queen(const Position& p, const Color& c, Chessboard* cb = nullptr) :
 		Piece(p, c, cb) {};
-	virtual TurnMap moveMap() const override { return {}; };
+	virtual TurnMap moveMap() const override;
+	class Turn : public Piece::Turn {
+	public:
+		using Piece::Turn::Turn;
+	public:
+		bool isEqual(const Piece::Turn &) const override;
+	};
 public:
 	using Piece::move;
 	virtual ~Queen() = default;
