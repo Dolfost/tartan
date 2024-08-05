@@ -14,7 +14,8 @@ add_library(dchess STATIC
 	pieces/bishop/bishopTurn.cpp
 	pieces/knight/knight.cpp
 	pieces/knight/knightTurn.cpp
-	pieces/rook.cpp
+	pieces/rook/rook.cpp
+	pieces/rook/rookTurn.cpp
 	pieces/queen.cpp
 	pieces/king.cpp
 )

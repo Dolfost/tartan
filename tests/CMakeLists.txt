@@ -9,6 +9,7 @@ set(ONEFILE_TESTS
 	noPieceGetter
 	bishop
 	knight
+	rook
 )
 
 add_library(testutils STATIC
