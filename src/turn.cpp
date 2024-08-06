@@ -14,7 +14,7 @@ Turn::Turn(const Piece* p, const Position& t, const Piece* c, bool u) {
 	t_possible = u;
 }
 
-void Turn::apply() {
+void Turn::apply(bool) {
 	Chessboard& cb = *t_piece->p_chessboard;
 	if (t_capture)
 		cb[t_capture->position()] = nullptr;

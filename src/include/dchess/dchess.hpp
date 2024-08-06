@@ -75,7 +75,7 @@ public:
 		Piece* capture() { return t_capture; };
 		bool possible() const { return t_possible; };
 		bool setPossible(bool c) { return !(t_possible = c); };
-		virtual void apply();
+		virtual void apply(bool = false);
 		virtual void undo();
 		virtual bool isEqual(const Turn&) const;
 		friend bool operator==(const Turn&, const Turn&);
@@ -198,7 +198,7 @@ public:
 		std::type_index t_promoteTo = typeid(nullptr);
 	public:
 		bool isEqual(const Piece::Turn &) const override;
-		virtual void apply() override;
+		virtual void apply(bool = false) override;
 		const std::type_index& promoteTo() const { return t_promoteTo; };
 	};
 private:

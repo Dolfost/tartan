@@ -109,7 +109,7 @@ void Chessboard::markChecks(TurnMap& tm) const {
 		throw no_king(b_currentTurnColor);
 
 	for (auto& t : tm) {
-		(*t).apply();
+		(*t).apply(true);
 		(*t).setPossible(!b_currentKing->check());
 		(*t).undo();
 	}

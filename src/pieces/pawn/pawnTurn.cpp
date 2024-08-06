@@ -4,7 +4,7 @@
 namespace dchess {
 using Turn = Pawn::Turn;
 
-void Turn::apply() {
+void Turn::apply(bool checking) {
 	Piece::Turn::apply();
 
 	Position pos = t_to;
@@ -12,11 +12,11 @@ void Turn::apply() {
 		pos.setOffsetMode(Position::Mode::Reverse);
 
 	t_promoteTo = typeid(nullptr);
-	if (pos.atTop()) {
+	if (pos.atTop() and !checking) {
 		Chessboard* cb = t_piece->chessboard();
-			t_promoteTo = cb->getPieceType({
-				typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
-			});
+		t_promoteTo = cb->getPieceType({
+			typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
+		});
 
 		Piece* tmp = cb->at(pos);
 		Piece* newPiece;
