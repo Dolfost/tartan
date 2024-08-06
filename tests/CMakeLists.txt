@@ -11,6 +11,7 @@ set(ONEFILE_TESTS
 	knight
 	rook
 	queen
+	checkMove
 )
 
 add_library(testutils STATIC

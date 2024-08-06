@@ -93,3 +93,9 @@ void interactive_play(Chessboard& cb, bool rethrow) {
 	}
 	cin.clear();
 }
+
+void placeKings(Chessboard& cb) {
+	cb.insertPiece(new King("e1", Piece::Color::White));
+	cb.insertPiece(new King("e8", Piece::Color::Black));
+}
+

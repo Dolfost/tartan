@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
 	using namespace dchess;
 
 	Chessboard cb;
-	new Pawn("e7", Piece::Color::White, &cb);
+	cb.insertPiece(new Pawn("e7", Piece::Color::White));
 	try {
 		cb.makeTurn("e7", "e8");
 	} catch (logic_error& ex) {

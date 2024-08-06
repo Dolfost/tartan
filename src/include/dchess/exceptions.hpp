@@ -34,14 +34,30 @@ public:
 	) : invalid_piece(p, what_arg) {};
 };
 
-class insertion_position_is_taken : public invalid_piece {
+class position_is_taken : public invalid_piece {
 public:
-	insertion_position_is_taken(
+	position_is_taken(
 		const Piece* p, 
 		const string& what_arg = "Piece insertion position is taken."
 	) : invalid_piece(p, what_arg) {};
 };
 	
+class duplicate_king : public invalid_piece {
+public:
+	duplicate_king(
+		const Piece* p, 
+		const string& what_arg = "Board already has a king."
+	) : invalid_piece(p, what_arg) {};
+};
+
+class no_king : public board_error {
+public:
+	no_king(
+		Piece::Color c,
+		const string& what_arg = "Board does not have a king."
+	) : board_error(what_arg) { e_color = c; };
+	Piece::Color e_color;
+};
 
 class illegal_move : public board_error {
 public:
@@ -54,6 +70,7 @@ private:
 	const Piece* e_piece;
 	const Piece::Position& e_to;
 };
+
 
 class tile_is_empty : public illegal_move {
 public:
@@ -93,6 +110,18 @@ public:
 		const Piece::Position& to, 
 		const string& what_arg = "Selected piece can't perform such move.") 
 	:	illegal_move(p, to, what_arg) {};
+};
+
+class king_is_under_check : public illegal_move {
+public:
+	king_is_under_check(
+		const Piece* p,
+		const Piece::Position& to, 
+		const Piece* k,
+		const string& what_arg = "Piece king is under check after move.") 
+	:	illegal_move(p, to, what_arg) { e_king = k; };
+private:
+	const Piece* e_king;
 };
 
 

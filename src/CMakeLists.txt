@@ -18,7 +18,8 @@ add_library(dchess STATIC
 	pieces/rook/rookTurn.cpp
 	pieces/queen/queen.cpp
 	pieces/queen/queenTurn.cpp
-	pieces/king.cpp
+	pieces/king/king.cpp
+	pieces/king/kingTurn.cpp
 )
 
 target_sources(dchess 

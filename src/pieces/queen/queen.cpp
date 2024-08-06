@@ -9,7 +9,9 @@ TurnMap Queen::moveMap() const {
 
 	map = Piece::diagonalMoves(this);
 	m = Piece::straightMoves(this); 
-	map.insert_after(map.begin(), m.begin(), m.end());
+	map.insert(
+		map.begin(), m.begin(), m.end()
+	);
 	m.clear();
 
 	return map;

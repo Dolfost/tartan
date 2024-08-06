@@ -1,4 +1,5 @@
 #include "dchess.hpp"
+#include "testutils.hpp"
 
 #include <iostream>
 
@@ -7,9 +8,13 @@ int main(int argc, char** argv) {
 	using namespace std;
 
 	Chessboard cb;
-	Piece* pawn1 = new Pawn("h4", Piece::Color::Black, &cb);
-	Piece* pawn2 = new Pawn("d7", Piece::Color::Black, &cb);
-	Piece* rook = new Rook("d4", Piece::Color::White, &cb);
+	placeKings(cb);
+	Piece* pawn1 = new Pawn("h4", Piece::Color::Black);
+	Piece* pawn2 = new Pawn("d7", Piece::Color::Black);
+	Piece* rook = new Rook("d4", Piece::Color::White);
+	cb.insertPiece(pawn1);
+	cb.insertPiece(pawn2);
+	cb.insertPiece(rook);
 
 	Piece::TurnMap movemap = cb.possibleMoves(rook);
 	Piece::TurnMap targetmap = {

@@ -14,24 +14,37 @@ using Color = Piece::Color;
 
 Chessboard::Chessboard() {
 	std::for_each(b_board.begin(), b_board.end(), 
-							 [](BoardT& a){ a.fill(nullptr); });
+							 [](BoardT& row){ row.fill(nullptr); });
 }
 
 Piece* Chessboard::insertPiece(Piece* p) {
 	if (p->chessboard())
-		throw piece_belongs_to_board_already(
-			p, "Piece belongs to other chessboard already."
-		);
-	p->setChessboard(this);
+		throw piece_belongs_to_board_already(p);
+
+	King* king = dynamic_cast<King*>(p);
+	if (king) {
+		if (king->color() == Piece::Color::White) {
+			if (!b_whiteKing) {
+				b_whiteKing = king;
+				b_currentKing = king;
+			} else
+				throw duplicate_king(p);
+		} else if (king->color() == Piece::Color::Black) {
+			if (!b_blackKing) {
+				b_blackKing = king;
+				b_currentEnemyKing = king;
+			} else
+				throw duplicate_king(p);
+		}
+	}
 		
 	Piece*& dest = 
 		b_board[p->position().x()-1][p->position().y()-1];
 	if (dest)
-		throw insertion_position_is_taken(
-			p, "Two pieces can't be placed on same tile."
-		);
+		throw position_is_taken(p);
 	dest = p;
 
+	p->setChessboard(this);
 	return p;
 }
 
@@ -40,24 +53,23 @@ inline TurnMap Chessboard::possibleMoves(const Position& p) const {
 };
 
 inline TurnMap Chessboard::possibleMoves(const Piece* p) const {
-	return p->moveMap();
+	Piece::TurnMap map = p->moveMap();
+	markChecks(map);
+	return map;
 };
 
-const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
+const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 	Piece* turnpiece = operator[](from);
 	if (!turnpiece) 
-		throw tile_is_empty(
-			from, to, "Selected tile is empty."
-		);
+		throw tile_is_empty(from, to);
 
 	if (turnpiece->color() != b_currentTurnColor)
-		throw piece_in_wrong_color(
-			turnpiece, to, "Selected piece is in wrong color.");
+		throw piece_in_wrong_color(turnpiece, to);
 
 	TurnMap possible = possibleMoves(from);
 
 	if (possible.empty())
-		throw can_not_move(turnpiece, to, "Selected piece can't move.");
+		throw can_not_move(turnpiece, to);
 
 	TurnMap::iterator turn = find_if(
 		possible.begin(), 
@@ -68,25 +80,39 @@ const Turn& Chessboard::makeTurn(const Position& from, const Position& to) {
 	);
 
 	if (turn == possible.end())
-		throw no_such_move(
-			turnpiece, 
-			to, 
-			"Selected piece can't perform such move."
-		);
+		throw no_such_move(turnpiece, to);
 
 	Turn* t = *turn; 
 
-	b_history.push_back(*t);
+	if (!t->possible())
+		throw king_is_under_check(t->piece(), t->to(), b_currentKing);
+
+	b_history.push_back(t->clone());
 	if (t->capture())
 		b_capturedPieces.push_front(t->capture());
+
 	t->apply();
 
-	if (b_currentTurnColor == Color::White)
+	if (b_currentTurnColor == Color::White) {
 		b_currentTurnColor = Color::Black;
-	else
+	} else {
 		b_currentTurnColor = Color::White;
+	}
 
-	return *t;
+	std::swap(b_currentKing, b_currentEnemyKing);
+
+	return b_history.back();
+}
+
+void Chessboard::markChecks(TurnMap& tm) const {
+	if (!b_currentKing)
+		throw no_king(b_currentTurnColor);
+
+	for (auto& t : tm) {
+		(*t).apply();
+		(*t).setPossible(!b_currentKing->check());
+		(*t).undo();
+	}
 }
 
 Chessboard::PieceTypesRetT Chessboard::getPieceType(
@@ -140,7 +166,7 @@ std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
 			else if (dynamic_cast<const Queen*>(p))
 				letter = 'q';
 			else if (dynamic_cast<const King*>(p))
-				letter = 'k';
+				letter = 'x';
 			else 
 				letter = ((i + j)%2 ? '+' : '#');
 

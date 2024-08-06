@@ -1,4 +1,5 @@
 #include "dchess.hpp"
+#include "testutils.hpp"
 
 #include <iostream>
 
@@ -7,14 +8,18 @@ int main(int argc, char** argv) {
 	using namespace std;
 
 	Chessboard cb;
-	Piece* pawn1 = new Pawn("h4", Piece::Color::Black, &cb);
-	Piece* pawn2 = new Pawn("d7", Piece::Color::Black, &cb);
-	Piece* pawn3 = new Pawn("g7", Piece::Color::Black, &cb);
-	Piece* queen = new Queen("d4", Piece::Color::White, &cb);
+	placeKings(cb);
+	Piece* pawn1 = new Pawn("h4", Piece::Color::Black);
+	Piece* pawn2 = new Pawn("d7", Piece::Color::Black);
+	Piece* pawn3 = new Pawn("g7", Piece::Color::Black);
+	Piece* queen = new Queen("d4", Piece::Color::White);
+	cb.insertPiece(pawn1);
+	cb.insertPiece(pawn2);
+	cb.insertPiece(pawn3);
+	cb.insertPiece(queen);
 
 	Piece::TurnMap movemap = cb.possibleMoves(queen);
 	Piece::TurnMap targetmap = {
-		new Queen::Turn{queen, "a7"},
 		new Queen::Turn{queen, "h4", pawn1},
 		new Queen::Turn{queen, "g4"},
 		new Queen::Turn{queen, "f4"},
@@ -29,7 +34,8 @@ int main(int argc, char** argv) {
 		new Queen::Turn{queen, "d1"},
 		new Queen::Turn{queen, "d2"},
 		new Queen::Turn{queen, "d3"},
-
+		
+		new Queen::Turn{queen, "a7"},
 		new Queen::Turn{queen, "b6"},
 		new Queen::Turn{queen, "c5"},
 

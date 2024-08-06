@@ -17,4 +17,6 @@ void play(Chessboard& cb,
 
 void interactive_play(Chessboard& cb, bool rethrow = false);
 
+void placeKings(Chessboard& cb);
+
 #endif // !_DCHESS_TEST_UTILS_HPP_
