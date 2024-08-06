@@ -3,6 +3,7 @@
 #include "testutils.hpp"
 
 #include <iostream>
+#include <vector>
 
 int main(int argc, char** argv) {
 	using namespace dchess;

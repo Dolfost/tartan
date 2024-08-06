@@ -1,6 +1,8 @@
 #include "dchess.hpp"
 #include "testutils.hpp"
 
+#include <vector>
+
 int main(int argc, char** argv) {
 	using namespace dchess;
 	using  Position = dchess::Piece::Position;

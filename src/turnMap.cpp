@@ -1,5 +1,7 @@
 #include "include/dchess.hpp"
 
+#include <algorithm>
+
 namespace dchess {
 using Turn = Piece::Turn;
 using TurnMap = Piece::TurnMap;
