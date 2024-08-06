@@ -6,6 +6,7 @@
 #include <list>
 #include <ostream>
 #include <typeindex>
+#include <functional>
 
 namespace dchess {
 
