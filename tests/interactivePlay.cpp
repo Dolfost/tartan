@@ -46,9 +46,8 @@ int main(int argc, char** argv) {
 		pieces.push_back(new Pawn({i+1, 7}, Piece::Color::Black));
 	}
 
-	for (auto const& p : pieces) {
+	for (auto const& p : pieces)
 		cb.insertPiece(p);
-	}
 
 	interactive_play(cb);
 

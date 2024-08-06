@@ -34,7 +34,7 @@ void Turn::undo() {
 	if (t_capture)
 		cb[t_capture->position()] = t_capture;
 
-	Piece::MoveHistoryT hist = t_piece->p_moveHistory;
+	Piece::MoveHistoryT& hist = t_piece->p_moveHistory;
 	hist.pop_back();
 	hist.pop_back();
 }

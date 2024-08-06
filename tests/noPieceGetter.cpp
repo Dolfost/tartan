@@ -1,6 +1,7 @@
 #include "dchess.hpp"
 
 #include <iostream>
+#include <stdexcept>
 
 int main(int argc, char** argv) {
 	using namespace std;
@@ -10,10 +11,11 @@ int main(int argc, char** argv) {
 	cb.insertPiece(new Pawn("e7", Piece::Color::White));
 	try {
 		cb.makeTurn("e7", "e8");
-	} catch (logic_error& ex) {
+	} catch (std::runtime_error& ex) {
 		cout << ex.what();
 		return 0;
 	} catch (exception& ex) {
+		cout << ex.what();
 		return 1;
 	}
 

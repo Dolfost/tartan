@@ -1,7 +1,6 @@
 #include "dchess.hpp"
 
 #include "testutils.hpp"
-#include <iostream>
 
 int main(int argc, char** argv) {
 	using namespace dchess;
@@ -24,12 +23,7 @@ int main(int argc, char** argv) {
 		{{'d', 6}, {'e', 5}},
 	};
 	
-	try {
-		play(cb, turns, true);
-	} catch (std::exception& ex) {
-		std::cerr << "Error: " << ex.what();
-		return 1;
-	}
+	play(cb, turns, true);
 
 	return 0;
 }

@@ -114,8 +114,8 @@ public:
 	const Chessboard* chessboard() const { return p_chessboard; };
 	Chessboard* chessboard() { return p_chessboard; };
 	Chessboard* setChessboard(Chessboard*);
-	const MoveHistoryT history() const { return p_moveHistory; };
-	MoveHistoryT history() { return p_moveHistory; };
+	const MoveHistoryT& history() const { return p_moveHistory; };
+	MoveHistoryT& history() { return p_moveHistory; };
 	std::size_t movesMade() const { return p_moveHistory.size(); }
 public:
 	static TurnMap diagonalMoves(const Piece*);

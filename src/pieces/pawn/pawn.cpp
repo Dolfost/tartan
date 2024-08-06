@@ -1,4 +1,5 @@
 #include <dchess.hpp>
+#include <iostream>
 
 namespace dchess {
 using Position = Piece::Position;
@@ -65,14 +66,9 @@ TurnMap Pawn::moveMap() const {
 }
 
 Position Pawn::move(const Position& p) {
-	Position pos = p;
-
-	if (p_color == Color::Black)
-		pos.setOffsetMode(Position::Mode::Reverse);
-
-	if (movesMade() == 0 and std::abs(pos.y()-p_position.y()) == 2)
+	if (movesMade() == 0 and std::abs(p.y()-p_position.y()) == 2)
 		p_enPassant = true;
-	else 
+	else
 		p_enPassant = false;
 	return Piece::move(p);
 }

@@ -42,7 +42,7 @@ void move(Chessboard& cb,
 			cb.makeTurn(from, to);
 		} catch (logic_error& e) {
 			if (rethrow)
-				throw e;
+				throw;
 			cout << e.what() << endl;
 		}
 }
@@ -59,7 +59,7 @@ void play(Chessboard& cb,
 		try {
 			move(cb, t.first, t.second, rethrow);
 		} catch (std::exception& ex) {
-			throw ex;
+				throw;
 		}
 		cout << cb << flush;
 	}
@@ -82,7 +82,7 @@ void interactive_play(Chessboard& cb, bool rethrow) {
 			to = Piece::Position(mv.substr(2, 2));
 		} catch (std::exception& ex) {
 			if (rethrow)
-				throw ex;
+				throw;
 			cerr << "Error: " << ex.what() << endl;
 			continue;
 		}
