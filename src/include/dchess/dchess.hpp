@@ -34,6 +34,9 @@ public:
 		Position(const std::string&);
 		Position(const char* s) : Position(std::string(s)) {};
 	public:
+		Position(const Position&);
+		Position& operator=(const Position&);
+	public:
 		int x() const { return p_x; };
 		int y() const { return p_y; };
 		char letter() const { return p_x + 'a' - 1; };
@@ -57,7 +60,6 @@ public:
 		Position operator-=(const Position&);
 		Position operator()(int, int) const;
 		Position operator()(char, int) const;
-		Position& operator=(const Position&);
 		friend bool operator==(const Position&, const Position&);
 		friend std::ostream& operator<<(
 			std::ostream&, const Position&);
@@ -80,6 +82,7 @@ public:
 		friend bool operator!=(const Turn&, const Turn&);
 		friend std::ostream& operator<<(std::ostream&, const Turn&);
 		virtual auto clone() const -> std::decay<decltype(*this)>::type*;
+		virtual ~Turn() = default;
 	protected:
 		Position t_from;
 		Position t_to;

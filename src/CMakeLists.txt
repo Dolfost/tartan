@@ -31,6 +31,12 @@ target_sources(dchess
 				"./include"
 )
 
+if (NOT MSVC)
+	target_compile_options(dchess PRIVATE
+		-Wall -pedantic-errors -Wextra
+	)
+endif()
+
 configure_file(
 	"include/dchess/version.hpp.in" 
 	"dchess/version.hpp"

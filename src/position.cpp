@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include<stdexcept>
+#include<algorithm>
+
 using std::out_of_range;
 using std::invalid_argument;
 
@@ -105,6 +107,17 @@ Position::Mode Position::setOffsetMode(Position::Mode m) {
 	return r; 
 };
 
+Position::Position(const Position& other) {
+	p_x = other.p_x;
+	p_y = other.p_y;
+}
+
+Position& Position::operator=(const Position& other) {
+	p_x = other.p_x;
+	p_y = other.p_y;
+	return *this;
+}
+
 Position Position::operator+(const Position& p) const {
 	return Position(p_x + p.p_x, p_y + p.p_y);
 }
@@ -138,10 +151,5 @@ std::ostream& operator<<(std::ostream& os, const Position& p) {
 	return os;
 }
 
-Position& Position::operator=(const Position& other) {
-	p_x = other.p_x;
-	p_y = other.p_y;
-	return *this;
-}
 
 }

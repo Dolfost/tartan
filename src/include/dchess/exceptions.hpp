@@ -62,7 +62,8 @@ public:
 class illegal_move : public board_error {
 public:
 	illegal_move(const Piece* p, const Piece::Position& to, 
-							const string& what_arg = "Illegal move.") : e_piece(p), e_to(to), board_error(what_arg) {
+							const string& what_arg = "Illegal move.") : 
+		board_error(what_arg), e_piece(p), e_to(to) {
 	};
 	const Piece* piece() const { return e_piece; };
 	const Piece::Position& to() const { return e_to; };
@@ -78,7 +79,7 @@ public:
 		const Piece::Position& from, 
 		const Piece::Position& to, 
 		const string& what_arg = "Selected tile is empty.") 
-	:	e_from(from), illegal_move(nullptr, to, what_arg) {};
+	:	illegal_move(nullptr, to, what_arg), e_from(from) {};
 	const Piece* piece() = delete;
 	const Piece::Position& from() const { return e_from; };
 private:
