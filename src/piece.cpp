@@ -6,7 +6,6 @@ using Position = Piece::Position;
 Piece::Piece(const Position&  p, const Color& c) { 
 	p_position = p; 
 	p_color = c; 
-	p_moveHistory.push_back(p);
 };
 
 Chessboard* Piece::setChessboard(Chessboard* cb) {
@@ -18,7 +17,7 @@ Chessboard* Piece::setChessboard(Chessboard* cb) {
 Position Piece::move(const Position& p) {
 	Position ret = p_position;
 	p_position = p;
-	p_moveHistory.push_back(p);
+	p_movesMade++;
 	return ret;
 }
 

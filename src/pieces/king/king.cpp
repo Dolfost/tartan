@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <dchess.hpp>
+#include <iostream>
 
 namespace dchess {
 using Position = Piece::Position;
@@ -28,8 +29,9 @@ TurnMap King::moveMap(bool checking) const {
 		map.push_front(new Turn(this, tpos, p_chessboard->at(tpos)));
 	}
 
-	if (!checking and !k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom() and !check()) {
-		bool valid;
+	if (!checking and !k_castled and (movesMade() == 0) and (pos.letter() == 'e') and pos.atBottom() and !check()) {
+		std::cout << "BBB" << std::endl;
+		bool valid = false;
 		Rook* rook;
 		int variants[2] = {1, -1};
 		for (auto v : variants) {			tpos = pos;
@@ -45,7 +47,6 @@ TurnMap King::moveMap(bool checking) const {
 					valid = true;
 					break;
 				} else if (target != nullptr) {
-					valid = false;
 					break;
 				}
 			}
@@ -82,6 +83,13 @@ bool King::check() const {
 				return true;
 		}
 	}
+	return false;
+}
+
+bool King::checkmate() const {
+	if (!check() or !p_chessboard->possibleMoves(this).empty())
+		return false;
+
 	return false;
 }
 

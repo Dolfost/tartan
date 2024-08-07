@@ -100,7 +100,7 @@ public:
 	can_not_move(
 		const Piece* p,
 		const Piece::Position& to, 
-		const string& what_arg = "Selected piece can't move") 
+		const string& what_arg = "Selected piece can't move.") 
 	:	illegal_move(p, to, what_arg) {};
 };
 
@@ -119,8 +119,22 @@ public:
 		const Piece* p,
 		const Piece::Position& to, 
 		const Piece* k,
-		const string& what_arg = "Piece king is under check after move.") 
+		const string& what_arg = "King is under check after move.") 
 	:	illegal_move(p, to, what_arg) { e_king = k; };
+	const Piece* king() const { return e_king; };
+private:
+	const Piece* e_king;
+};
+
+class king_is_under_checkmate : public illegal_move {
+public:
+	king_is_under_checkmate(
+		const Piece* p,
+		const Piece::Position& to, 
+		const Piece* k,
+		const string& what_arg = "King is under checkmate.") 
+	:	illegal_move(p, to, what_arg) { e_king = k; };
+	const Piece* king() const { return e_king; };
 private:
 	const Piece* e_king;
 };

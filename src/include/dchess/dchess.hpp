@@ -102,12 +102,11 @@ public:
 		~TurnMap();
 		friend bool operator==(const TurnMap&, const TurnMap&);
 	};
-	using MoveHistoryT = std::list<Position>;
 protected:
 	Color p_color;
 	Position p_position;
-	MoveHistoryT p_moveHistory;
 	Chessboard* p_chessboard;
+	std::size_t p_movesMade = 0;
 public:
 	Color color() const { return p_color; };
 	Position position() const { return p_position; };
@@ -116,9 +115,7 @@ public:
 	const Chessboard* chessboard() const { return p_chessboard; };
 	Chessboard* chessboard() { return p_chessboard; };
 	Chessboard* setChessboard(Chessboard*);
-	const MoveHistoryT& history() const { return p_moveHistory; };
-	MoveHistoryT& history() { return p_moveHistory; };
-	std::size_t movesMade() const { return p_moveHistory.size(); }
+	std::size_t movesMade() const { return p_movesMade; }
 public:
 	static TurnMap diagonalMoves(const Piece*);
 	static TurnMap straightMoves(const Piece*);
@@ -302,6 +299,7 @@ public:
 		Rook::Turn* k_castlingTurn;
 	};
 	bool check() const;
+	bool checkmate() const;
 	bool castled() const { return k_castled; };
 private:
 	bool k_castled = false;
