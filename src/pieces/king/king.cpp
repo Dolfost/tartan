@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <dchess.hpp>
-#include <iostream>
 
 namespace dchess {
 using Position = Piece::Position;
@@ -9,6 +8,7 @@ using TurnMap = Piece::TurnMap;
 TurnMap King::moveMap(bool checking) const {
 	TurnMap map, m;
 	Position tpos, pos = p_position;
+	Piece* enemy;
 
 	if (p_color == Piece::Color::Black) {
 		pos.setOffsetMode(Position::Mode::Reverse);
@@ -26,11 +26,14 @@ TurnMap King::moveMap(bool checking) const {
 		} catch (std::out_of_range& ex) {
 			continue;
 		}
-		map.push_front(new Turn(this, tpos, p_chessboard->at(tpos)));
+		enemy = p_chessboard->at(tpos);
+		if (enemy and enemy->color() != p_color)
+			map.push_front(new Turn(this, tpos, enemy));
+		else if (!enemy)
+			map.push_front(new Turn(this, tpos));
 	}
 
 	if (!checking and !k_castled and (movesMade() == 0) and (pos.letter() == 'e') and pos.atBottom() and !check()) {
-		std::cout << "BBB" << std::endl;
 		bool valid = false;
 		Rook* rook;
 		int variants[2] = {1, -1};
@@ -87,10 +90,26 @@ bool King::check() const {
 }
 
 bool King::checkmate() const {
-	if (!check() or !p_chessboard->possibleMoves(this).empty())
+	if (!check() or p_chessboard->possibleMoves(this).possible())
 		return false;
 
-	return false;
+	for (auto& row : p_chessboard->board()) {
+		for (auto& p : row) {
+			if (!p or p->color() != p_color or p == this)
+				continue;
+			TurnMap allyTurns = p->moveMap();
+
+			for (auto const& t : allyTurns) {
+				t->apply(true);
+				bool underCheck = check();
+				t->undo();
+				if (!underCheck)
+					return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 }

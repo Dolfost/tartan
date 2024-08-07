@@ -30,6 +30,18 @@ TurnMap& TurnMap::operator=(TurnMap&& t) {
 	t.clear();
 	return *this;
 }
+
+bool TurnMap::possible() const {
+	auto l = static_cast<const std::list<Turn*>&>(*this);
+
+	bool p = false;
+	for (auto const& t: l) {
+		if ((p = t->possible()))
+			break;
+	}
+
+	return p;
+}
 	
 
 bool operator==(const TurnMap& lhs, const TurnMap& rhs) {

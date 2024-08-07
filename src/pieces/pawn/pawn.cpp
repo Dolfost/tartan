@@ -35,6 +35,7 @@ TurnMap Pawn::moveMap(bool) const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
+			enemy_pawn->p_color != p_color and
 			enemy_pawn->enPassant())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
@@ -45,6 +46,7 @@ TurnMap Pawn::moveMap(bool) const {
 		enemy_pawn = 
 			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
+			enemy_pawn->p_color != p_color and
 			enemy_pawn->enPassant())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
@@ -52,12 +54,12 @@ TurnMap Pawn::moveMap(bool) const {
 	// defeat left/right pawn
 	if (!pos.atLeft()) {
 		tpos = pos(-1, 1);
-		if ((enemy = p_chessboard->at(tpos)))
+		if ((enemy = p_chessboard->at(tpos)) and enemy->color() != p_color)
 			map.push_front(new Turn{this, tpos, enemy});
 	}
 	if (!pos.atRight()) {
 		tpos = pos(1, 1);
-		if ((enemy = p_chessboard->at(tpos))) {
+		if ((enemy = p_chessboard->at(tpos)) and enemy->color() != p_color) {
 			map.push_front(new Turn{this, tpos, enemy});
 		}
 	}

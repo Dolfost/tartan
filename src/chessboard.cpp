@@ -14,8 +14,7 @@ using Turn = Piece::Turn;
 using Color = Piece::Color;
 
 Chessboard::Chessboard() {
-	std::for_each(b_board.begin(), b_board.end(), 
-							 [](BoardT& row){ row.fill(nullptr); });
+	fillBoardWithNullptrs();
 }
 
 Piece* Chessboard::insertPiece(Piece* p) {
@@ -85,6 +84,9 @@ const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 
 	Turn* t = *turn; 
 
+	if (b_currentKing->checkmate())
+		throw king_is_under_checkmate(t->piece(), t->to(), b_currentKing);
+
 	if (!t->possible())
 		throw king_is_under_check(t->piece(), t->to(), b_currentKing);
 
@@ -130,6 +132,77 @@ Color Chessboard::setCurrentTurn(Color c) {
 	}
 
 	return ret;
+}
+
+Chessboard::PieceSetT Chessboard::defaultPieceSet() {
+	PieceSetT pieces = {
+		new Bishop("c1", Piece::Color::White),
+		new Bishop("f1", Piece::Color::White),
+		new Bishop("c8", Piece::Color::Black),
+		new Bishop("f8", Piece::Color::Black),
+
+		new Knight("b1", Piece::Color::White),
+		new Knight("g1", Piece::Color::White),
+		new Knight("b8", Piece::Color::Black),
+		new Knight("g8", Piece::Color::Black),
+
+		new Rook("a1", Piece::Color::White),
+		new Rook("h1", Piece::Color::White),
+		new Rook("a8", Piece::Color::Black),
+		new Rook("h8", Piece::Color::Black),
+
+		new Queen("d1", Piece::Color::White),
+		new Queen("d8", Piece::Color::Black),
+
+		new King("e1", Piece::Color::White),
+		new King("e8", Piece::Color::Black),
+	};
+
+	for (int i = 0; i < 8; i++) {
+		pieces.push_back(new Pawn({i+1, 2}, Piece::Color::White));
+		pieces.push_back(new Pawn({i+1, 7}, Piece::Color::Black));
+	}
+
+	return pieces;
+}
+
+void Chessboard::fill(PieceSetT& pieces) {
+	for (auto const& p : pieces) {
+		insertPiece(p);
+	}
+}
+
+void Chessboard::fill() {
+	PieceSetT set = Chessboard::defaultPieceSet();
+	fill(set);
+}
+
+void Chessboard::clear() {
+	for (auto & p : b_board) {
+		std::for_each(p.begin(), p.end(), [](Piece* p){ delete p; });
+	}
+	for (auto& p : b_capturedPieces) {
+		delete p;
+	}
+	b_capturedPieces.clear();
+
+	for (auto& t : b_history) {
+		delete t;
+	}
+	b_history.clear();
+
+	b_currentKing = nullptr;
+	b_currentEnemyKing = nullptr;
+	b_blackKing = nullptr;
+	b_whiteKing = nullptr;
+	b_currentTurnColor = Piece::Color::White;
+
+	fillBoardWithNullptrs();
+}
+
+void Chessboard::fillBoardWithNullptrs() {
+	std::for_each(b_board.begin(), b_board.end(), 
+							 [](BoardT& row){ row.fill(nullptr); });
 }
 
 Chessboard::PieceTypesRetT Chessboard::getPieceType(
@@ -199,13 +272,7 @@ std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
 }
 
 Chessboard::~Chessboard() {
-	for (auto & p : b_board) {
-		std::for_each(p.begin(), p.end(), [](Piece* p){ delete p; });
-	}
-	for (auto& p : b_capturedPieces) {
-		delete p;
-	}
-	
+	clear();
 }
 
 }

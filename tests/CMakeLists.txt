@@ -14,6 +14,7 @@ set(ONEFILE_TESTS
 	checkMove
 	castling
 	castling1
+	scholarsMate
 )
 
 add_library(testutils STATIC

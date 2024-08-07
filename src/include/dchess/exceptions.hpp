@@ -126,17 +126,15 @@ private:
 	const Piece* e_king;
 };
 
-class king_is_under_checkmate : public illegal_move {
+class king_is_under_checkmate : public king_is_under_check {
 public:
 	king_is_under_checkmate(
 		const Piece* p,
 		const Piece::Position& to, 
 		const Piece* k,
 		const string& what_arg = "King is under checkmate.") 
-	:	illegal_move(p, to, what_arg) { e_king = k; };
-	const Piece* king() const { return e_king; };
+	:	king_is_under_check(p, to, k, what_arg) {};
 private:
-	const Piece* e_king;
 };
 
 

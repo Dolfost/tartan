@@ -99,6 +99,7 @@ public:
 		TurnMap(TurnMap&&);
 		TurnMap& operator=(const TurnMap&);
 		TurnMap& operator=(TurnMap&&);
+		bool possible() const;
 		~TurnMap();
 		friend bool operator==(const TurnMap&, const TurnMap&);
 	};
@@ -134,6 +135,7 @@ public:
 	using CapturedT = std::forward_list<const Piece*>;
 	using HistoryT = std::list<const Piece::Turn*>;
 	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
+	using PieceSetT = std::list<Piece*>;
 	using PieceTypesArgT = std::list<std::type_index>;
 	using PieceTypesRetT = std::type_index;
 	using PieceGetterT = std::function<PieceTypesRetT(PieceTypesArgT)>;
@@ -160,6 +162,12 @@ public:
 	const King* currentKing() const {return b_currentKing; };
 	const King* currentEnemyKing() const {return b_currentEnemyKing; };
 
+	void clear();
+	void fill();
+	void fill(PieceSetT&);
+	static PieceSetT defaultPieceSet();
+	void refill() { clear(); fill(); };
+
 	Piece*& operator[](const Piece::Position&);
 	const Piece* operator[](const Piece::Position&) const;
 	Piece*& at(const Piece::Position&);
@@ -172,6 +180,7 @@ public:
 	~Chessboard();
 private:
 	void markChecks(Piece::TurnMap&) const;
+	void fillBoardWithNullptrs();
 private:
 	Piece::Color b_currentTurnColor = Piece::Color::White;
 	BoardTT b_board;

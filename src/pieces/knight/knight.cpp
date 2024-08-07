@@ -26,7 +26,10 @@ TurnMap Knight::moveMap(bool) const {
 			continue;
 		}
 		enemy = p_chessboard->at(tpos);
-		map.push_front(new Turn(this, tpos, enemy));
+		if (enemy and enemy->color() != p_color)
+			map.push_front(new Turn(this, tpos, enemy));
+		else if (!enemy)
+			map.push_front(new Turn(this, tpos));
 	}
 
 	return map;
