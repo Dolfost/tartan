@@ -28,7 +28,7 @@ TurnMap King::moveMap() const {
 		map.push_front(new Turn(this, tpos, p_chessboard->at(tpos)));
 	}
 
-	if (!k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom()) {
+	if (!k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom() and check()) {
 		int variants[2] = {1, -1};
 		for (auto v : variants) {
 			tpos = pos;
@@ -51,7 +51,7 @@ TurnMap King::moveMap() const {
 	return map;
 }
 
-bool King::check() {
+bool King::check() const {
 	for (auto& row : p_chessboard->board()) {
 		for (auto& p : row) {
 			if (!p or p->color() == p_color)

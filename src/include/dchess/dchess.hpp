@@ -301,7 +301,7 @@ public:
 	private:
 		Rook::Turn* k_castlingTurn;
 	};
-	bool check();
+	bool check() const;
 	bool castled() const { return k_castled; };
 private:
 	bool k_castled = false;
