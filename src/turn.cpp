@@ -47,6 +47,18 @@ bool Turn::isEqual(const Turn& rhs) const {
 	(t_possible == rhs.t_possible));
 }
 
+std::string Turn::str() const {
+	std::string str; 
+	if (!t_possible)
+		str.append("X ");
+
+	str.append(t_from.str() + "->" + t_to.str());
+
+	if (t_capture)
+		str.append(" " + t_capture->position().str());
+	return str;
+}
+
 bool operator==(const Turn& lhs, const Turn& rhs) {
 	return lhs.isEqual(rhs);
 }
@@ -55,16 +67,9 @@ bool operator!=(const Turn& lhs, const Turn& rhs) {
 	return !lhs.isEqual(rhs);
 }
 
-std::ostream& operator<<(std::ostream& os, const Turn& t) {
-	os << '['; 
-	if (!t.t_possible)
-		os << "X ";
-	os << t.from() << "->" << t.t_to;
-	if (t.t_capture)
-		os << ' ' << t.t_capture->position();
-	os << ']';
 
-	return os;
+std::ostream& operator<<(std::ostream& os, const Turn& t) {
+	return os << '[' << t.str() << ']';
 }
 
 auto Turn::clone() const -> std::decay<decltype(*this)>::type * {

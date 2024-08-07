@@ -112,6 +112,13 @@ Position::Position(const Position& other) {
 	p_y = other.p_y;
 }
 
+std::string Position::str() const {
+	std::string s;
+	s.push_back(letter());
+	s.append(to_string(digit()));
+	return s;
+}
+
 Position& Position::operator=(const Position& other) {
 	p_x = other.p_x;
 	p_y = other.p_y;
@@ -147,9 +154,7 @@ bool operator==(const Position& lhs, const Position& rhs) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Position& p) {
-	os << p.letter() << p.digit();
-	return os;
+	return os << p.str();
 }
-
 
 }

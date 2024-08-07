@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <ostream>
 #include <iostream>
+#include <sys/wait.h>
 
 namespace dchess {
 using BoardT = Chessboard::BoardT;
@@ -113,6 +114,22 @@ void Chessboard::markChecks(TurnMap& tm) const {
 		(*t).setPossible(!b_currentKing->check());
 		(*t).undo();
 	}
+}
+
+Color Chessboard::setCurrentTurn(Color c) {
+	Color ret = b_currentTurnColor;
+
+	b_currentTurnColor = c;
+
+	if (b_currentTurnColor == Color::White) {
+		b_currentKing = b_whiteKing;
+		b_currentEnemyKing = b_blackKing;
+	} else { 
+		b_currentKing = b_blackKing;
+		b_currentEnemyKing = b_whiteKing;
+	}
+
+	return ret;
 }
 
 Chessboard::PieceTypesRetT Chessboard::getPieceType(

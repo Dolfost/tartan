@@ -54,6 +54,7 @@ public:
 		Mode offsetMode() const { return p_mode; };
 		Mode setOffsetMode (Mode m);
 	public:
+		std::string str() const;
 		Position operator+(const Position&) const;
 		Position operator-(const Position&) const;
 		Position operator+=(const Position&);
@@ -75,6 +76,7 @@ public:
 		Piece* capture() { return t_capture; };
 		bool possible() const { return t_possible; };
 		bool setPossible(bool c) { return !(t_possible = c); };
+		virtual std::string str() const;
 		virtual void apply(bool = false);
 		virtual void undo();
 		virtual bool isEqual(const Turn&) const;
@@ -139,9 +141,10 @@ public:
 	using PieceTypesRetT = std::type_index;
 	using PieceGetterT = std::function<PieceTypesRetT(PieceTypesArgT)>;
 public:
-	Piece::Color currentTurnColor() const {
+	Piece::Color currentTurn() const {
 		return b_currentTurnColor; 
 	};
+	Piece::Color setCurrentTurn(Piece::Color);
 	Piece::TurnMap possibleMoves(const Piece*) const;
 	Piece::TurnMap possibleMoves(const Piece::Position&) const;
 	const Piece::Turn* makeTurn(const Piece::Position&, 
@@ -278,11 +281,30 @@ public:
 	virtual TurnMap moveMap() const override;
 	class Turn : public Piece::Turn {
 	public:
-		using Piece::Turn::Turn;
+		Turn(
+			const Piece* f, 
+			const Position& t, 
+			const Piece* c = nullptr, 
+			Rook::Turn* castling = nullptr,
+			bool p = true
+		) : Piece::Turn(f, t, c, p) { 
+			k_castlingTurn = castling;
+		};
 	public:
 		bool isEqual(const Piece::Turn &) const override;
+		virtual void apply(bool = false) override;
+		virtual void undo() override;
+		virtual std::string str() const override;
+		virtual ~Turn() override {
+			delete k_castlingTurn;
+		}
+	private:
+		Rook::Turn* k_castlingTurn;
 	};
 	bool check();
+	bool castled() const { return k_castled; };
+private:
+	bool k_castled = false;
 public:
 	using Piece::move;
 	virtual ~King() = default;

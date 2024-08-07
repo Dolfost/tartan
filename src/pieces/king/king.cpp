@@ -28,6 +28,26 @@ TurnMap King::moveMap() const {
 		map.push_front(new Turn(this, tpos, p_chessboard->at(tpos)));
 	}
 
+	if (!k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom()) {
+		int variants[2] = {1, -1};
+		for (auto v : variants) {
+			tpos = pos;
+			while (true) {
+				try {
+					tpos = tpos(v, 0);
+				} catch (std::out_of_range& ex) {
+					break;
+				}
+				Piece* target = p_chessboard->at(tpos);
+				Rook* rook = dynamic_cast<Rook*>(target);
+				if (rook and target->movesMade() == 0)
+					map.push_front(new Turn(this, pos(2*v, 0), nullptr, new Rook::Turn(rook, pos(v, 0))));
+				else if (target != nullptr)
+					break;
+			}
+		}
+	}
+
 	return map;
 }
 
