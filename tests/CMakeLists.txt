@@ -13,6 +13,7 @@ set(ONEFILE_TESTS
 	queen
 	checkMove
 	castling
+	castling1
 )
 
 add_library(testutils STATIC

@@ -4,7 +4,7 @@ namespace dchess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap Queen::moveMap() const {
+TurnMap Queen::moveMap(bool) const {
 	TurnMap map, m;
 
 	map = Piece::diagonalMoves(this);

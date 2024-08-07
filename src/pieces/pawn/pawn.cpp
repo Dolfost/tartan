@@ -5,7 +5,7 @@ namespace dchess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap Pawn::moveMap() const {
+TurnMap Pawn::moveMap(bool) const {
 	TurnMap map;
 	Position tpos, pos = p_position;
 	Pawn* enemy_pawn;

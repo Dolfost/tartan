@@ -5,7 +5,7 @@ namespace dchess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap King::moveMap() const {
+TurnMap King::moveMap(bool checking) const {
 	TurnMap map, m;
 	Position tpos, pos = p_position;
 
@@ -28,10 +28,11 @@ TurnMap King::moveMap() const {
 		map.push_front(new Turn(this, tpos, p_chessboard->at(tpos)));
 	}
 
-	if (!k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom() and check()) {
+	if (!checking and !k_castled and movesMade() == 0 and pos.letter() == 'e' and pos.atBottom() and !check()) {
+		bool valid;
+		Rook* rook;
 		int variants[2] = {1, -1};
-		for (auto v : variants) {
-			tpos = pos;
+		for (auto v : variants) {			tpos = pos;
 			while (true) {
 				try {
 					tpos = tpos(v, 0);
@@ -39,11 +40,22 @@ TurnMap King::moveMap() const {
 					break;
 				}
 				Piece* target = p_chessboard->at(tpos);
-				Rook* rook = dynamic_cast<Rook*>(target);
-				if (rook and target->movesMade() == 0)
-					map.push_front(new Turn(this, pos(2*v, 0), nullptr, new Rook::Turn(rook, pos(v, 0))));
-				else if (target != nullptr)
+				rook = dynamic_cast<Rook*>(target);
+				if (rook and rook->movesMade() == 0) {
+					valid = true;
 					break;
+				} else if (target != nullptr) {
+					valid = false;
+					break;
+				}
+			}
+			if (valid) {
+				Turn t(this, pos(v, 0));
+				t.apply();
+				bool c = check();
+				t.undo();
+				if (!c)
+					map.push_front(new Turn(this, pos(2*v, 0), nullptr, new Rook::Turn(rook, pos(v, 0))));
 			}
 		}
 	}
@@ -56,7 +68,7 @@ bool King::check() const {
 		for (auto& p : row) {
 			if (!p or p->color() == p_color)
 				continue;
-			TurnMap enemyTurns = p->moveMap();
+			TurnMap enemyTurns = p->moveMap(dynamic_cast<King*>(p));
 
 			TurnMap::iterator e = std::find_if(
 				enemyTurns.begin(), 

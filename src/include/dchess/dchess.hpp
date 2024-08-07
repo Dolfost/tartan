@@ -112,7 +112,7 @@ public:
 	Color color() const { return p_color; };
 	Position position() const { return p_position; };
 	virtual Position move(const Position&);
-	virtual TurnMap moveMap() const = 0;
+	virtual TurnMap moveMap(bool checking = false) const = 0;
 	const Chessboard* chessboard() const { return p_chessboard; };
 	Chessboard* chessboard() { return p_chessboard; };
 	Chessboard* setChessboard(Chessboard*);
@@ -191,7 +191,7 @@ class Pawn : public Piece {
 public: 
 	Pawn(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
 	class Turn : public Piece::Turn {
@@ -214,7 +214,7 @@ class Knight : public Piece {
 public: 
 	Knight(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -230,7 +230,7 @@ class Bishop : public Piece {
 public: 
 	Bishop(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -246,7 +246,7 @@ class Rook : public Piece {
 public: 
 	Rook(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -262,7 +262,7 @@ class Queen : public Piece {
 public: 
 	Queen(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -278,7 +278,7 @@ class King : public Piece {
 public: 
 	King(const Position& p, const Color& c) :
 		Piece(p, c) {};
-	virtual TurnMap moveMap() const override;
+	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
 		Turn(

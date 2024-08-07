@@ -13,25 +13,25 @@ int main(int argc, char** argv) {
 	Piece* bRook1 = new Rook("a8", Piece::Color::Black);
 	Piece* bRook2 = new Rook("h8", Piece::Color::Black);
 
-	Piece* wBishop = new Bishop("g4", Piece::Color::White);
+	Piece* wRook = new Rook("d3", Piece::Color::White);
 
 	cb.insertPiece(wKing);
 	cb.insertPiece(bKing);
 	cb.insertPiece(bRook1);
 	cb.insertPiece(bRook2);
-	cb.insertPiece(wBishop);
+	cb.insertPiece(wRook);
 
 	cb.setCurrentTurn(Piece::Color::Black);
 
 	Piece::TurnMap movemap = cb.possibleMoves(bKing);
 	Piece::TurnMap targetmap = {
 		new King::Turn{bKing, "g8", nullptr, new Rook::Turn(bRook2, "f8")},
-		new King::Turn{bKing, "c8", nullptr, new Rook::Turn(bRook1, "d8"), false},
+		// new King::Turn{bKing, "c8", nullptr, new Rook::Turn(bRook1, "d8"), false},
 
 		new King::Turn{bKing, "e7"},
 		new King::Turn{bKing, "f7"},
 		new King::Turn{bKing, "f8"},
-		new King::Turn{bKing, "d8"},
+		new King::Turn{bKing, "d8", nullptr, nullptr, false},
 		new King::Turn{bKing, "d7", nullptr, nullptr, false},
 	};
 
