@@ -2,6 +2,7 @@
 #include "dchess/exceptions.hpp"
 
 #include <algorithm>
+#include <ctime>
 #include <ostream>
 #include <iostream>
 #include <sys/wait.h>
@@ -74,7 +75,7 @@ const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 	TurnMap::iterator turn = find_if(
 		possible.begin(), 
 		possible.end(), 
-		[&](Turn*& v) { 
+		[&from, &to](Turn*& v) { 
 			return (v->from() == from and v->to() == to);
 		}
 	);

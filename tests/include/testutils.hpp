@@ -6,6 +6,8 @@ using namespace dchess;
 
 Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT);
 
+Chessboard::PieceTypesRetT getQueen(Chessboard::PieceTypesArgT);
+
 void move(Chessboard& cb,
 								 Piece::Position from,
 								 Piece::Position to,
@@ -13,7 +15,7 @@ void move(Chessboard& cb,
 
 void play(Chessboard& cb, 
 					Chessboard::TurnsT t, 
-					bool rethro = false);
+					bool rethrow = false);
 
 void interactive_play(Chessboard& cb, bool rethrow = false);
 

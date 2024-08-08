@@ -45,12 +45,13 @@ Piece::TurnMap Piece::diagonalMoves(const Piece* p) {
 			std::pair<int, int> of = std::get<2>(v);
 			tpos = tpos.offset(of.first, of.second);
 			enemy = p->p_chessboard->at(tpos);
-			if (enemy and enemy->p_color != p->p_color) {
-				map.push_front(new Turn(p, tpos, enemy));
-				break;
-			}
 			if (!enemy)
 				map.push_front(new Turn(p, tpos));
+			else if (enemy->p_color != p->p_color) {
+				map.push_front(new Turn(p, tpos, enemy));
+				break;
+			} else if (enemy->p_color == p->p_color) 
+				break;
 		}
 	}
 	
@@ -81,12 +82,13 @@ Piece::TurnMap Piece::straightMoves(const Piece* p) {
 			std::pair<int, int> of = std::get<1>(v);
 			tpos = tpos.offset(of.first, of.second);
 			enemy = p->p_chessboard->at(tpos);
-			if (enemy and enemy->p_color != p->p_color) {
-				map.push_front(new Turn(p, tpos, enemy));
-				break;
-			}
 			if (!enemy)
 				map.push_front(new Turn(p, tpos));
+			else if (enemy->p_color != p->p_color) {
+				map.push_front(new Turn(p, tpos, enemy));
+				break;
+			} else if (enemy->p_color == p->p_color) 
+				break;
 		}
 	}
 

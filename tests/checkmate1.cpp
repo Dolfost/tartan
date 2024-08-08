@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 		new Rook("h1", C::White), 
 		new Queen("f6", C::White), 
 		new Bishop("g5", C::White), 
-		new Pawn("e6", C::White), 
+		new Pawn("e5", C::White), 
 
 		new King("e7", C::Black),
 		new Rook("d8", C::Black),

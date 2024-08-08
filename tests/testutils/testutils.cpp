@@ -34,6 +34,10 @@ Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT types) {
 	return type;
 }
 
+Chessboard::PieceTypesRetT getQueen(Chessboard::PieceTypesArgT) {
+	return typeid(Queen);
+}
+
 void move(Chessboard& cb,
 								 Piece::Position from,
 								 Piece::Position to,
@@ -50,7 +54,6 @@ void move(Chessboard& cb,
 void play(Chessboard& cb, 
 					Chessboard::TurnsT t, 
 					bool rethrow) {
-	cb.setPieceGetter(getPiece);
 	int no = 1;
 	cout << "Board:\n" << cb;
 	for (auto& t : t) {
@@ -66,6 +69,8 @@ void play(Chessboard& cb,
 }
 
 void interactive_play(Chessboard& cb, bool rethrow) {
+	cb.setPieceGetter(getPiece);
+
 	string mv;
 	Piece::Position from, to;
 	int no = 0;
