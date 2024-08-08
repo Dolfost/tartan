@@ -51,5 +51,11 @@ int main(int argc, char** argv) {
 
 	interactive_play(cb);
 
+	cout << "Turns:\n";
+	for (auto& x : cb.history()) {
+		cout << "\t{\"" << (*x).from() << "\", \"" << (*x).to() << "\"},\n";
+	}
+	
+
 	return 0;
 }

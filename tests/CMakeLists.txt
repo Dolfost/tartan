@@ -15,6 +15,8 @@ set(ONEFILE_TESTS
 	castling
 	castling1
 	scholarsMate
+	checkmate1
+	checkmate2
 )
 
 add_library(testutils STATIC
