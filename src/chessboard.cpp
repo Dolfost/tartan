@@ -2,7 +2,11 @@
 #include "dchess/exceptions.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <ostream>
+#include <vector>
+#include <cctype>
+#include <initializer_list>
 
 namespace dchess {
 using TurnMap = Piece::TurnMap;
@@ -12,6 +16,126 @@ using Color = Piece::Color;
 
 Chessboard::Chessboard() {
 	fillBoardWithNullptrs();
+}
+
+Chessboard::Chessboard(PieceSetT& s) : Chessboard() {
+	fill(s);
+}
+
+Chessboard::Chessboard(const std::string& str) : Chessboard() {
+	PieceSetT s = set(str);
+	fill(s);
+}
+
+
+Chessboard::Chessboard(std::initializer_list<const std::string> l) : Chessboard() {
+	PieceSetT s = set(l.begin(), l.end());
+	fill(s);
+}
+
+template<class Iterator>
+Chessboard::PieceSetT Chessboard::set(Iterator begin, Iterator end) {
+	PieceSetT pieces;
+	try {
+		while (begin != end) {
+			pieces.push_back(piece(*begin));
+			++begin;
+		}
+	} catch (invalid_piece_spec& ex) {
+		std::for_each(pieces.begin(), pieces.end(), 
+								[](Piece* p) { delete p; });
+		std::throw_with_nested(can_not_produce_set());
+	}
+
+	return pieces;
+}
+
+
+Chessboard::PieceSetT Chessboard::set(const std::string& str) {
+	std::size_t start = 0, end = 0;
+
+	std::vector<std::string> tokens;
+
+	while ((start = str.find(' ', end)) != std::string::npos) {
+		std::string token;
+		token = str.substr(end, start - end);
+
+		if (token.length() == 0) {
+			end++;
+			continue;
+		}
+
+		tokens.push_back(std::move(token));
+		end = start + 1;
+	}
+	tokens.push_back(str.substr(end));
+
+	if (tokens.back().length() == 0)
+		tokens.pop_back();
+
+	return set(tokens.begin(), tokens.end());
+}
+
+Piece* Chessboard::piece(const std::string& spec) {
+	if (spec.size() > 3)
+		throw invalid_piece_spec(spec, "Specification is too long");
+	if (spec.size() < 3)
+		throw invalid_piece_spec(spec, "Specification is too short");
+
+
+	char p = spec[0];
+	Piece::Color color;
+	if (!isalpha(p))
+		throw invalid_piece_spec(spec, "Specified piece type is unknown");
+
+	if (isupper(p))
+		color = Piece::Color::White;
+	else
+		color = Piece::Color::Black;
+
+	Position position;
+	try {
+		position = spec.substr(1, 2);
+	} catch (std::out_of_range& ex) {
+		std::throw_with_nested(invalid_piece_spec(
+			spec, "Specified position is out of range"
+		));
+	}
+	
+	Piece* newPiece;
+	switch (tolower(p)) {
+		case 'p': {
+			newPiece = new Pawn;
+			break;
+		}
+		case 'b': {
+			newPiece = new Bishop;
+			break;
+		}
+		case 'k': {
+			newPiece = new Knight;
+			break;
+		}
+		case 'r': {
+			newPiece = new Rook;
+			break;
+		}
+		case 'q': {
+			newPiece = new Queen;
+			break;
+		}
+		case 'x': {
+			newPiece = new King;
+			break;
+		}
+		default:
+			throw invalid_piece_spec(spec, "Specified piece type is unknown");
+	}
+
+	newPiece->setColor(color);
+	newPiece->setPosition(position);
+
+	return newPiece;
 }
 
 Piece* Chessboard::insertPiece(Piece* p) {
@@ -163,7 +287,7 @@ Chessboard::PieceSetT Chessboard::defaultPieceSet() {
 }
 
 void Chessboard::fill(PieceSetT& pieces) {
-	for (auto const& p : pieces) {
+	for (auto const p : pieces) {
 		insertPiece(p);
 	}
 }
@@ -267,6 +391,35 @@ std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
 	}
 	os << "  └" << line << "┘\n" << letters;
 	return os;
+}
+
+bool operator==(const Chessboard& lhs, const Chessboard& rhs) {
+	BoardT::const_iterator lRow = lhs.begin();
+	BoardT::const_iterator rRow = rhs.begin();
+	while (lRow != lhs.end() and rRow != rhs.end()) {
+		auto lPiece = lRow->begin();
+		auto rPiece = rRow->begin();
+		for ( ; lPiece != lRow->end() and rPiece != rRow->end(); lPiece++, rPiece++) {
+			if (*lPiece == *rPiece)
+				continue;
+			else if (dynamic_cast<Pawn*>(*lPiece) and dynamic_cast<Pawn*>(*rPiece))
+					continue;
+			else if (dynamic_cast<Bishop*>(*lPiece) and dynamic_cast<Bishop*>(*rPiece))
+					continue;
+			else if (dynamic_cast<Knight*>(*lPiece) and dynamic_cast<Knight*>(*rPiece))
+					continue;
+			else if (dynamic_cast<Rook*>(*lPiece) and dynamic_cast<Rook*>(*rPiece))
+					continue;
+			else if (dynamic_cast<Queen*>(*lPiece) and dynamic_cast<Queen*>(*rPiece))
+					continue;
+			else if (dynamic_cast<King*>(*lPiece) and dynamic_cast<King*>(*rPiece))
+					continue;
+			else
+					return false;
+		}
+		lRow++, rRow++;
+	}
+	return true;
 }
 
 Chessboard::~Chessboard() {

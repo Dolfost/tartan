@@ -22,13 +22,24 @@ int main(int argc, char** argv) {
 		{"e5", "d4"},
 	};
 
+
+	Chessboard target = Chessboard(
+		"ra8 kb8 bc8 qd8 xe8 bf8 kg8 rh8 "
+		"pa7 pb7 pc7 pd7 pf7 pg7 ph7 "
+		"Pd5 pe5 "
+		"Pa2 Pb2 Pc2 Pe2 Pf2 Pg2 Ph2 "
+		"Ra1 Kb1 Bc1 Qd1 Xe1 Bf1 Kg1 Rh1 "
+	);
+
+
 	try {
 		play(cb, turns, true);
 	} catch (illegal_move& ex) {
-		cout << "msg: " << ex.what();
-		return 0;
+		std::cerr << "OK ";
+		print_exception(ex);
 	}
 
+	cout << "target board: \n" << target;
 
-	return 1;
+	return !(cb == target);
 }

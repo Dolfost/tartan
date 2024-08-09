@@ -41,6 +41,17 @@ int main(int argc, char** argv) {
 		{"e2", "f1"},
 	};
 
+	Chessboard target = {
+		"ra8", "kb8", "bc8", "xe8", "bf8", "kg8", "rh8",
+		"pb7", "qe7", "pf7", "pg7",
+		"pa6", "Pd6", "Bh6",
+		"Kb5", "pe5",
+		"Pd4",
+		"Pc3", "Ph3",
+		"Pa2", "qb2", "Pf2", "Pg2",
+		"Ra1", "Qd1", "Xe1", "Bf1", "Kg1", "Rh1"
+	};
+
 	try {
 		play(cb, turns, true);
 	} catch (exception& ex) {
@@ -48,5 +59,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	return 0;
+	cout << "target board:\n" << target;
+
+	return !(target == cb);
 }

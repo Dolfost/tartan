@@ -7,6 +7,7 @@
 #include <ostream>
 #include <typeindex>
 #include <functional>
+#include <initializer_list>
 
 namespace dchess {
 
@@ -106,7 +107,7 @@ public:
 protected:
 	Color p_color;
 	Position p_position;
-	Chessboard* p_chessboard;
+	Chessboard* p_chessboard = nullptr;
 	std::size_t p_movesMade = 0;
 	std::size_t p_turnIndex = 0;
 public:
@@ -135,8 +136,6 @@ class King;
 class Chessboard : private BoardT {
 	friend class Piece::Turn;
 public:
-	Chessboard();
-public:
 	using CapturedT = std::forward_list<const Piece*>;
 	using HistoryT = std::list<const Piece::Turn*>;
 	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
@@ -144,6 +143,11 @@ public:
 	using PieceTypesArgT = std::list<std::type_index>;
 	using PieceTypesRetT = std::type_index;
 	using PieceGetterT = std::function<PieceTypesRetT(PieceTypesArgT)>;
+public:
+	Chessboard();
+	Chessboard(const std::string&);
+	Chessboard(std::initializer_list<const std::string>);
+	Chessboard(PieceSetT&);
 public:
 	Piece::Color currentTurn() const {
 		return b_currentTurnColor; 
@@ -175,6 +179,7 @@ public:
 	static PieceSetT defaultPieceSet();
 	void refill() { clear(); fill(); };
 
+	friend bool operator==(const Chessboard&, const Chessboard&);
 	Piece*& operator[](const Piece::Position&);
 	const Piece* operator[](const Piece::Position&) const;
 	Piece*& at(const Piece::Position&);
@@ -187,6 +192,11 @@ public:
 	const PieceGetterT& pieceGetter() const  { return b_pieceGetter; };
 	friend std::ostream& operator<<(std::ostream&, const Chessboard&);
 	~Chessboard();
+public:
+	static PieceSetT set(const std::string&);
+	template<class Iterator>
+	static PieceSetT set(Iterator, Iterator);
+	static Piece* piece(const std::string&);
 private:
 	void markChecks(Piece::TurnMap&) const;
 	void fillBoardWithNullptrs();
@@ -204,8 +214,7 @@ private:
 
 class Pawn : public Piece {
 public: 
-	Pawn(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	virtual ~Pawn() = default;
 	class Turn : public Piece::Turn {
@@ -222,8 +231,7 @@ public:
 
 class Knight : public Piece {
 public: 
-	Knight(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
@@ -238,8 +246,7 @@ public:
 
 class Bishop : public Piece {
 public: 
-	Bishop(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
@@ -254,8 +261,7 @@ public:
 
 class Rook : public Piece {
 public: 
-	Rook(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
@@ -270,8 +276,7 @@ public:
 
 class Queen : public Piece {
 public: 
-	Queen(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:
@@ -286,8 +291,7 @@ public:
 
 class King : public Piece {
 public: 
-	King(const Position& p, const Color& c) :
-		Piece(p, c) {};
+	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
 	class Turn : public Piece::Turn {
 	public:

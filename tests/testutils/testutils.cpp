@@ -104,3 +104,13 @@ void placeKings(Chessboard& cb) {
 	cb.insertPiece(new King("e8", Piece::Color::Black));
 }
 
+void print_exception(const std::exception& e, int level) {
+	if (level == 0)
+		std::cerr << std::endl;
+	std::cerr << std::string(level, ' ') << "exception: " << e.what() << '\n';
+	try {
+		std::rethrow_if_nested(e);
+	} catch(const std::exception& e) {
+		print_exception(e, level+1);
+	} catch(...) {}
+}
