@@ -3,7 +3,7 @@
 namespace dchess {
 using Position = Piece::Position;
 
-Piece::Piece(const Position&  p, const Color& c) { 
+Piece::Piece(const Position&  p, Color c) { 
 	p_position = p; 
 	p_color = c; 
 };
@@ -16,8 +16,26 @@ Chessboard* Piece::setChessboard(Chessboard* cb) {
 
 Position Piece::move(const Position& p) {
 	Position ret = p_position;
-	p_position = p;
+
 	p_movesMade++;
+	p_turnIndex = p_chessboard->turnIndex();
+
+	p_chessboard->at(p_position) = nullptr;
+	p_chessboard->at(p) = this;
+
+	p_position = p;
+	return ret;
+}
+
+Position Piece::setPosition(const Position& p) {
+	Position ret = p_position;
+	p_position = p;
+	return ret;
+}
+
+Piece::Color Piece::setColor(Color c) {
+	Color ret = p_color;
+	p_color = c;
 	return ret;
 }
 

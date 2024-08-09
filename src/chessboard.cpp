@@ -2,13 +2,9 @@
 #include "dchess/exceptions.hpp"
 
 #include <algorithm>
-#include <ctime>
 #include <ostream>
-#include <iostream>
-#include <sys/wait.h>
 
 namespace dchess {
-using BoardT = Chessboard::BoardT;
 using TurnMap = Piece::TurnMap;
 using Position = Piece::Position;
 using Turn = Piece::Turn;
@@ -39,8 +35,7 @@ Piece* Chessboard::insertPiece(Piece* p) {
 		}
 	}
 		
-	Piece*& dest = 
-		b_board[p->position().x()-1][p->position().y()-1];
+	Piece*& dest = at(p->position());
 	if (dest)
 		throw position_is_taken(p);
 	dest = p;
@@ -179,7 +174,7 @@ void Chessboard::fill() {
 }
 
 void Chessboard::clear() {
-	for (auto & p : b_board) {
+	for (auto & p : board()) {
 		std::for_each(p.begin(), p.end(), [](Piece* p){ delete p; });
 	}
 	for (auto& p : b_capturedPieces) {
@@ -197,13 +192,15 @@ void Chessboard::clear() {
 	b_blackKing = nullptr;
 	b_whiteKing = nullptr;
 	b_currentTurnColor = Piece::Color::White;
+	b_turnIndex = 0;
 
 	fillBoardWithNullptrs();
 }
 
 void Chessboard::fillBoardWithNullptrs() {
-	std::for_each(b_board.begin(), b_board.end(), 
-							 [](BoardT& row){ row.fill(nullptr); });
+	for (auto& row : board()) {
+		row.fill(nullptr);
+	}
 }
 
 Chessboard::PieceTypesRetT Chessboard::getPieceType(
@@ -219,11 +216,11 @@ Chessboard::PieceTypesRetT Chessboard::getPieceType(
 
 
 const Piece* Chessboard::operator[](const Position& p) const { 
-	return b_board[p.x()-1][p.y()-1]; 
+	return board()[p.x()-1][p.y()-1]; 
 }
 
 Piece*& Chessboard::operator[](const Position& p) { 
-	return b_board[p.x()-1][p.y()-1]; 
+	return board()[p.x()-1][p.y()-1]; 
 }
 
 Piece*& Chessboard::at(const Position& p) {

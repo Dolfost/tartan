@@ -16,20 +16,19 @@ Turn::Turn(const Piece* p, const Position& t, const Piece* c, bool u) {
 
 void Turn::apply(bool) {
 	Chessboard& cb = *t_piece->p_chessboard;
+	cb.b_turnIndex++;
+	
 	if (t_capture)
 		cb[t_capture->position()] = nullptr;
 
-	cb[t_from] = nullptr;
-	cb[t_to] = t_piece;
 	t_piece->move(t_to);
 }
 
 void Turn::undo() {
 	Chessboard& cb = *t_piece->p_chessboard;
+	cb.b_turnIndex--;
 
 	t_piece->move(t_from);
-	cb[t_to] = nullptr;
-	cb[t_from] = t_piece;
 
 	if (t_capture)
 		cb[t_capture->position()] = t_capture;

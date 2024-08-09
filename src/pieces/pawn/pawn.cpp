@@ -1,5 +1,4 @@
 #include <dchess.hpp>
-#include <iostream>
 
 namespace dchess {
 using Position = Piece::Position;
@@ -36,7 +35,8 @@ TurnMap Pawn::moveMap(bool) const {
 			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
 			enemy_pawn->p_color != p_color and
-			enemy_pawn->enPassant())
+			enemy_pawn->movesMade() == 1 and
+			enemy_pawn->turnIndex() == p_chessboard->turnIndex())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
 
@@ -47,7 +47,8 @@ TurnMap Pawn::moveMap(bool) const {
 			dynamic_cast<Pawn*>(p_chessboard->at(tpos));
 		if (enemy_pawn and 
 			enemy_pawn->p_color != p_color and
-			enemy_pawn->enPassant())
+			enemy_pawn->movesMade() == 1 and
+			enemy_pawn->turnIndex() == p_chessboard->turnIndex())
 			map.push_front(new Turn{this, tpos(0, 1), enemy_pawn});
 	}
 
@@ -65,14 +66,6 @@ TurnMap Pawn::moveMap(bool) const {
 	}
 
 	return map;
-}
-
-Position Pawn::move(const Position& p) {
-	if (movesMade() == 0 and std::abs(p.y()-p_position.y()) == 2)
-		p_enPassant = true;
-	else
-		p_enPassant = false;
-	return Piece::move(p);
 }
 
 }

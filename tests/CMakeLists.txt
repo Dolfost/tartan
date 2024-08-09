@@ -18,6 +18,7 @@ set(ONEFILE_TESTS
 	checkmate1
 	checkmate2
 	check1
+	noEnPassant
 )
 
 add_library(testutils STATIC

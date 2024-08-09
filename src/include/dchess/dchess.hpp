@@ -108,30 +108,35 @@ protected:
 	Position p_position;
 	Chessboard* p_chessboard;
 	std::size_t p_movesMade = 0;
+	std::size_t p_turnIndex = 0;
 public:
 	Color color() const { return p_color; };
-	Position position() const { return p_position; };
+	Color setColor(Color);
+	const Position& position() const { return p_position; };
+	Position& position() { return p_position; };
+	Position setPosition(const Position&);
 	virtual Position move(const Position&);
 	virtual TurnMap moveMap(bool checking = false) const = 0;
 	const Chessboard* chessboard() const { return p_chessboard; };
 	Chessboard* chessboard() { return p_chessboard; };
 	Chessboard* setChessboard(Chessboard*);
 	std::size_t movesMade() const { return p_movesMade; }
+	std::size_t turnIndex() const { return p_turnIndex; }
 public:
 	static TurnMap diagonalMoves(const Piece*);
 	static TurnMap straightMoves(const Piece*);
 public:
-	Piece(const Position&, const Color&);
+	Piece(const Position& = {1,1}, Color = Color::White);
 	virtual ~Piece() = default;
 };
 
+using BoardT = std::array<std::array<Piece*, 8>, 8>;
 class King;
-class Chessboard {
+class Chessboard : private BoardT {
+	friend class Piece::Turn;
 public:
 	Chessboard();
 public:
-	using BoardT = std::array<Piece*, 8>;
-	using BoardTT = std::array<std::array<Piece*, 8>, 8>;
 	using CapturedT = std::forward_list<const Piece*>;
 	using HistoryT = std::list<const Piece::Turn*>;
 	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
@@ -148,9 +153,8 @@ public:
 	Piece::TurnMap possibleMoves(const Piece::Position&) const;
 	const Piece::Turn* makeTurn(const Piece::Position&, 
 														 const Piece::Position&);
-	Piece* insertPiece(Piece*);
-	const BoardTT& board() const { return b_board; };
-	BoardTT& board() { return b_board; };
+	const BoardT& board() const { return static_cast<const BoardT&>(*this); };
+	BoardT& board() { return static_cast<BoardT&>(*this); };
 	HistoryT& history() { return b_history; };
 	const HistoryT& history() const { return b_history; };
 	std::size_t movesMade() const { return b_history.size(); }
@@ -161,7 +165,10 @@ public:
 	King* currentKing() { return b_currentKing; };
 	const King* currentKing() const {return b_currentKing; };
 	const King* currentEnemyKing() const {return b_currentEnemyKing; };
+	King* currentEnemyKing() {return b_currentEnemyKing; };
+	std::size_t turnIndex() const { return b_turnIndex; };
 
+	Piece* insertPiece(Piece*);
 	void clear();
 	void fill();
 	void fill(PieceSetT&);
@@ -172,6 +179,8 @@ public:
 	const Piece* operator[](const Piece::Position&) const;
 	Piece*& at(const Piece::Position&);
 	const Piece* at(const Piece::Position&) const;
+	using BoardT::iterator;
+	using BoardT::const_iterator;
 	void setPieceGetter(PieceGetterT g) { b_pieceGetter = g; };
 	PieceGetterT& pieceGetter() { return b_pieceGetter; };
 	PieceTypesRetT getPieceType(PieceTypesArgT);
@@ -183,7 +192,6 @@ private:
 	void fillBoardWithNullptrs();
 private:
 	Piece::Color b_currentTurnColor = Piece::Color::White;
-	BoardTT b_board;
 	CapturedT b_capturedPieces;
 	HistoryT b_history;
 	PieceGetterT b_pieceGetter;
@@ -191,6 +199,7 @@ private:
 	King* b_blackKing = nullptr;
 	King* b_currentKing = nullptr;
 	King* b_currentEnemyKing = nullptr;
+	std::size_t b_turnIndex = 0;
 };
 
 class Pawn : public Piece {
@@ -198,7 +207,6 @@ public:
 	Pawn(const Position& p, const Color& c) :
 		Piece(p, c) {};
 	virtual TurnMap moveMap(bool) const override;
-	virtual Position move(const Position&) override;
 	virtual ~Pawn() = default;
 	class Turn : public Piece::Turn {
 	public:
@@ -210,10 +218,6 @@ public:
 		virtual void apply(bool = false) override;
 		const std::type_index& promoteTo() const { return t_promoteTo; };
 	};
-private:
-	bool p_enPassant = false;
-public:
-	bool enPassant() const { return p_enPassant; };
 };
 
 class Knight : public Piece {
