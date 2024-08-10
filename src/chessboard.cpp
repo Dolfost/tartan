@@ -33,6 +33,11 @@ Chessboard::Chessboard(std::initializer_list<const std::string> l) : Chessboard(
 }
 
 template<class Iterator>
+Chessboard::Chessboard(Iterator begin, Iterator end) : Chessboard() {
+	fill(set(begin, end));
+}
+
+template<class Iterator>
 Chessboard::PieceSetT Chessboard::set(Iterator begin, Iterator end) {
 	PieceSetT pieces;
 	try {
@@ -289,6 +294,11 @@ void Chessboard::fill(PieceSetT& pieces) {
 	for (auto const p : pieces) {
 		insertPiece(p);
 	}
+}
+
+template<class Iterator>
+void Chessboard::fill(Iterator begin, Iterator end) {
+	fill(set(begin, end));
 }
 
 void Chessboard::fill() {

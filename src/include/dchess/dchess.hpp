@@ -148,6 +148,8 @@ public:
 	Chessboard(const std::string&);
 	Chessboard(std::initializer_list<const std::string>);
 	Chessboard(PieceSetT&);
+	template<class Iterator>
+	Chessboard(Iterator, Iterator);
 public:
 	Piece::Color currentTurn() const {
 		return b_currentTurnColor; 
@@ -177,6 +179,8 @@ public:
 	void fill();
 	void fill(PieceSetT&);
 	void fill(const std::string&);
+	template<class Iterator>
+	static void fill(Iterator, Iterator);
 	static PieceSetT defaultPieceSet();
 	void refill() { clear(); fill(); };
 
