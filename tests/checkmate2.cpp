@@ -52,14 +52,26 @@ int main(int argc, char** argv) {
 		{"a8", "b8"},
 	};
 
+	Chessboard target(
+		"ra8 bc8 kd8 qe8 bf8 rh8 "
+		"pb7 pc7 pd7 xe7 ph7 "
+		"pa6 pe6 Bf6 "
+		"Pa5 Pc5 Pe5 Bh5 "
+		"pd4 "
+		"pg3 Ph3 "
+		"Pb2 Pf2 Pg2 "
+		" Ra1 Kb1 Xe1 Kg1 Rh1"
+	);
+
 	try {
 		play(cb, turns, true);
 	} catch (king_is_under_checkmate& ex) {
-		cout << endl << "Checkmate: " << ex.what();
+		cout << endl << "OK: " << ex.what();
 	} catch (exception& ex) {
 		cout << endl << "Error: " << ex.what();
-		return 1;
 	}
 
-	return 0;
+	cout << "target: \n" << target;
+
+	return target != cb;
 }

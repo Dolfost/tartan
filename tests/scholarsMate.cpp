@@ -12,6 +12,16 @@ int main(int argc, char** argv) {
 
 	Chessboard cb;
 	cb.fill();
+
+	Chessboard target(
+		"ra8 bc8 qd8 xe8 bf8 rh8 "
+		"pa7 pb7 pc7 pd7 Qf7 pg7 ph7 "
+		"kc6 kf6 "
+		"pe5 "
+		"pe4 Bc4 "
+		"Pa2 Pb2 Pc2 Pd2 Pf2 Pg2 Ph2 "
+		"Ra1 Kb1 Bc1 Xe1 Kg1 Rh1"
+	);
 	
 	std::list<std::pair<Position, Position>> turns = {
 		{"e2", "e4"},
@@ -27,11 +37,11 @@ int main(int argc, char** argv) {
 	try {
 		play(cb, turns, true);
 	} catch (king_is_under_checkmate& ex) {
-		cout << endl << "Checkmate: " << ex.what();
+		cout << endl << "OK: " << ex.what();
 	} catch (exception& ex) {
 		cout << endl << "Error: " << ex.what();
 		return 1;
 	}
 
-	return 0;
+	return target != cb;
 }

@@ -23,8 +23,7 @@ Chessboard::Chessboard(PieceSetT& s) : Chessboard() {
 }
 
 Chessboard::Chessboard(const std::string& str) : Chessboard() {
-	PieceSetT s = set(str);
-	fill(s);
+	fill(str);
 }
 
 
@@ -297,6 +296,11 @@ void Chessboard::fill() {
 	fill(set);
 }
 
+void Chessboard::fill(const std::string& str) {
+	PieceSetT set = Chessboard::set(str);
+	fill(set);
+}
+
 void Chessboard::clear() {
 	for (auto & p : board()) {
 		std::for_each(p.begin(), p.end(), [](Piece* p){ delete p; });
@@ -391,6 +395,10 @@ std::ostream& operator<<(std::ostream& os, const Chessboard& cb) {
 	}
 	os << "  └" << line << "┘\n" << letters;
 	return os;
+}
+
+bool operator!=(const Chessboard& lhs, const Chessboard& rhs) {
+	return !(lhs == rhs);
 }
 
 bool operator==(const Chessboard& lhs, const Chessboard& rhs) {

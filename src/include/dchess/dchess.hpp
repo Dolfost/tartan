@@ -167,19 +167,21 @@ public:
 	const King* blackKing() const { return b_blackKing; };
 	King* blackKing() { return b_blackKing; };
 	King* currentKing() { return b_currentKing; };
-	const King* currentKing() const {return b_currentKing; };
-	const King* currentEnemyKing() const {return b_currentEnemyKing; };
-	King* currentEnemyKing() {return b_currentEnemyKing; };
+	const King* currentKing() const { return b_currentKing; };
+	const King* currentEnemyKing() const { return b_currentEnemyKing; };
+	King* currentEnemyKing() { return b_currentEnemyKing; };
 	std::size_t turnIndex() const { return b_turnIndex; };
 
 	Piece* insertPiece(Piece*);
 	void clear();
 	void fill();
 	void fill(PieceSetT&);
+	void fill(const std::string&);
 	static PieceSetT defaultPieceSet();
 	void refill() { clear(); fill(); };
 
 	friend bool operator==(const Chessboard&, const Chessboard&);
+	friend bool operator!=(const Chessboard&, const Chessboard&);
 	Piece*& operator[](const Piece::Position&);
 	const Piece* operator[](const Piece::Position&) const;
 	Piece*& at(const Piece::Position&);

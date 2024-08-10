@@ -1,6 +1,8 @@
 #include "dchess.hpp"
 #include "testutils.hpp"
 
+#include <iostream>
+#include <exception>
 #include <vector>
 
 int main(int argc, char** argv) {
@@ -17,6 +19,15 @@ int main(int argc, char** argv) {
 		cb.insertPiece(white[i]);
 		cb.insertPiece(black[i]);
 	}
+
+	Chessboard target(
+		"xe8 pa7 pc7 pf7 ph7 "
+		"pd6 pg6 "
+		"Pg5 "
+		"pa3 "
+		"Pb2 Pd2 Pe2 Pf2 Ph2 "
+		"Xe1"
+	);
 	
 	std::list<std::pair<Position, Position>> turns = {
 		{{'c', 2}, {'c', 4}},
@@ -35,7 +46,13 @@ int main(int argc, char** argv) {
 		{{'b', 4}, {'a', 3}},
 	};
 
-	play(cb, turns, true);
+	try {
+		play(cb, turns, true);
+	} catch(exception& ex) {
+		cerr << "ERROR: " << ex.what();
+	}
 
-	return 0;
+	cout << "target: \n" << target;
+
+	return target != cb;
 }

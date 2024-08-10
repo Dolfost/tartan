@@ -41,5 +41,5 @@ int main(int argc, char** argv) {
 
 	cout << "target board: \n" << target;
 
-	return !(cb == target);
+	return cb != target;
 }

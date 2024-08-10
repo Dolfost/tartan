@@ -61,5 +61,5 @@ int main(int argc, char** argv) {
 
 	cout << "target board:\n" << target;
 
-	return !(target == cb);
+	return target != cb;
 }
