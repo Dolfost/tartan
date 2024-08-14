@@ -1,13 +1,14 @@
-#include "dchess.hpp"
-#include "testutils.hpp"
+#include <tartan/chess.hpp>
+#include <testutils.hpp>
 
 #include <iostream>
 #include <exception>
 #include <vector>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
-	using  Position = dchess::Piece::Position;
+	using namespace tt;
+	using namespace tt::chess;
+	using  Position = tt::Piece::Position;
 	using namespace std;
 
 	Chessboard cb;
@@ -20,7 +21,8 @@ int main(int argc, char** argv) {
 		cb.insertPiece(black[i]);
 	}
 
-	Chessboard target(
+	Chessboard target;
+	target.fill(
 		"xe8 pa7 pc7 pf7 ph7 "
 		"pd6 pg6 "
 		"Pg5 "

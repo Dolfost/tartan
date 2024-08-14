@@ -1,19 +1,20 @@
-#include "dchess.hpp"
-#include "dchess/exceptions.hpp"
+#include <tartan/chess.hpp>
+#include <tartan/chess/exceptions.hpp>
 
-#include "testutils.hpp"
+#include <testutils.hpp>
 
 #include <iostream>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
-	using  Position = dchess::Piece::Position;
+	using namespace tt::chess;
+	using  Position = tt::Piece::Position;
 	using namespace std;
 
 	Chessboard cb;
 	cb.fill();
 
-	Chessboard target(
+	Chessboard target;
+	target.fill(
 		"ra8 bc8 qd8 xe8 bf8 rh8 "
 		"pa7 pb7 pc7 pd7 Qf7 pg7 ph7 "
 		"kc6 kf6 "

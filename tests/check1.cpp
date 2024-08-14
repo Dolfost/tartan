@@ -1,13 +1,14 @@
-#include "dchess.hpp"
+#include <tartan/chess.hpp>
 
 #include "testutils.hpp"
 
 #include <iostream>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
-	using C = dchess::Piece::Color;
-	using Position = dchess::Piece::Position;
+	using namespace tt;
+	using namespace tt::chess;
+	using C = tt::Piece::Color;
+	using Position = tt::Piece::Position;
 	using namespace std;
 
 	Chessboard cb;
@@ -41,7 +42,8 @@ int main(int argc, char** argv) {
 		{"e2", "f1"},
 	};
 
-	Chessboard target = {
+	Chessboard target;
+	target.fill({
 		"ra8", "kb8", "bc8", "xe8", "bf8", "kg8", "rh8",
 		"pb7", "qe7", "pf7", "pg7",
 		"pa6", "Pd6", "Bh6",
@@ -50,7 +52,7 @@ int main(int argc, char** argv) {
 		"Pc3", "Ph3",
 		"Pa2", "qb2", "Pf2", "Pg2",
 		"Ra1", "Qd1", "Xe1", "Bf1", "Kg1", "Rh1"
-	};
+	});
 
 	try {
 		play(cb, turns, true);

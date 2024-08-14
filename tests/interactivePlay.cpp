@@ -1,12 +1,13 @@
-#include "dchess.hpp"
-#include "dchess/version.hpp"
+#include <tartan/chess.hpp>
+#include <tartan/version.hpp>
 #include "testutils.hpp"
 
 #include <iostream>
 #include <vector>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
+	using namespace tt;
+	using namespace tt::chess;
 	using namespace std;
 	
 	cerr << "dchess v" 

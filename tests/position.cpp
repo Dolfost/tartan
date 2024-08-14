@@ -1,10 +1,10 @@
-#include "dchess.hpp"
+#include <tartan/board.hpp>
 
 #include <iostream>
 #include <list>
 
 int main(int argc, char** argv) {
-	using Position = dchess::Piece::Position;
+	using Position = tt::Piece::Position;
 	using namespace std;
 
 	std::list<bool> result = {

@@ -1,10 +1,11 @@
-#include "dchess.hpp"
-#include "testutils.hpp"
+#include <tartan/chess.hpp>
+#include <testutils.hpp>
 
 #include <iostream>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
+	using namespace tt;
+	using namespace tt::chess;
 	using namespace std;
 
 	Chessboard cb;

@@ -1,15 +1,15 @@
-#include "dchess.hpp"
-#include "dchess/exceptions.hpp"
+#include <tartan/chess.hpp>
+#include <tartan/chess/exceptions.hpp>
 
 #include "testutils.hpp"
 
 #include <iostream>
-#include <string>
 
 int main(int argc, char** argv) {
-	using namespace dchess;
-	using C = dchess::Piece::Color;
-	using  Position = dchess::Piece::Position;
+	using namespace tt;
+	using namespace tt::chess;
+	using C = tt::Piece::Color;
+	using  Position = tt::Piece::Position;
 	using namespace std;
 
 	Chessboard cb;
@@ -21,7 +21,8 @@ int main(int argc, char** argv) {
 	cb.fill(init);
 	cb.setCurrentTurn(C::Black);
 
-	Chessboard target(init);
+	Chessboard target;
+	target.fill(init);
 	
 	std::list<std::pair<Position, Position>> turns = {
 		{"c7", "c6"},

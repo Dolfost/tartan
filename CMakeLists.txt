@@ -6,7 +6,7 @@ list(APPEND CMAKE_MODULE_PATH
 
 include(version)
 
-project(dchess
+project(tartan
 	LANGUAGES CXX
 	VERSION ${GIT_VERSION_TAG}
 )

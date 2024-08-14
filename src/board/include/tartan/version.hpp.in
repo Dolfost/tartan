@@ -1,0 +1,30 @@
+#ifndef _TARTAN_VERSION_HPP_
+#define _TARTAN_VERSION_HPP_
+
+#include<string>
+
+namespace tt {
+
+	inline std::string version() { 
+		return "@tartan_VERSION@";
+	}
+
+	inline int versionMajor() { 
+		return @tartan_VERSION_MAJOR@ + 0;
+	}
+
+	inline int versionMinor() { 
+		return @tartan_VERSION_MINOR@ + 0;
+	}
+
+	inline int versionPatch() { 
+		return @tartan_VERSION_PATCH@ + 0;
+	}
+
+	inline int versionTweak() { 
+		return @tartan_VERSION_TWEAK@ + 0;
+	}
+
+}
+
+#endif // !_TARTAN_VERSION_HPP_

@@ -1,10 +1,10 @@
-#include "../include/testutils.hpp"
+#include "include/testutils.hpp"
 
 #include <iostream>
 
 using namespace std;
 
-Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT types) {
+tt::chess::Chessboard::PieceTypesRetT getPiece(tt::chess::Chessboard::PieceTypesArgT types) {
 	char piece; 
 	type_index type = typeid(nullptr);
 
@@ -14,19 +14,19 @@ Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT types) {
 		piece = tolower(piece);
 		switch (piece) {
 			case 'p':
-				type = typeid(Pawn);
+				type = typeid(tt::chess::Pawn);
 				break;
 			case 'k':
-				type = typeid(Knight);
+				type = typeid(tt::chess::Knight);
 				break;
 			case 'b':
-				type = typeid(Bishop);
+				type = typeid(tt::chess::Bishop);
 				break;
 			case 'r':
-				type = typeid(Rook);
+				type = typeid(tt::chess::Rook);
 				break;
 			case 'q':
-				type = typeid(Queen);
+				type = typeid(tt::chess::Queen);
 				break;
 		}
 	} while(type == typeid(nullptr));
@@ -34,13 +34,13 @@ Chessboard::PieceTypesRetT getPiece(Chessboard::PieceTypesArgT types) {
 	return type;
 }
 
-Chessboard::PieceTypesRetT getQueen(Chessboard::PieceTypesArgT) {
-	return typeid(Queen);
+tt::chess::Chessboard::PieceTypesRetT getQueen(tt::chess::Chessboard::PieceTypesArgT) {
+	return typeid(tt::chess::Queen);
 }
 
-void move(Chessboard& cb,
-								 Piece::Position from,
-								 Piece::Position to,
+void move(tt::chess::Chessboard& cb,
+								 tt::Piece::Position from,
+								 tt::Piece::Position to,
 								 bool rethrow) {
 		try {
 			cb.makeTurn(from, to);
@@ -51,8 +51,8 @@ void move(Chessboard& cb,
 		}
 }
 
-void play(Chessboard& cb, 
-					Chessboard::TurnsT t, 
+void play(tt::chess::Chessboard& cb, 
+					tt::chess::Chessboard::TurnsT t, 
 					bool rethrow) {
 	int no = 1;
 	cout << "Board:\n" << cb;
@@ -68,11 +68,11 @@ void play(Chessboard& cb,
 	}
 }
 
-void interactive_play(Chessboard& cb, bool rethrow) {
+void interactive_play(tt::chess::Chessboard& cb, bool rethrow) {
 	cb.setPieceGetter(getPiece);
 
 	string mv;
-	Piece::Position from, to;
+	tt::Piece::Position from, to;
 	int no = 0;
 	cout << "Board:\n" << cb;
 	while (cout << "Enter move: " and cin >> mv) {
@@ -83,8 +83,8 @@ void interactive_play(Chessboard& cb, bool rethrow) {
 			continue;
 		}
 		try {
-			from = Piece::Position(mv.substr(0, 2));
-			to = Piece::Position(mv.substr(2, 2));
+			from = tt::Piece::Position(mv.substr(0, 2));
+			to = tt::Piece::Position(mv.substr(2, 2));
 		} catch (std::exception& ex) {
 			if (rethrow)
 				throw;
@@ -99,9 +99,9 @@ void interactive_play(Chessboard& cb, bool rethrow) {
 	cin.clear();
 }
 
-void placeKings(Chessboard& cb) {
-	cb.insertPiece(new King("e1", Piece::Color::White));
-	cb.insertPiece(new King("e8", Piece::Color::Black));
+void placeKings(tt::chess::Chessboard& cb) {
+	cb.insertPiece(new tt::chess::King("e1", tt::Piece::Color::White));
+	cb.insertPiece(new tt::chess::King("e8", tt::Piece::Color::Black));
 }
 
 void print_exception(const std::exception& e, int level) {
