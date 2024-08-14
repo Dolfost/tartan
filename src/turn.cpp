@@ -70,7 +70,7 @@ std::ostream& operator<<(std::ostream& os, const Turn& t) {
 }
 
 auto Turn::clone() const -> std::decay<decltype(*this)>::type * {
-    return new std::decay<decltype(*this)>::type(*this);
+	return new std::decay<decltype(*this)>::type(*this);
 }
 
 }

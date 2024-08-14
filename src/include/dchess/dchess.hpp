@@ -150,6 +150,11 @@ public:
 	Chessboard(PieceSetT&);
 	template<class Iterator>
 	Chessboard(Iterator, Iterator);
+
+	Chessboard(Chessboard&&) = default;
+	Chessboard& operator=(Chessboard&&) = default;
+	Chessboard(const Chessboard&) = delete;
+	Chessboard& operator=(const Chessboard&) = delete;
 public:
 	Piece::Color currentTurn() const {
 		return b_currentTurnColor; 
@@ -222,7 +227,6 @@ class Pawn : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(bool) const override;
-	virtual ~Pawn() = default;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -245,9 +249,6 @@ public:
 	public:
 		bool isEqual(const Piece::Turn &) const override;
 	};
-public:
-	using Piece::move;
-	virtual ~Knight() = default;
 };
 
 class Bishop : public Piece {
@@ -260,9 +261,6 @@ public:
 	public:
 		bool isEqual(const Piece::Turn &) const override;
 	};
-public:
-	using Piece::move;
-	virtual ~Bishop() = default;
 };
 
 class Rook : public Piece {
@@ -275,9 +273,6 @@ public:
 	public:
 		bool isEqual(const Piece::Turn &) const override;
 	};
-public:
-	using Piece::move;
-	virtual ~Rook() = default;
 };
 
 class Queen : public Piece {
@@ -290,9 +285,6 @@ public:
 	public:
 		bool isEqual(const Piece::Turn &) const override;
 	};
-public:
-	using Piece::move;
-	virtual ~Queen() = default;
 };
 
 class King : public Piece {
@@ -326,9 +318,6 @@ public:
 	bool castled() const { return k_castled; };
 private:
 	bool k_castled = false;
-public:
-	using Piece::move;
-	virtual ~King() = default;
 };
 
 }
