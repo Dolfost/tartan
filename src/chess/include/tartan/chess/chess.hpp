@@ -29,6 +29,10 @@ public:
 	const King* currentEnemyKing() const { return c_currentEnemyKing; };
 	King* currentEnemyKing() { return c_currentEnemyKing; };
 	PieceSetT defaultPieceSet() const override;
+	enum Mode : int { 
+		DefaultMode = 0,
+		CheckingMode = 1,
+	};
 protected:
 	King* c_whiteKing = nullptr;
 	King* c_blackKing = nullptr;
@@ -41,7 +45,7 @@ private:
 class Pawn : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -49,7 +53,7 @@ public:
 		std::type_index t_promoteTo = typeid(nullptr);
 	public:
 		bool isEqual(const Piece::Turn &) const override;
-		virtual void apply(bool = false) override;
+		virtual void apply(int mode = 0) override;
 		const std::type_index& promoteTo() const { return t_promoteTo; };
 	};
 };
@@ -57,7 +61,7 @@ public:
 class Knight : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int mode = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -69,7 +73,7 @@ public:
 class Bishop : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int mode = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -81,7 +85,7 @@ public:
 class Rook : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int mode = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -93,7 +97,7 @@ public:
 class Queen : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int mode = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -105,7 +109,7 @@ public:
 class King : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(bool) const override;
+	virtual TurnMap moveMap(int mode = 0) const override;
 	class Turn : public Piece::Turn {
 	public:
 		Turn(
@@ -119,7 +123,7 @@ public:
 		};
 	public:
 		bool isEqual(const Piece::Turn &) const override;
-		virtual void apply(bool = false) override;
+		virtual void apply(int mode = 0) override;
 		virtual void undo() override;
 		virtual std::string str() const override;
 		virtual ~Turn() override {

@@ -4,7 +4,7 @@ namespace tt::chess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap Pawn::moveMap(bool) const {
+TurnMap Pawn::moveMap(int) const {
 	TurnMap map;
 	Position tpos, pos = p_position;
 	Pawn* enemy_pawn;

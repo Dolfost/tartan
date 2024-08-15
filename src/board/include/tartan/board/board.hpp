@@ -78,7 +78,7 @@ public:
 		bool possible() const { return t_possible; };
 		bool setPossible(bool c) { return !(t_possible = c); };
 		virtual std::string str() const;
-		virtual void apply(bool = false);
+		virtual void apply(int mode = 0);
 		virtual void undo();
 		virtual bool isEqual(const Turn&) const;
 		friend bool operator==(const Turn&, const Turn&);
@@ -117,7 +117,7 @@ public:
 	Position& position() { return p_position; };
 	Position setPosition(const Position&);
 	virtual Position move(const Position&);
-	virtual TurnMap moveMap(bool checking = false) const = 0;
+	virtual TurnMap moveMap(int mode = 0) const = 0;
 	const Board* chessboard() const { return p_board; };
 	Board* chessboard() { return p_board; };
 	Board* setChessboard(Board*);

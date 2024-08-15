@@ -4,7 +4,7 @@
 namespace tt::chess {
 using Turn = Pawn::Turn;
 
-void Turn::apply(bool checking) {
+void Turn::apply(int mode) {
 	Piece::Turn::apply();
 
 	Position pos = t_to;
@@ -12,7 +12,7 @@ void Turn::apply(bool checking) {
 		pos.setOffsetMode(Position::Mode::Reverse);
 
 	t_promoteTo = typeid(nullptr);
-	if (pos.atTop() and !checking) {
+	if (pos.atTop() and mode != Chessboard::CheckingMode) {
 		Board* cb = t_piece->chessboard();
 		t_promoteTo = cb->getPieceType({
 			typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)

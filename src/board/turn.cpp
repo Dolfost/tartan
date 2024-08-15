@@ -14,7 +14,7 @@ Turn::Turn(const Piece* p, const Position& t, const Piece* c, bool u) {
 	t_possible = u;
 }
 
-void Turn::apply(bool) {
+void Turn::apply(int) {
 	Board& cb = *t_piece->p_board;
 	cb.b_turnIndex++;
 	

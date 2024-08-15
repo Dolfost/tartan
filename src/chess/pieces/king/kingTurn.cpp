@@ -20,7 +20,7 @@ bool Turn::isEqual(const Piece::Turn& rhs) const {
 	return Piece::Turn::isEqual(rhs) and castling;
 }
 
-void Turn::apply(bool) {
+void Turn::apply(int) {
 	Piece::Turn::apply();
 
 	if (k_castlingTurn) {

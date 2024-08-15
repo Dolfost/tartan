@@ -6,7 +6,7 @@ namespace tt::chess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap King::moveMap(bool checking) const {
+TurnMap King::moveMap(int mode) const {
 	TurnMap map, m;
 	Position tpos, pos = p_position;
 	Piece* enemy;
@@ -34,7 +34,10 @@ TurnMap King::moveMap(bool checking) const {
 			map.push_front(new Turn(this, tpos));
 	}
 
-	if (!checking and !k_castled and (movesMade() == 0) and (pos.letter() == 'e') and pos.atBottom() and !check()) {
+	if (mode != Chessboard::CheckingMode and 
+		!k_castled and (movesMade() == 0) and 
+		(pos.letter() == 'e') and 
+		pos.atBottom() and !check()) {
 		bool valid = false;
 		Rook* rook;
 		int variants[2] = {1, -1};
@@ -73,7 +76,11 @@ bool King::check() const {
 		for (auto& p : row) {
 			if (!p or p->color() == p_color)
 				continue;
-			TurnMap enemyTurns = p->moveMap(dynamic_cast<King*>(p));
+			TurnMap enemyTurns = p->moveMap(
+				dynamic_cast<King*>(p) ? 
+				Chessboard::CheckingMode : 
+				Chessboard::DefaultMode
+			);
 
 			TurnMap::iterator e = std::find_if(
 				enemyTurns.begin(), 

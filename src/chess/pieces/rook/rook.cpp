@@ -4,7 +4,7 @@ namespace tt::chess {
 using Position = Piece::Position;
 using TurnMap = Piece::TurnMap;
 
-TurnMap Rook::moveMap(bool) const {
+TurnMap Rook::moveMap(int) const {
 	return Piece::straightMoves(this);
 }
 
