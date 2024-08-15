@@ -101,7 +101,7 @@ bool Position::atBottom() const {
 		return p_y == 8;
 }
 
-Position::Mode Position::setOffsetMode(Position::Mode m) { 
+Position::Mode Position::setMode(Position::Mode m) { 
 	Position::Mode r = p_mode; 
 	p_mode = m; 
 	return r; 

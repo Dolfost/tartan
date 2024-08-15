@@ -11,8 +11,8 @@ TurnMap Pawn::moveMap(int) const {
 	Piece* enemy;
 
 	if (p_color == Piece::Color::Black) {
-		pos.setOffsetMode(Position::Mode::Reverse);
-		tpos.setOffsetMode(Position::Mode::Reverse);
+		pos.setMode(Position::Mode::Reverse);
+		tpos.setMode(Position::Mode::Reverse);
 	}
 
 	tpos = pos(0, 1);

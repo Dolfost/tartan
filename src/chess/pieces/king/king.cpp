@@ -12,8 +12,8 @@ TurnMap King::moveMap(int mode) const {
 	Piece* enemy;
 
 	if (p_color == Piece::Color::Black) {
-		pos.setOffsetMode(Position::Mode::Reverse);
-		tpos.setOffsetMode(Position::Mode::Reverse);
+		pos.setMode(Position::Mode::Reverse);
+		tpos.setMode(Position::Mode::Reverse);
 	}
 
 	std::pair<int, int> ofs[8] = {

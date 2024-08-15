@@ -13,56 +13,283 @@ namespace tt {
 
 class Board;
 
+/**
+ * @brief Describes generic board memeber piece API.
+ *
+ * This class should be inherited and used as
+ * a way to describe chess piece in every board derived
+ * from Board class.
+ */
 class Piece {
 public:
+	/**
+	 * @brief Piece color.
+	 *
+	 * @sa setColor(), color()
+	 */
 	enum class Color {
 		Black = 0, White = 1,
 	};
+	/**
+	 * @class Position
+	 * @brief Describes Piece position at the Board.
+	 */
 	class Position {
 	public:
+		/**
+		 * @brief Boolean functions operation mode.
+		 *
+		 * Describes location of the coordinates origin.
+		 * @sa atTop(), atLeft(), atRight(), atBottom(),
+		 * offset()
+		 */
 		enum class Mode {
-			Normal = 1,
-			Reverse = -1,
+			Normal = 1, ///< Place origin at the a1
+			Reverse = -1, ///< Place origin at the h8
 		};
 	private:
 		short p_x = 1;
 		short p_y = 1;
 		Mode p_mode = Mode::Normal;
 	public:
-		Position() = default;
-		Position(int, int);
-		Position(char, int);
-		Position(const std::string&);
-		Position(const char* s) : Position(std::string(s)) {};
+		Position() = default; ///< Create Position object at a1
+		/**
+		 * @brief Create Position object with coordinates `x` `y`
+		 *
+		 * @param x x coordinate
+		 * @param y y coordinate
+		 * @exception std::out_of_range
+		 */
+		Position(int x, int y);
+		/**
+		 * @brief Create Position object with coordinates `ld` (eq. `b3`) 
+		 *
+		 * @param l letter x coordinate
+		 * @param d digit y coordinate
+		 * @exception std::out_of_range
+		 */
+		Position(char l, int d);
+		/**
+		 * @brief Creates Position object at `str` position
+		 *
+		 * @param str 2-character letter-digit string representation of position
+		 * @exception std::out_of_range
+		 */
+		Position(const std::string& str);
+		/**
+		 * @copydoc Position(const std::string&)
+		 */
+		Position(const char* str) : Position(std::string(str)) {};
 	public:
+		/**
+		 * @brief Copy constructor
+		 *
+		 * @note Copying does not copy the current mode.
+		 */
 		Position(const Position&);
+		/**
+		 * @brief Copy assignment operator
+		 * @copydetails Position(const Position&)
+		 * @return a new object with same coordinates.
+		 */
 		Position& operator=(const Position&);
 	public:
+		/**
+		 * @brief x coordinate
+		 * @return x coordinate
+		 */
 		int x() const { return p_x; };
+		/**
+		 * @brief y coordinate
+		 * @return y coordinate
+		 */
 		int y() const { return p_y; };
+		/**
+		 * @brief Letter representation of x coordinate
+		 *
+		 * @return x coordinate in letter representation
+		 * @sa x()
+		 */
 		char letter() const { return p_x + 'a' - 1; };
+		/**
+		 * @brief Digit representation of y coordinate
+		 *
+		 * @return y coordinate in digit representation
+		 * @sa y()
+		 */
 		int digit() const { return p_y; };
-		int setX(int);
-		int setY(int);
+		/**
+		 * @brief Set x coordinate
+		 *
+		 * @param x new value
+		 * @return old value
+		 */
+		int setX(int x);
+		/**
+		 * @brief Set y coordinate
+		 *
+		 * @param y new value
+		 * @return old value
+		 * @exception std::out_of_range
+		 */
+		int setY(int y);
+		/**
+		 * @brief Set x coordinate with string representation
+		 *
+		 * @param x x coordinate represented as string
+		 * @return old value
+		 * @exception std::out_of_range
+		 */
 		char setLetter(char x) { return setX(x-'a'+1) + 'a'-1; };
+		/**
+		 * @copydoc setY(int)
+		 * @exception std::out_of_range
+		 * @sa setY(int)
+		 */
 		int setDigit(short y) { return setY(y); };
-		Position offset(int, int) const;
-		Position offset(char, int) const;
+		/**
+		 * @name Position manipulation
+		 * Set of functions that provide boolean operations on the Position object
+		 * conditionally depending on it's mode() value.
+		 * @{
+		 */
+		/**
+		 * @brief Offset current position
+		 *
+		 * Returns new position at (x±dx, y±dy). Operation sign
+		 * depends on current mode().
+		 *
+		 * @param dx x coordinate incrementation
+		 * @param dy y coordinate incrementation
+		 * @return new Position object at (x±dx, y±dy).
+		 * @exception std::out_of_range
+		 * @sa mode().
+		 */
+		Position offset(int dx, int dy) const;
+		/**
+		 * @copybrief offset(int, int) const
+		 *
+		 * Works as offset(int dx, int dy) but with 
+		 * character-digit representation
+		 *
+		 * @param dc x coordinate incrementation represented as string
+		 * @param dd y coordinate incrementation
+		 * @return new Position object at (x±dx, y±dy).
+		 * @exception std::out_of_range
+		 * @sa offsetMode().
+		 */
+		Position offset(char dc, int dd) const;
+		/**
+		 * @brief Check if the position are at left border
+		 *
+		 * @note This function behaivor is influenced by current mode() value.
+		 *
+		 * @return `true` if position is at left border
+		 * `false` otherwise
+		 * @sa setMode().
+		 */
 		bool atLeft() const;
+		/**
+		 * @brief Check if the position are at right border
+		 *
+		 * @copydetails atLeft()
+		 *
+		 * @return `true` if position is at right border
+		 * `false` otherwise
+		 * @sa mode().
+		 */
 		bool atRight() const;
+		/**
+		 * @brief Check if the position are at top border
+		 *
+		 * @copydetails atLeft()
+		 *
+		 * @return `true` if position is at top border
+		 * `false` otherwise
+		 * @sa mode().
+		 */
 		bool atTop() const;
+		/**
+		 * @brief Check if the position are at bottom border
+		 *
+		 * @copydetails atLeft()
+		 *
+		 * @return `true` if position is at bottom border, 
+		 * `false` otherwise
+		 * @sa mode().
+		 */
 		bool atBottom() const;
-		Mode offsetMode() const { return p_mode; };
-		Mode setOffsetMode (Mode m);
+		/**
+		 * @brief Current mode
+		 *
+		 * @return current mode
+		 * @sa setMode(), Mode
+		 */
+		Mode mode() const { return p_mode; };
+		/**
+		 * @brief Set offset mode
+		 *
+		 * @note Depending on the mode() value, functions from 
+		 * @ref posmanip group behave differently.
+		 *
+		 * @param m new offset mode value
+		 * @return old offset mode value
+		 */
+		Mode setMode (Mode m);
+		/** @} */
 	public:
+		/**
+		 * @brief String position representation.
+		 * @return string representation of current position
+		 */
 		std::string str() const;
+		/**
+		 * @brief Addition operator
+		 *
+		 * @return new object with sum of corresponding 
+		 * coordinates of argument objects
+		 * @exception std::out_of_range
+		 */
 		Position operator+(const Position&) const;
+		/**
+		 * @brief Substraction operator
+		 *
+		 * @return new object with difference of corresponding 
+		 * coordinates of argument objects
+		 * @exception std::out_of_range
+		 */
 		Position operator-(const Position&) const;
+		/**
+		 * @copydoc operator+(const Position&) cosnt
+		 */
 		Position operator+=(const Position&);
+		/**
+		 * @copydoc operator-(const Position&) cosnt
+		 */
 		Position operator-=(const Position&);
+		/**
+		 * @copydoc offset(int, int) cosnt
+		 */
 		Position operator()(int, int) const;
+		/**
+		 * @copydoc offset(char, int) cosnt
+		 */
 		Position operator()(char, int) const;
+		/**
+		 * @brief Comparison operator
+		 *
+		 * @return `true` if corresponding coordinates 
+		 * of both objects are equal
+		 */
 		friend bool operator==(const Position&, const Position&);
+		/**
+		 * @brief std::ostream output operator
+		 *
+		 * Puts string representation of position to 
+		 * std::ostream.
+		 * @return called std::ostream object
+		 * @sa str()
+		 */
 		friend std::ostream& operator<<(
 			std::ostream&, const Position&);
 	};
@@ -174,7 +401,7 @@ public:
 	virtual Piece* insertPiece(Piece*);
 	virtual void clear();
 	void fill();
-	void fill(PieceSetT&);
+	void fill(PieceSetT& set);
 	void fill(const std::string&);
 	template<class Iterator>
 	void fill(Iterator, Iterator);

@@ -12,6 +12,7 @@ project(tartan
 )
 
 add_subdirectory(src)
+add_subdirectory(doc)
 
 if (PROJECT_IS_TOP_LEVEL)
 	enable_testing()

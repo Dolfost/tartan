@@ -9,7 +9,7 @@ void Turn::apply(int mode) {
 
 	Position pos = t_to;
 	if (t_piece->color() == Color::Black)
-		pos.setOffsetMode(Position::Mode::Reverse);
+		pos.setMode(Position::Mode::Reverse);
 
 	t_promoteTo = typeid(nullptr);
 	if (pos.atTop() and mode != Chessboard::CheckingMode) {
