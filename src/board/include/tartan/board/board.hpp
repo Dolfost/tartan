@@ -107,7 +107,7 @@ public:
 protected:
 	Color p_color;
 	Position p_position;
-	Board* p_chessboard = nullptr;
+	Board* p_board = nullptr;
 	std::size_t p_movesMade = 0;
 	std::size_t p_turnIndex = 0;
 public:
@@ -118,8 +118,8 @@ public:
 	Position setPosition(const Position&);
 	virtual Position move(const Position&);
 	virtual TurnMap moveMap(bool checking = false) const = 0;
-	const Board* chessboard() const { return p_chessboard; };
-	Board* chessboard() { return p_chessboard; };
+	const Board* chessboard() const { return p_board; };
+	Board* chessboard() { return p_board; };
 	Board* setChessboard(Board*);
 	std::size_t movesMade() const { return p_movesMade; }
 	std::size_t turnIndex() const { return p_turnIndex; }

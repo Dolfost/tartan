@@ -76,15 +76,15 @@ Piece* Chessboard::insertPiece(Piece* p) {
 	King* king = dynamic_cast<King*>(p);
 	if (king) {
 		if (king->color() == Piece::Color::White) {
-			if (!b_whiteKing) {
-				b_whiteKing = king;
-				b_currentKing = king;
+			if (!c_whiteKing) {
+				c_whiteKing = king;
+				c_currentKing = king;
 			} else
 				throw duplicate_king(p);
 		} else if (king->color() == Piece::Color::Black) {
-			if (!b_blackKing) {
-				b_blackKing = king;
-				b_currentEnemyKing = king;
+			if (!c_blackKing) {
+				c_blackKing = king;
+				c_currentEnemyKing = king;
 			} else
 				throw duplicate_king(p);
 		}
@@ -103,22 +103,22 @@ const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 	Turn* selected;
 	TurnMap map = Board::produceTurn(from, to, &selected);
 
-	if (b_currentKing->checkmate())
-		throw king_is_under_checkmate(selected->piece(), selected->to(), b_currentKing);
+	if (c_currentKing->checkmate())
+		throw king_is_under_checkmate(selected->piece(), selected->to(), c_currentKing);
 
 	if (!selected->possible())
-		throw king_is_under_check(selected->piece(), selected->to(), b_currentKing);
+		throw king_is_under_check(selected->piece(), selected->to(), c_currentKing);
 
 	return applyTurn(selected);
 }
 
 void Chessboard::markChecks(TurnMap& tm) const {
-	if (!b_currentKing)
+	if (!c_currentKing)
 		throw no_king(b_currentTurnColor);
 
 	for (auto& t : tm) {
 		(*t).apply(true);
-		(*t).setPossible(!b_currentKing->check());
+		(*t).setPossible(!c_currentKing->check());
 		(*t).undo();
 	}
 }
@@ -127,11 +127,11 @@ Piece::Color Chessboard::setCurrentTurn(Piece::Color c) {
 	Piece::Color ret = Board::setCurrentTurn(c);
 
 	if (b_currentTurnColor == Color::White) {
-		b_currentKing = b_whiteKing;
-		b_currentEnemyKing = b_blackKing;
+		c_currentKing = c_whiteKing;
+		c_currentEnemyKing = c_blackKing;
 	} else { 
-		b_currentKing = b_blackKing;
-		b_currentEnemyKing = b_whiteKing;
+		c_currentKing = c_blackKing;
+		c_currentEnemyKing = c_whiteKing;
 	}
 
 	return ret;
@@ -139,10 +139,10 @@ Piece::Color Chessboard::setCurrentTurn(Piece::Color c) {
 
 void Chessboard::clear() {
 	Board::clear();
-	b_currentKing = nullptr;
-	b_currentEnemyKing = nullptr;
-	b_blackKing = nullptr;
-	b_whiteKing = nullptr;
+	c_currentKing = nullptr;
+	c_currentEnemyKing = nullptr;
+	c_blackKing = nullptr;
+	c_whiteKing = nullptr;
 }
 
 Board::PieceSetT Chessboard::defaultPieceSet() const {

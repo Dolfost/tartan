@@ -27,7 +27,7 @@ TurnMap King::moveMap(bool checking) const {
 		} catch (std::out_of_range& ex) {
 			continue;
 		}
-		enemy = p_chessboard->at(tpos);
+		enemy = p_board->at(tpos);
 		if (enemy and enemy->color() != p_color)
 			map.push_front(new Turn(this, tpos, enemy));
 		else if (!enemy)
@@ -45,7 +45,7 @@ TurnMap King::moveMap(bool checking) const {
 				} catch (std::out_of_range& ex) {
 					break;
 				}
-				Piece* target = p_chessboard->at(tpos);
+				Piece* target = p_board->at(tpos);
 				rook = dynamic_cast<Rook*>(target);
 				if (rook and rook->movesMade() == 0) {
 					valid = true;
@@ -69,7 +69,7 @@ TurnMap King::moveMap(bool checking) const {
 }
 
 bool King::check() const {
-	for (auto& row : p_chessboard->board()) {
+	for (auto& row : p_board->board()) {
 		for (auto& p : row) {
 			if (!p or p->color() == p_color)
 				continue;
@@ -91,10 +91,10 @@ bool King::check() const {
 }
 
 bool King::checkmate() const {
-	if (!check() or p_chessboard->possibleMoves(this).possible())
+	if (!check() or p_board->possibleMoves(this).possible())
 		return false;
 
-	for (auto& row : p_chessboard->board()) {
+	for (auto& row : p_board->board()) {
 		for (auto& p : row) {
 			if (!p or p->color() != p_color or p == this)
 				continue;

@@ -15,7 +15,7 @@ Turn::Turn(const Piece* p, const Position& t, const Piece* c, bool u) {
 }
 
 void Turn::apply(bool) {
-	Board& cb = *t_piece->p_chessboard;
+	Board& cb = *t_piece->p_board;
 	cb.b_turnIndex++;
 	
 	if (t_capture)
@@ -25,7 +25,7 @@ void Turn::apply(bool) {
 }
 
 void Turn::undo() {
-	Board& cb = *t_piece->p_chessboard;
+	Board& cb = *t_piece->p_board;
 	cb.b_turnIndex--;
 
 	t_piece->move(t_from);

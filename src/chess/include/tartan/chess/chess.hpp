@@ -20,20 +20,20 @@ public:
 	virtual Piece::TurnMap possibleMoves(const Piece*) const override;
 	using Board::possibleMoves;
 
-	const King* whiteKing() const { return b_whiteKing; };
-	King* whiteKing() { return b_whiteKing; };
-	const King* blackKing() const { return b_blackKing; };
-	King* blackKing() { return b_blackKing; };
-	King* currentKing() { return b_currentKing; };
-	const King* currentKing() const { return b_currentKing; };
-	const King* currentEnemyKing() const { return b_currentEnemyKing; };
-	King* currentEnemyKing() { return b_currentEnemyKing; };
+	const King* whiteKing() const { return c_whiteKing; };
+	King* whiteKing() { return c_whiteKing; };
+	const King* blackKing() const { return c_blackKing; };
+	King* blackKing() { return c_blackKing; };
+	King* currentKing() { return c_currentKing; };
+	const King* currentKing() const { return c_currentKing; };
+	const King* currentEnemyKing() const { return c_currentEnemyKing; };
+	King* currentEnemyKing() { return c_currentEnemyKing; };
 	PieceSetT defaultPieceSet() const override;
 protected:
-	King* b_whiteKing = nullptr;
-	King* b_blackKing = nullptr;
-	King* b_currentKing = nullptr;
-	King* b_currentEnemyKing = nullptr;
+	King* c_whiteKing = nullptr;
+	King* c_blackKing = nullptr;
+	King* c_currentKing = nullptr;
+	King* c_currentEnemyKing = nullptr;
 private:
 	void markChecks(Piece::TurnMap&) const;
 };

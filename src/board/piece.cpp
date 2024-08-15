@@ -9,8 +9,8 @@ Piece::Piece(const Position&  p, Color c) {
 };
 
 Board* Piece::setChessboard(Board* cb) {
-	Board* ret = p_chessboard;
-	p_chessboard = cb;
+	Board* ret = p_board;
+	p_board = cb;
 	return ret;
 }
 
@@ -18,10 +18,10 @@ Position Piece::move(const Position& p) {
 	Position ret = p_position;
 
 	p_movesMade++;
-	p_turnIndex = p_chessboard->turnIndex();
+	p_turnIndex = p_board->turnIndex();
 
-	p_chessboard->at(p_position) = nullptr;
-	p_chessboard->at(p) = this;
+	p_board->at(p_position) = nullptr;
+	p_board->at(p) = this;
 
 	p_position = p;
 	return ret;
@@ -62,7 +62,7 @@ Piece::TurnMap Piece::diagonalMoves(const Piece* p) {
 		while (!(tpos.*std::get<0>(v))() and !(tpos.*std::get<1>(v))()) {
 			std::pair<int, int> of = std::get<2>(v);
 			tpos = tpos.offset(of.first, of.second);
-			enemy = p->p_chessboard->at(tpos);
+			enemy = p->p_board->at(tpos);
 			if (!enemy)
 				map.push_front(new Turn(p, tpos));
 			else if (enemy->p_color != p->p_color) {
@@ -99,7 +99,7 @@ Piece::TurnMap Piece::straightMoves(const Piece* p) {
 		while (!(tpos.*std::get<0>(v))()) {
 			std::pair<int, int> of = std::get<1>(v);
 			tpos = tpos.offset(of.first, of.second);
-			enemy = p->p_chessboard->at(tpos);
+			enemy = p->p_board->at(tpos);
 			if (!enemy)
 				map.push_front(new Turn(p, tpos));
 			else if (enemy->p_color != p->p_color) {
