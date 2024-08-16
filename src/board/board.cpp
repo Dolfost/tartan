@@ -74,7 +74,7 @@ TurnMap Board::possibleMoves(const Piece* p) const {
 };
 
 Piece* Board::insertPiece(Piece* p) {
-	if (p->chessboard())
+	if (p->board())
 		throw piece_belongs_to_board_already(p);
 
 	Piece*& dest = at(p->position());
@@ -82,7 +82,7 @@ Piece* Board::insertPiece(Piece* p) {
 		throw position_is_taken(p);
 	dest = p;
 
-	p->setChessboard(this);
+	p->setBoard(this);
 
 	return p;
 }

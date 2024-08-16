@@ -8,7 +8,7 @@ Piece::Piece(const Position&  p, Color c) {
 	p_color = c; 
 };
 
-Board* Piece::setChessboard(Board* cb) {
+Board* Piece::setBoard(Board* cb) {
 	Board* ret = p_board;
 	p_board = cb;
 	return ret;

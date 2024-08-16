@@ -60,4 +60,8 @@ bool operator==(const TurnMap& lhs, const TurnMap& rhs) {
 	return true;
 }
 
+bool operator!=(const TurnMap& lhs, const TurnMap& rhs) {
+	return !operator==(lhs, rhs);
+}
+
 }

@@ -13,7 +13,7 @@ void Turn::apply(int mode) {
 
 	t_promoteTo = typeid(nullptr);
 	if (pos.atTop() and mode != Chessboard::CheckingMode) {
-		Board* cb = t_piece->chessboard();
+		Board* cb = t_piece->board();
 		t_promoteTo = cb->getPieceType({
 			typeid(Queen), typeid(Bishop), typeid(Rook), typeid(Knight)
 		});
