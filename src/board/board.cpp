@@ -69,6 +69,10 @@ TurnMap Board::possibleMoves(const Position& p) const {
 };
 
 TurnMap Board::possibleMoves(const Piece* p) const {
+	if (p == nullptr)
+		throw piece_is_null();
+	if (p->board() != this)
+		throw foreign_piece(p, this);
 	TurnMap map = p->moveMap();
 	return map;
 };

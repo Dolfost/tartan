@@ -656,86 +656,447 @@ public:
 
 //! Underlying Board grid representation type
 using BoardT = std::array<std::array<Piece*, 8>, 8>;
+/**
+ * @class Board
+ * @brief 8x8 game board
+ *
+ * This class is used to host Piece objects.
+ */
 class Board : private BoardT {
 	friend class Piece::Turn;
 public:
+	//! Type for list of captured Piece objects that no more on the board
 	using CapturedT = std::forward_list<const Piece*>;
+	//! Type for internal move history representation
 	using HistoryT = std::list<const Piece::Turn*>;
+	//! Type for representation a sequence of turns
 	using TurnsT = std::list<std::pair<Piece::Position, Piece::Position>>;
+	//! Type for representing set of pointers to Piece objects
 	using PieceSetT = std::list<Piece*>;
+	//! Type used as argument to getPieceType()
 	using PieceTypesArgT = std::list<std::type_index>;
+	//! Type that getPieceType() should return
 	using PieceTypesRetT = std::type_index;
+	//! Type of pieceGetter()
 	using PieceGetterT = std::function<PieceTypesRetT(PieceTypesArgT)>;
 public:
+	//! Construct empty Board object
 	Board();
-	Board(PieceSetT&);
+	/**
+	 * @brief Consturct empty Board object and populate it with `set`
+	 *
+	 * @param set set of pieces to populate the Board with
+	 */
+	Board(PieceSetT& set);
 
+	//! Move constructor
 	Board(Board&&) = default;
+	//! Move assignment operator
 	Board& operator=(Board&&) = default;
 	Board(const Board&) = delete;
 	Board& operator=(const Board&) = delete;
 public:
+	/**
+	 * @brief Current turn color
+	 *
+	 * @return Color which have to make next turn on Board
+	 */
 	Piece::Color currentTurn() const {
 		return b_currentTurnColor; 
 	};
-	virtual Piece::Color setCurrentTurn(Piece::Color);
-	virtual Piece::TurnMap possibleMoves(const Piece*) const;
-	Piece::TurnMap possibleMoves(const Piece::Position&) const;
-	virtual const Piece::Turn* makeTurn(const Piece::Position&, 
-														 const Piece::Position&) = 0;
+	/**
+	 * @brief Set current turn Color
+	 *
+	 * This function may be reimplemented in 
+	 * child class to account for it's implementation,
+	 * and call base function.
+	 *
+	 * @param col mew Color value
+	 */
+	virtual Piece::Color setCurrentTurn(Piece::Color col);
+	/**
+	 * @brief Possible moves of a Piece by it's adress
+	 *
+	 * This function returns the final TurnMap object
+	 * with all Turn members marked as possible or not,
+	 * so user can see what turns they can perform. Could 
+	 * be useful for GUI board games.
+	 *
+	 * @param p pointer to desired Piece
+	 * @exception piece_is_null, foreign_piece
+	 * @sa possibleMoves(const Piece::Position&) const
+	 */
+	virtual Piece::TurnMap possibleMoves(const Piece* p) const;
+	/**
+	 * @brief Possible moves of a Piece by it's location 
+	 * on board.
+	 *
+	 * This function calls the possibleMoves(const Piece*) const 
+	 * after resolving the Piece object by it's position.
+	 *
+	 * @param pos Position of desired Piece on board
+	 * @sa possibleMoves(const Piece*) const
+	 */
+	Piece::TurnMap possibleMoves(const Piece::Position& pos) const;
+	/**
+	 * @brief Make the turn 
+	 *
+	 * This function shall be reimplemented 
+	 * in child class. It have to call produceTurn() to get 
+	 * started.
+	 *
+	 * @param from Piece Position to move
+	 * @param to Piece Position of target
+	 * @return Turn object that has been applied
+	 * @sa produceTurn()
+	 */
+	virtual const Piece::Turn* makeTurn(const Piece::Position& from, 
+														 const Piece::Position& to) = 0;
 protected:
-	Piece::TurnMap produceTurn(const Piece::Position&,
-													const Piece::Position&, Piece::Turn**);
-	const Piece::Turn* applyTurn(Piece::Turn*);
+	/**
+	 * @brief Make Turn object based on `from` and `to`
+	 *
+	 * Function checks selected Piece object for empty tile,
+	 * piece in wrong color, no possible moves, no moves at all.
+	 * If some of the basic consditions not satisfied, corresponding
+	 * exception is thrown. Then it makes basic Turn object 
+	 * from selected Piece Piece::TurnMap. Function should be called from
+	 * reimplemented makeTurn(), and alter Turn acceptance logic.
+	 *
+	 * @param from Piece::Position of Piece to move
+	 * @param to Piece::Position to move the Piece to
+	 * @param[in] turn produced Piece::Turn object pointer selected 
+	 * as valid from returned TurnMap object
+	 * @return TrunMap object of all possible moves
+	 * @exception tile_is_empty, piece_in_wrong_color,
+	 * can_not_move, no_such_move
+	 */
+	Piece::TurnMap produceTurn(const Piece::Position& from,
+													const Piece::Position& to, Piece::Turn** turn);
+	/**
+	 * @brief Apply valid turn
+	 *
+	 * This function should describe things to do before 
+	 * the Turn::apply(int) is called. Current implementation
+	 * adds Turn::capture() to b_capturedPieces, then flips 
+	 * b_currentTurnColor to opposite.
+	 *
+	 * @param turn Turn object to apply
+	 */
+	virtual const Piece::Turn* applyTurn(Piece::Turn* turn);
 public:
+	/**
+	 * @brief Internal board data structure
+	 * @return internal board data structure type object tt::BoardT
+	 */
 	const BoardT& board() const { return static_cast<const BoardT&>(*this); };
+	/**
+	* @copydoc board() const
+	*/
 	BoardT& board() { return static_cast<BoardT&>(*this); };
+	/**
+	 * @brief Turns history
+	 *
+	 * @return HistoryT data type object
+	 * @sa b_history
+	 */
 	HistoryT& history() { return b_history; };
+	/**
+	* @copydoc history()
+	*/
 	const HistoryT& history() const { return b_history; };
+	/**
+	 * @brief Total count of moves made on Board
+	 *
+	 * @return Moves count or history().size()
+	 * @sa b_history
+	 */
 	std::size_t movesMade() const { return b_history.size(); }
+	/**
+	 * @brief Turn index
+	 *
+	 * @return last Piece::Turn index
+	 * @sa b_turnIndex
+	 */
 	std::size_t turnIndex() const { return b_turnIndex; };
 
-	virtual Piece* insertPiece(Piece*);
+	/**
+	 * @brief Place piece on Board
+	 *
+	 * Places the `p` in the current Board object.
+	 * Throws corresponding exception on error.
+	 * @note Board object takes the ownership of inserted pieces.
+	 *
+	 * @param p Piece pointer to insert 
+	 * @return `p` pointer
+	 * @exception piece_belongs_to_board_already,
+	 * position_is_taken
+	 */
+	virtual Piece* insertPiece(Piece* p);
+	/**
+	 * @brief Clears current Board 
+	 *
+	 * Fills board with `nullptr`s and deletes every Piece
+	 * object on the way with `delete`.
+	 */
 	virtual void clear();
+	/**
+	 * @name Fill functions 
+	 * Every fill() function takes ovnership of the 
+	 * passed Piece objects. 
+	 *
+	 * Functions that take the 
+	 * string Piece specialization allocates new objects
+	 * with piece().
+	 *
+	 * The insertPiece() is used on each produces/recieved Piece object. 
+	 * This function throws corresponding exceptions on errors.
+	 *
+	 * @sa insertPiece(), piece()
+	 */
+	//! @{
+	/**
+	 * @brief Fills current Board with default pieces 
+	 *
+	 * The default pieces is given by defaultPieceSet() function.
+	 */
 	void fill();
+	/**
+	 * @brief Fill Board with piece set
+	 *
+	 * Fills the board with Piece objects in `set`. 	 *
+	 * @param set set of Piece objects to put on Board
+	 */
 	void fill(PieceSetT& set);
-	void fill(const std::string&);
+	/**
+	 * @brief Fill Board with string 
+	 * representation of Piece objects
+	 *
+	 * Function allocates memory for new Pieces objects
+	 * and puts them on board
+	 *
+	 * @param str space separated set of piece specs
+	 * @sa piece(), set()
+	 */
+	void fill(const std::string& str);
+	/**
+	 * @brief Fill Board from STL container of pointers to Piece objects
+	 *
+	 * Calls the set(const std::string) const to produce 
+	 * PieceSetT, then fill(PieceSetT) to actually fill
+	 * the Board.
+	 *
+	 * @tparam Iterator STL iterator type
+	 * @param begin start of STL container
+	 * @param end end of STL container
+	 * @sa set(const std::string) const
+	 */
 	template<class Iterator>
-	void fill(Iterator, Iterator);
-	void fill(std::initializer_list<const std::string>);
-	virtual PieceSetT defaultPieceSet() const = 0;
+	void fill(Iterator begin, Iterator end);
+	/**
+	 * @brief Fill Board from std::initializer_list<cosnt std::string> 
+	 *
+	 * @param arg list of string piece specs
+	 * @se piece()
+	 */
+	void fill(std::initializer_list<const std::string> list);
+	 //! Clear and fill Board with default piece set
 	void refill() { clear(); fill(); };
+	//! @}
+	/**
+	 * @brief Default piece set for the Board
+	 *
+	 * This function should be reimplemented 
+	 * in child class to match it's game layout.
+	 *
+	 * @return defaultPieceSet for current Board implementation
+	 */
+	virtual PieceSetT defaultPieceSet() const = 0;
 
-	virtual bool isEqual(const Board&) const = 0;
-	friend bool operator==(const Board&, const Board&);
+	/**
+	 * @brief Compare 2 Board objects.
+	 *
+	 * @param other Board object to campare with
+	 * @return `true` if corresponding tiles have equal adress
+	 * or cast to same Piece type, `false` otherwise
+	 */
+	virtual bool isEqual(const Board& other) const = 0;
+	/**
+	 * @brief Equal to operator
+	 *
+	 * This is a bind to function `lhs.isEqua(rhs)`.
+	 * @sa isEqual()
+	 */
+	friend bool operator==(const Board& lhs, const Board& rhs);
+	/**
+	 * @brief Not equal to operator
+	 *
+	 * This is a bind to function `!lhs.isEqua(rhs)`.
+	 * @sa isEqual()
+	 */
 	friend bool operator!=(const Board&, const Board&);
-	Piece*& operator[](const Piece::Position&);
-	const Piece* operator[](const Piece::Position&) const;
-	Piece*& at(const Piece::Position&);
-	const Piece* at(const Piece::Position&) const;
+	/**
+	 * @brief Position subscript operator
+	 *
+	 * @param pos target Position object
+	 * @return Piece object pointer at position `pos`, 
+	 * `nullptr` if tile is empty.
+	 * @sa at()
+	 */
+	Piece*& operator[](const Piece::Position& pos);
+	/**
+	* @copydoc operator[](const Piece::Position&)
+	*/
+	const Piece* operator[](const Piece::Position& pos) const;
+	/**
+	 * @brief Board member access by Position
+	 *
+	 * @copydetails operator[](const Piece::Position&)
+	 */
+	Piece*& at(const Piece::Position& pos);
+	/**
+	 * @copydoc at(const Piece::Position&)
+	 */
+	const Piece* at(const Piece::Position& pos) const;
 	using BoardT::iterator;
 	using BoardT::const_iterator;
 	using BoardT::begin;
 	using BoardT::end;
+	/**
+	 * @brief Set the Piece getter functor
+	 *
+	 * @param g piece getter
+	 * @sa b_pieceGetter
+	 */
 	void setPieceGetter(PieceGetterT g) { b_pieceGetter = g; };
+	/**
+	 * @brief Get current piece getter functor
+	 *
+	 * @return current Piece getter functor
+	 * @sa b_pieceGetter
+	 */
 	PieceGetterT& pieceGetter() { return b_pieceGetter; };
-	PieceTypesRetT getPieceType(PieceTypesArgT);
+	/**
+	 * @copydoc setPieceGetter(PieceGetterT)
+	 */
 	const PieceGetterT& pieceGetter() const  { return b_pieceGetter; };
+	/**
+	 * @brief Get user provided Piece std::type_index 
+	 *
+	 * This function calls the b_pieceGetter functor 
+	 * that were set via setPieceGetter(). If b_pieceGetter
+	 * were not set and this function were called, the
+	 * std::runtime_error exception is thrown.
+	 *
+	 * @param possible STL contaier of possible types
+	 * @return selected std::type_index
+	 * @exception std::runtime_error
+	 * @sa b_pieceGetter
+	 */
+	PieceTypesRetT getPieceType(PieceTypesArgT possible);
+	/**
+	 * @brief String representation of Board
+	 *
+	 * Useful for debugging purposes.
+	 * Should be reimplemented in child class.
+	 *
+	 * @return string of current board state visualized
+	 */
 	virtual std::string str() const = 0;
-	friend std::ostream& operator<<(std::ostream&, const Board&);
+	/**
+	 * @brief Bitwise left shift operator on std::ostream
+	 *
+	 * This function puts the str() function result
+	 * to `os` object with `<<` operator.
+	 *
+	 * @param os calling object
+	 * @param b Board object for display
+	 * @return calling `os` object
+	 */
+	friend std::ostream& operator<<(std::ostream& os, const Board& b);
 	~Board();
 public:
-	PieceSetT set(const std::string&) const;
+	/**
+	 * @brief Produce piece set from std::string
+	 *
+	 * Function uses piece() to allocate actual 
+	 * Pice object from std::string spec.
+	 *
+	 * @param str input string with space separated piece specs 
+	 * @return resulting piece set
+	 * @sa piece()
+	 */
+	PieceSetT set(const std::string& str) const;
+	/**
+	 * @brief Make piece set out of STL 
+	 * container of std::string Piece specs
+	 *
+	 * @tparam Iterator STL container iterator
+	 * @param begin begin iterator of STL container
+	 * @param end end iterator of STL container
+	 * @return resulting Piece objects set
+	 */
 	template<class Iterator>
-	PieceSetT set(Iterator, Iterator) const;
-	virtual Piece* piece(const std::string&) const = 0;
+	PieceSetT set(Iterator begin, Iterator end) const;
+	/**
+	 * @brief Convert std::string Piece spec to
+	 * actual Piece object pointer
+	 *
+	 * This function should convert in-game std::string
+	 * notation for Piece objects to actual objects.
+	 *
+	 * For example, in chess game the qc3 means
+	 * the black Queen at c3, Qd5 means the 
+	 * white Queen on d5.
+	 *
+	 * @param spec Piece std::string specification
+	 * @return pointer to Piece object constructed from
+	 * `spec` string
+	 */	
+	virtual Piece* piece(const std::string& spec) const = 0;
 private:
 	void fillBoardWithNullptrs();
 protected:
+	/**
+	 * @brief Current turn color variable
+	 * @sa currentTurn()
+	 */
 	Piece::Color b_currentTurnColor = Piece::Color::White;
+	/**
+	 * @brief List of captured pieces
+	 *
+	 * Pieces that have retired and have been removed from 
+	 * Board should go to this list. The default applyTurn()
+	 * function does that if turn catures something.
+	 */
 	CapturedT b_capturedPieces;
+	/**
+	 * @brief Board history of applied Turn objects
+	 *
+	 * All turn objects that have been passed to 
+	 * applyTurn() function go to that list by default 
+	 * with help of Turn::clone().
+	 * @sa history(), HistoryT
+	 */
 	HistoryT b_history;
+	/**
+	 * @brief Piece getter variable
+	 *
+	 * This variable keeps the functor for getting the 
+	 * new user-reuqested Piece std::type_index.
+	 *
+	 * This could be useful for example in chess game, when
+	 * pawn reaches the end of the board and player 
+	 * have to choose the piece to exchange it for.
+	 */
 	PieceGetterT b_pieceGetter;
+	/**
+	 * @brief Current turn index 
+	 *
+	 * This varriable is incremented each time 
+	 * the Turn::apply() is called on Piece 
+	 * that belongs to current Board object.
+	 */
 	std::size_t b_turnIndex = 0;
 };
 

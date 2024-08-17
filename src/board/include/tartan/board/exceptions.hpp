@@ -34,6 +34,26 @@ private:
 	const Piece* e_piece;
 };
 
+class piece_is_null : public invalid_piece {
+public:
+	piece_is_null(
+		const string what_arg = "Tile is empty"
+	) : invalid_piece(nullptr, what_arg) {};
+	const Piece* piece() const = delete;
+};
+
+class foreign_piece : public invalid_piece {
+public:
+	foreign_piece(
+		const Piece* p, 
+		const Board* b, 
+		const string& what_arg = "Piece does not belong to this board"
+	) : invalid_piece(p, what_arg) { e_board = b; };
+	const Board* board() const { return e_board; };
+private:
+	const Board* e_board;
+};
+
 class invalid_piece_spec : public invalid_piece {
 public:
 	invalid_piece_spec(
@@ -73,7 +93,6 @@ private:
 	const Piece* e_piece;
 	const Piece::Position& e_to;
 };
-
 
 class tile_is_empty : public illegal_move {
 public:
