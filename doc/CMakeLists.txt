@@ -12,6 +12,9 @@ set(DOXYGEN_IMAGE_PATH images/)
 set(DOXYGEN_DOT_IMAGE_FORMAT svg)
 set(DOXYGEN_INTERACTIVE_SVG YES)
 set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+set(DOXYGEN_CITE_BIB_FILES
+	bibliography/games.bib
+)
 set(DOXYGEN_TAGFILES
 	"cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/"
 )

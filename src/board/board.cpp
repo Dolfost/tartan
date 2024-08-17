@@ -77,18 +77,27 @@ TurnMap Board::possibleMoves(const Piece* p) const {
 	return map;
 };
 
-Piece* Board::insertPiece(Piece* p) {
+Piece* Board::canInsert(Piece* p) const {
 	if (p->board())
 		throw ex::foreign_piece(p, this);
 
-	Piece*& dest = at(p->position());
+	const Piece* const& dest = at(p->position());
 	if (dest)
 		throw ex::position_is_taken(p);
-	dest = p;
-
-	p->setBoard(this);
 
 	return p;
+}
+
+Piece* Board::placePiece(Piece* p) {
+	at(p->position()) = p;
+	p->setBoard(this);
+	return p;
+}
+
+Piece* Board::insertPiece(Piece* p) {
+	return placePiece(
+		canInsert(p)
+	);
 }
 
 TurnMap Board::produceTurn(const Position& from, const Position& to, Turn** s) {

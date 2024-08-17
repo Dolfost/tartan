@@ -1,4 +1,3 @@
-#include <iostream>
 #include <tartan/chess.hpp>
 #include <tartan/chess/exceptions.hpp>
 
@@ -72,25 +71,38 @@ Piece* Chessboard::piece(const std::string& spec) const {
 	return newPiece;
 }
 
-Piece* Chessboard::insertPiece(Piece* p) {
+Piece* Chessboard::canInsert(Piece* p) const {
+	Board::canInsert(p);
+
 	King* king = dynamic_cast<King*>(p);
 	if (king) {
 		if (king->color() == Piece::Color::White) {
-			if (!c_whiteKing) {
-				c_whiteKing = king;
-				c_currentKing = king;
-			} else
+			if (c_whiteKing)
 				throw ex::duplicate_king(p);
 		} else if (king->color() == Piece::Color::Black) {
-			if (!c_blackKing) {
-				c_blackKing = king;
-				c_currentEnemyKing = king;
-			} else
+			if (c_blackKing) 
 				throw ex::duplicate_king(p);
 		}
 	}
+
+	return p;
+}
+
+Piece* Chessboard::insertPiece(Piece* p) {
+	canInsert(p);
+
+	King* king = dynamic_cast<King*>(p);
+	if (king) {
+		if (king->color() == Piece::Color::White) {
+				c_whiteKing = king;
+				c_currentKing = king;
+		} else if (king->color() == Piece::Color::Black) {
+				c_blackKing = king;
+				c_currentEnemyKing = king;
+		}
+	}
 		
-	return Board::insertPiece(p);
+	return placePiece(p);
 }
 
 Piece::TurnMap Chessboard::possibleMoves(const Piece* p) const {
@@ -104,10 +116,10 @@ const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 	TurnMap map = Board::produceTurn(from, to, &selected);
 
 	if (c_currentKing->checkmate())
-		throw ex::king_is_under_checkmate(selected->piece(), selected->to(), c_currentKing);
+		throw ex::checkmate(selected->piece(), selected->to(), c_currentKing);
 
 	if (!selected->possible())
-		throw ex::king_is_under_check(selected->piece(), selected->to(), c_currentKing);
+		throw ex::check(selected->piece(), selected->to(), c_currentKing);
 
 	return applyTurn(selected);
 }

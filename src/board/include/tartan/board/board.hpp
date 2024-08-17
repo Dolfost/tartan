@@ -32,7 +32,6 @@ public:
 		Black = 0, White = 1,
 	};
 	/**
-	 * @class Position
 	 * @brief Piece position at the Board.
 	 */
 	class Position {
@@ -59,7 +58,6 @@ public:
 		 *
 		 * @param x x coordinate
 		 * @param y y coordinate
-		 * @exception std::out_of_range
 		 */
 		Position(int x, int y);
 		/**
@@ -67,14 +65,38 @@ public:
 		 *
 		 * @param l letter x coordinate
 		 * @param d digit y coordinate
-		 * @exception std::out_of_range
 		 */
 		Position(char l, int d);
 		/**
 		 * @brief Creates Position object at `str` position
 		 *
+		 * The `str` arguments has the form of 
+		 * ```
+		 * <x><y>
+		 * ```
+		 * where the `<x>` is the lowercase letter in range 
+		 * a-h inclusive, `<y>` is a number from range [1;8].
+		 *
+		 * Table for `<x>` letter-to-digit mapping
+		 * Letter | Digit
+		 * :-----:|:----:
+		 * `a`    | `1`
+		 * `b`    | `2`
+		 * `c`    | `3`
+		 * `d`    | `4`
+		 * `e`    | `5`
+		 * `f`    | `6`
+		 * `g`    | `7`
+		 * `h`    | `8`
+		 *
+		 * Example arguments: 
+		 * Argument | x() | y() 
+		 * :--------|:---:|:---: 
+		 * `"d4"`   |  4  |  4
+		 * `"e7"`   |  5  |  7
+		 * `"h3"`   |  8  |  3
+		 *
 		 * @param str 2-character letter-digit string representation of position
-		 * @exception std::out_of_range
 		 */
 		Position(const std::string& str);
 		/**
@@ -124,6 +146,7 @@ public:
 		 *
 		 * @param x new value
 		 * @return old value
+		 * @exception std::out_of_range if `x` is < 1 or > 8
 		 */
 		int setX(int x);
 		/**
@@ -131,7 +154,7 @@ public:
 		 *
 		 * @param y new value
 		 * @return old value
-		 * @exception std::out_of_range
+		 * @exception std::out_of_range if `y` is < 1 or > 8
 		 */
 		int setY(int y);
 		/**
@@ -139,7 +162,6 @@ public:
 		 *
 		 * @param x x coordinate represented as string
 		 * @return old value
-		 * @exception std::out_of_range
 		 */
 		char setLetter(char x) { return setX(x-'a'+1) + 'a'-1; };
 		/**
@@ -251,7 +273,6 @@ public:
 		 *
 		 * @return new object with sum of corresponding 
 		 * coordinates of argument objects
-		 * @exception std::out_of_range
 		 */
 		Position operator+(const Position&) const;
 		/**
@@ -259,7 +280,6 @@ public:
 		 *
 		 * @return new object with difference of corresponding 
 		 * coordinates of argument objects
-		 * @exception std::out_of_range
 		 */
 		Position operator-(const Position&) const;
 		/**
@@ -659,10 +679,15 @@ public:
 //! Underlying Board grid representation type
 using BoardT = std::array<std::array<Piece*, 8>, 8>;
 /**
- * @class Board
  * @brief 8x8 game board
  *
- * This class is used to host Piece objects.
+ * This class is used to host Piece objects 
+ * and should be inherited to use. Also You have
+ * reimlemtent all pure virtual methods to use 
+ * the class.
+ *
+ * Class exceptions are described in 
+ * tartan/board/exceptions.hpp.
  */
 class Board : private BoardT {
 	friend class Piece::Turn;
@@ -709,11 +734,9 @@ public:
 	/**
 	 * @brief Set current turn Color
 	 *
-	 * This function may be reimplemented in 
-	 * child class to account for it's implementation,
-	 * and call base function.
+	 * Sets the b_currentTurnColor to `col`.
 	 *
-	 * @param col mew Color value
+	 * @param col new Color value
 	 */
 	virtual Piece::Color setCurrentTurn(Piece::Color col);
 	/**
@@ -725,7 +748,9 @@ public:
 	 * be useful for GUI board games.
 	 *
 	 * @param p pointer to desired Piece
-	 * @exception piece_is_null, foreign_piece
+	 * @exception ex::null_piece if `p` is `nullptr`
+	 * @exception ex::foreign_piece if `p` does not belong 
+	 * to this Board object
 	 * @sa possibleMoves(const Piece::Position&) const
 	 */
 	virtual Piece::TurnMap possibleMoves(const Piece* p) const;
@@ -756,11 +781,22 @@ public:
 														 const Piece::Position& to) = 0;
 protected:
 	/**
+	 * @brief Just places the Piece object on the Board
+	 *
+	 * @warning This function does not do any checks
+	 * on Piece object it places. Use with care.
+	 *
+	 * @param p placed Piece
+	 * @return `p` object pointer
+	 * @sa canInsert()
+	 */
+	virtual Piece* placePiece(Piece* p);
+	/**
 	 * @brief Make Turn object based on `from` and `to`
 	 *
 	 * Function checks selected Piece object for empty tile,
 	 * piece in wrong color, no possible moves, no moves at all.
-	 * If some of the basic consditions not satisfied, corresponding
+	 * If some of the basic conditions aren't satisfied, corresponding
 	 * exception is thrown. Then it makes basic Turn object 
 	 * from selected Piece Piece::TurnMap. Function should be called from
 	 * reimplemented makeTurn(), and alter Turn acceptance logic.
@@ -770,8 +806,11 @@ protected:
 	 * @param[in] turn produced Piece::Turn object pointer selected 
 	 * as valid from returned TurnMap object
 	 * @return TrunMap object of all possible moves
-	 * @exception tile_is_empty, piece_in_wrong_color,
-	 * can_not_move, no_such_move
+	 * @exception ex::tile_is_empty if p.position() is empty on board
+	 * @exception ex::piece_in_wrong_color if `p` color does not match
+	 * b_currentTurnColor.
+	 * @exception ex::can_not_move `p` can not move 
+	 * @exception ex::no_such_move `p` does not have such move at all.
 	 */
 	Piece::TurnMap produceTurn(const Piece::Position& from,
 													const Piece::Position& to, Piece::Turn** turn);
@@ -823,16 +862,29 @@ public:
 	std::size_t turnIndex() const { return b_turnIndex; };
 
 	/**
+	 * @brief Throws an exception if Piece cannot be placed 
+	 * at the Board
+	 *
+	 * @param p checked Piece object
+	 * @return `p` object
+	 * @exception ex::foreign_piece if `p` belongs 
+	 * to other Board already
+	 * @exception ex::position_is_taken if tile 
+	 * at p.position() is taken
+	 */
+	virtual Piece* canInsert(Piece* p) const;
+	/**
 	 * @brief Place piece on Board
 	 *
-	 * Places the `p` in the current Board object.
-	 * Throws corresponding exception on error.
+	 * Default implementation
+	 * checks if `p` can be placed on Board with 
+	 * canInsert(), if it can, then it places 
+	 * the `p` in the current Board object with placePiece().
+	 *
 	 * @note Board object takes the ownership of inserted pieces.
 	 *
 	 * @param p Piece pointer to insert 
 	 * @return `p` pointer
-	 * @exception piece_belongs_to_board_already,
-	 * position_is_taken
 	 */
 	virtual Piece* insertPiece(Piece* p);
 	/**
@@ -918,7 +970,7 @@ public:
 	/**
 	 * @brief Compare 2 Board objects.
 	 *
-	 * @param other Board object to campare with
+	 * @param other Board object to compare with
 	 * @return `true` if corresponding tiles have equal adress
 	 * or cast to same Piece type, `false` otherwise
 	 */
@@ -992,8 +1044,8 @@ public:
 	 *
 	 * @param possible STL contaier of possible types
 	 * @return selected std::type_index
-	 * @exception std::runtime_error
-	 * @sa b_pieceGetter
+	 * @exception std::runtime_error if b_pieceGetter is not set.
+	 * @sa b_pieceGetter, setPieceGetter()
 	 */
 	PieceTypesRetT getPieceType(PieceTypesArgT possible);
 	/**

@@ -27,9 +27,9 @@ public:
 	Piece::Color e_color;
 };
 
-class king_is_under_check : public tt::ex::illegal_move {
+class check : public tt::ex::illegal_move {
 public:
-	king_is_under_check(
+	check(
 		const Piece* p,
 		const Piece::Position& to, 
 		const Piece* k,
@@ -40,14 +40,14 @@ private:
 	const Piece* e_king;
 };
 
-class king_is_under_checkmate : public king_is_under_check {
+class checkmate : public check {
 public:
-	king_is_under_checkmate(
+	checkmate(
 		const Piece* p,
 		const Piece::Position& to, 
 		const Piece* k,
 		const string& what_arg = "King is under checkmate") 
-	:	king_is_under_check(p, to, k, what_arg) {};
+	:	check(p, to, k, what_arg) {};
 private:
 };
 
