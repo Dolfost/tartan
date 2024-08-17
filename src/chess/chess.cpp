@@ -13,14 +13,14 @@ using Color = Piece::Color;
 
 Piece* Chessboard::piece(const std::string& spec) const {
 	if (spec.size() > 3)
-		throw invalid_piece_spec(spec, "Specification is too long");
+		throw tt::ex::bad_piece_spec(spec, "Specification is too long");
 	if (spec.size() < 3)
-		throw invalid_piece_spec(spec, "Specification is too short");
+		throw tt::ex::bad_piece_spec(spec, "Specification is too short");
 
 	char p = spec[0];
 	Piece::Color color;
 	if (!isalpha(p))
-		throw invalid_piece_spec(spec, "Specified piece type is unknown");
+		throw tt::ex::bad_piece_spec(spec, "Specified piece type is unknown");
 
 	if (isupper(p))
 		color = Piece::Color::White;
@@ -31,7 +31,7 @@ Piece* Chessboard::piece(const std::string& spec) const {
 	try {
 		position = spec.substr(1, 2);
 	} catch (std::out_of_range& ex) {
-		std::throw_with_nested(invalid_piece_spec(
+		std::throw_with_nested(tt::ex::bad_piece_spec(
 			spec, "Specified position is out of range"
 		));
 	}
@@ -63,7 +63,7 @@ Piece* Chessboard::piece(const std::string& spec) const {
 			break;
 		}
 		default:
-			throw invalid_piece_spec(spec, "Specified piece type is unknown");
+			throw tt::ex::bad_piece_spec(spec, "Specified piece type is unknown");
 	}
 
 	newPiece->setColor(color);
@@ -80,13 +80,13 @@ Piece* Chessboard::insertPiece(Piece* p) {
 				c_whiteKing = king;
 				c_currentKing = king;
 			} else
-				throw duplicate_king(p);
+				throw ex::duplicate_king(p);
 		} else if (king->color() == Piece::Color::Black) {
 			if (!c_blackKing) {
 				c_blackKing = king;
 				c_currentEnemyKing = king;
 			} else
-				throw duplicate_king(p);
+				throw ex::duplicate_king(p);
 		}
 	}
 		
@@ -104,17 +104,17 @@ const Turn* Chessboard::makeTurn(const Position& from, const Position& to) {
 	TurnMap map = Board::produceTurn(from, to, &selected);
 
 	if (c_currentKing->checkmate())
-		throw king_is_under_checkmate(selected->piece(), selected->to(), c_currentKing);
+		throw ex::king_is_under_checkmate(selected->piece(), selected->to(), c_currentKing);
 
 	if (!selected->possible())
-		throw king_is_under_check(selected->piece(), selected->to(), c_currentKing);
+		throw ex::king_is_under_check(selected->piece(), selected->to(), c_currentKing);
 
 	return applyTurn(selected);
 }
 
 void Chessboard::markChecks(TurnMap& tm) const {
 	if (!c_currentKing)
-		throw no_king(b_currentTurnColor);
+		throw ex::no_king(b_currentTurnColor);
 
 	for (auto& t : tm) {
 		(*t).apply(true);

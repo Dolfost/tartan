@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 
 	try {
 		play(cb, turns, true);
-	} catch (king_is_under_checkmate& ex) {
+	} catch (tt::chess::ex::king_is_under_checkmate& ex) {
 		cout << endl << "OK: " << ex.what();
 	} catch (exception& ex) {
 		cout << endl << "Error: " << ex.what();

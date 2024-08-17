@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
 	try {
 		play(cb, turns, true);
-	} catch (illegal_move& ex) {
+	} catch (tt::ex::illegal_move& ex) {
 		std::cerr << "OK ";
 		print_exception(ex);
 	}

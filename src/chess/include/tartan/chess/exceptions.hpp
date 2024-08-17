@@ -6,27 +6,28 @@
 
 #include <string>
 
-namespace tt::chess {
+//! Chess related exceptions namespace
+namespace tt::chess::ex {
 using std::string;
 
-class duplicate_king : public invalid_piece {
+class duplicate_king : public tt::ex::bad_piece {
 public:
 	duplicate_king(
 		const Piece* p, 
 		const string& what_arg = "Board already has a king"
-	) : invalid_piece(p, what_arg) {};
+	) : bad_piece(p, what_arg) {};
 };
 
-class no_king : public board_error {
+class no_king : public tt::ex::tartan {
 public:
 	no_king(
 		Piece::Color c,
 		const string& what_arg = "Board does not have a king"
-	) : board_error(what_arg) { e_color = c; };
+	) : tartan(what_arg) { e_color = c; };
 	Piece::Color e_color;
 };
 
-class king_is_under_check : public illegal_move {
+class king_is_under_check : public tt::ex::illegal_move {
 public:
 	king_is_under_check(
 		const Piece* p,

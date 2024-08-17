@@ -42,7 +42,7 @@ public:
 		 *
 		 * Describes location of the coordinates origin.
 		 * @sa atTop(), atLeft(), atRight(), atBottom(),
-		 * offset()
+		 * offset(), setMode(), mode()
 		 */
 		enum class Mode {
 			Normal = 1, ///< Place origin at the a1
@@ -842,12 +842,12 @@ public:
 	virtual void clear();
 	/**
 	 * @name Fill functions 
-	 * Every fill() function takes ovnership of the 
-	 * passed Piece objects. 
+	 * Every fill() function passes the ownership of  
+	 * recieved Piece objects to underlying Board object. 
 	 *
 	 * Functions that take the 
 	 * string Piece specialization allocates new objects
-	 * with piece().
+	 * with piece() function.
 	 *
 	 * The insertPiece() is used on each produces/recieved Piece object. 
 	 * This function throws corresponding exceptions on errors.

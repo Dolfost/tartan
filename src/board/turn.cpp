@@ -6,7 +6,7 @@ using Turn = Piece::Turn;
 
 Turn::Turn(const Piece* p, const Position& t, const Piece* c, bool u) {
 	if (p == nullptr)
-		throw illegal_turn("Turn piece cannot be nullptr.");
+		throw ex::illegal_turn("Turn piece cannot be nullptr.");
 	t_piece = const_cast<Piece*>(p);
 	t_to = t;
 	t_from = p->position();

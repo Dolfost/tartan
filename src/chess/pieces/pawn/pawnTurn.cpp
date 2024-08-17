@@ -32,7 +32,7 @@ void Turn::apply(int mode) {
 		else {
 			t_promoteTo = typeid(nullptr);
 			cb->at(pos) = tmp;
-			throw illegal_getter_type();
+			throw tt::ex::bad_piece_type();
 		}
 		cb->insertPiece(newPiece);
 		delete tmp;

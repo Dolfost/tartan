@@ -29,10 +29,10 @@ Board::PieceSetT Board::set(Iterator begin, Iterator end) const {
 			pieces.push_back(piece(*begin));
 			++begin;
 		}
-	} catch (invalid_piece_spec& ex) {
+	} catch (ex::bad_piece_spec& ex) {
 		std::for_each(pieces.begin(), pieces.end(), 
 								[](Piece* p) { delete p; });
-		std::throw_with_nested(can_not_produce_set());
+		std::throw_with_nested(ex::bad_set());
 	}
 
 	return pieces;
@@ -70,20 +70,20 @@ TurnMap Board::possibleMoves(const Position& p) const {
 
 TurnMap Board::possibleMoves(const Piece* p) const {
 	if (p == nullptr)
-		throw piece_is_null();
+		throw ex::null_piece();
 	if (p->board() != this)
-		throw foreign_piece(p, this);
+		throw ex::foreign_piece(p, this);
 	TurnMap map = p->moveMap();
 	return map;
 };
 
 Piece* Board::insertPiece(Piece* p) {
 	if (p->board())
-		throw piece_belongs_to_board_already(p);
+		throw ex::foreign_piece(p, this);
 
 	Piece*& dest = at(p->position());
 	if (dest)
-		throw position_is_taken(p);
+		throw ex::position_is_taken(p);
 	dest = p;
 
 	p->setBoard(this);
@@ -94,15 +94,15 @@ Piece* Board::insertPiece(Piece* p) {
 TurnMap Board::produceTurn(const Position& from, const Position& to, Turn** s) {
 	Piece* turnpiece = at(from);
 	if (!turnpiece) 
-		throw tile_is_empty(from, to);
+		throw ex::tile_is_empty(from, to);
 
 	if (turnpiece->color() != b_currentTurnColor)
-		throw piece_in_wrong_color(turnpiece, to);
+		throw ex::piece_in_wrong_color(turnpiece, to);
 
 	TurnMap possible = possibleMoves(from);
 
 	if (possible.empty())
-		throw can_not_move(turnpiece, to);
+		throw ex::can_not_move(turnpiece, to);
 
 	TurnMap::iterator turn = find_if(
 		possible.begin(), 
@@ -113,7 +113,7 @@ TurnMap Board::produceTurn(const Position& from, const Position& to, Turn** s) {
 	);
 
 	if (turn == possible.end())
-		throw no_such_move(turnpiece, to);
+		throw ex::no_such_move(turnpiece, to);
 
 	*s = *turn;
 	return possible; 
