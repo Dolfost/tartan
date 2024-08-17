@@ -149,7 +149,8 @@ public:
 		 */
 		int setDigit(short y) { return setY(y); };
 		/**
-		 * @name Position manipulation
+		 * @name Position manipulation 
+		 * @anchor posmanip
 		 * Set of functions that provide boolean operations on the Position object
 		 * conditionally depending on it's mode() value.
 		 * @{
@@ -231,13 +232,14 @@ public:
 		 * @brief Set offset mode
 		 *
 		 * @note Depending on the mode() value, functions from 
-		 * @ref posmanip group behave differently.
+		 * \ref posmanip "Position manipulation" 
+		 * group behave differently.
 		 *
 		 * @param m new offset mode value
 		 * @return old offset mode value
 		 */
 		Mode setMode (Mode m);
-		/** @} */
+		//! @}
 	public:
 		/**
 		 * @brief String position representation.
@@ -269,13 +271,13 @@ public:
 		 */
 		Position operator-=(const Position&);
 		/**
-		 * @copydoc offset(int, int) cosnt
+		 * @copydoc offset(int, int) const
 		 */
-		Position operator()(int, int) const;
+		Position operator()(int dx, int dy) const;
 		/**
-		 * @copydoc offset(char, int) cosnt
+		 * @copydoc offset(char, int) const
 		 */
-		Position operator()(char, int) const;
+		Position operator()(char dc, int dd) const;
 		/**
 		 * @brief Comparison operator
 		 *
