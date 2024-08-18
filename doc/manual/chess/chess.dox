@@ -1,0 +1,18 @@
+/**
+@page chess Getting started with chess
+
+To setup the chess game, following have to be done:
+- Create tt::chess::Chessboard object
+- Populate it with pieces with tt::chess::Chessboard::fill() funcitons
+- Make turns with the tt::chess::Chessboard::makeTurn() function and 
+  catch corresponding exceptions on the way from the tt::chess::ex namespace.
+- Optionally check for checkmates with tt::chess::King::checkmate() thru 
+  King object pointer, or trhu tt::chess::Chessboard::currentKing().
+
+Here is simple example of textual chess game implementation:
+@include chess/game.cpp
+
+Here are more complex TUI chess game implementation:
+@include chess/complexGame.cpp
+
+*/

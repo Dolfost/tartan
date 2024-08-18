@@ -4,9 +4,9 @@
 
 Welcome to the documentation page of tartan library.
 
-@section getstart Getting started
+@section quickstart Quickstart
 
 - Learn how to build a project with @ref building section.
-- Learn how to use tt::chess with @ref chessToutorial section.
+- Learn how to use tt::chess with @ref chess section.
 
 */
