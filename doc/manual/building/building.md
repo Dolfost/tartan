@@ -1,4 +1,4 @@
-# Building <!--{#building} -->
+# Building <!--{#building}-->
 
 Project have to be configured with `cmake` utillity.
 Install it on you'r system. Then get the project sources.
