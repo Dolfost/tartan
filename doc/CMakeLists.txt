@@ -8,12 +8,15 @@ get_target_property(DOC_SRC tartan SOURCE_DIR)
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_GENERATE_MAN YES)
 set(DOXYGEN_GENERATE_LATEX YES)
-set(DOXYGEN_IMAGE_PATH images/)
-set(DOXYGEN_DOT_IMAGE_FORMAT svg)
 set(DOXYGEN_INTERACTIVE_SVG YES)
 set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+set(DOXYGEN_GENERATE_TREEVIEW YES)
+
+set(DOXYGEN_IMAGE_PATH images/)
+set(DOXYGEN_DOT_IMAGE_FORMAT svg)
 set(DOXYGEN_CITE_BIB_FILES
 	bibliography/games.bib
+	bibliography/tools.bib
 )
 set(DOXYGEN_TAGFILES
 	"cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/"
