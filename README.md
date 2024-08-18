@@ -8,4 +8,4 @@ Library that provides API for basic checkerboards and game pieces. Also the
 chess game is fully implemented.
 
 To learn how to build the library and docs, see
-[Building][doc/manual/building/building.md].
+[Building](doc/manual/building/building.md).
