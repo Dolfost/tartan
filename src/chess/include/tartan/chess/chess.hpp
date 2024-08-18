@@ -282,10 +282,23 @@ protected:
 	King* c_currentEnemyKing = nullptr;
 };
 
+ //! @brief Pawn chess Piece
 class Pawn : public Piece {
 public: 
 	using Piece::Piece;
-	virtual TurnMap moveMap(int = 0) const override;
+	/**
+	 * @brief Moves of a Pawn object 
+	 *
+	 * Method describes moves on a current Chessboard object.
+	 *
+	 * @return moves on a Chessboard
+	 */
+	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief Pawn Turn
+	 *
+	 * Accomodates Piece::Turn for Pawn promotion logic.
+	 */
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -294,14 +307,30 @@ public:
 	public:
 		bool isEqual(const Piece::Turn &) const override;
 		virtual void apply(int mode = 0) override;
+		/**
+		 * @brief Get prometion Piece type
+		 *
+		 * Used on Pawn promotion Turn
+		 *
+		 * @return type of Piece that that the Pawn 
+		 * were promoted to
+		 */
 		const std::type_index& promoteTo() const { return t_promoteTo; };
 	};
 };
 
+ //! @brief Knight chess Piece
 class Knight : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief Knight Turn 
+	 *
+	 * Nothing special from Piece::Turn here. 
+	 * This is just defined to use it with RTTI 
+	 * to differentiate Piece::Turn pointers.
+	 */
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -310,10 +339,16 @@ public:
 	};
 };
 
+ //! @brief Bishop chess Piece
 class Bishop : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief Bishop Turn
+	 *
+	 * @copydetails Knight::Turn
+	 */
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -322,10 +357,16 @@ public:
 	};
 };
 
+ //! @brief Rook chess Piece
 class Rook : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief Rook Turn
+	 *
+	 * @copydetails Knight::Turn
+	 */
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -334,10 +375,16 @@ public:
 	};
 };
 
+ //! @brief Queen chess Piece
 class Queen : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief Queen Turn
+	 *
+	 * @copydetails Knight::Turn
+	 */
 	class Turn : public Piece::Turn {
 	public:
 		using Piece::Turn::Turn;
@@ -346,12 +393,30 @@ public:
 	};
 };
 
+ //! @brief King chess Piece
 class King : public Piece {
 public: 
 	using Piece::Piece;
 	virtual TurnMap moveMap(int mode = 0) const override;
+	/**
+	 * @brief King Turn
+	 *
+	 * Accomodates the Piece::Turn for castling turns
+	 */
 	class Turn : public Piece::Turn {
 	public:
+		/**
+		 * @brief Make new King Turn object
+		 *
+		 * @param f King pointer
+		 * that performs the move
+		 * @param t target Turn Position
+		 * @param c captured Piece
+		 * @param castling Rook object pointer 
+		 * which will perform castling move with 
+		 * `f`
+		 * @param p Turn::t_possibe value
+		 */
 		Turn(
 			const Piece* f, 
 			const Position& t, 
@@ -372,8 +437,27 @@ public:
 	private:
 		Rook::Turn* k_castlingTurn;
 	};
+	/**
+	 * @brief Check if a King is under check
+	 *
+	 * @return `true` if King object is under 
+	 * check, `false` otherwise
+	*/
 	bool check() const;
+	/**
+	 * @brief Check if a King is under checkmate
+	 *
+	 * @return `true` if King object is under 
+	 * checkmate, `false` otherwise
+	*/
 	bool checkmate() const;
+	/**
+	 * @brief Has the King object already performed
+	 * the castling Turn
+	 *
+	 * @return `true` if King object have done 
+	 * castling already, `false` otherwise
+	 */
 	bool castled() const { return k_castled; };
 private:
 	bool k_castled = false;
