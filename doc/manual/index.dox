@@ -1,6 +1,8 @@
 /**
 @mainpage
-<img src="tartan_heading.png" align="left" height=100px>
+<div style="position:relative; width:100%; height:100px; background-color:transparent">
+    <img src="tartan_heading.png" style="position:absolute; left:1px" height=100px>
+</div>
 
 Welcome to the documentation page of tartan library.
 
