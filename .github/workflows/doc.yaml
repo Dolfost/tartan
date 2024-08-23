@@ -15,9 +15,8 @@ jobs:
         fetch-depth: 0
 
     - name: Install dependencies
-      uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: dia doxygen graphviz mscgen texlive-bibtex-extra perl
+      run: > 
+        sudo apt install dia doxygen graphviz mscgen texlive perl
 
     - name: Generate
       run: |
