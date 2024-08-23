@@ -6,24 +6,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
       with:
         fetch_tags: true
         fetch-depth: 0
 
-    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install dependencies
+      uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: dia doxygen graphviz mscgen
 
-    - name: Generate Docs
+    - name: Generate
       run: |
         cmake -B build -S .
         cmake --build build -t doc
 
-    - name: Deploy Docs
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/doc/html
-        permissions:
-          contents: write
