@@ -11,6 +11,8 @@ jobs:
         fetch_tags: true
         fetch-depth: 0
 
+    - uses: ssciwr/doxygen-install@v1
+
     - name: Generate Docs
       run: |
         cmake -B build -S .
