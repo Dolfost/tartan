@@ -5,13 +5,6 @@
 #include <stdexcept>
 #include <string>
 
-namespace {
-using std::string;
-using std::logic_error;
-using std::bad_typeid;
-using std::runtime_error;
-}
-
 //! Tartan tt::Board exceptions set
 namespace tt::ex {
 
@@ -22,7 +15,7 @@ namespace tt::ex {
  * thrown by this library
  * is derived from this class.
  */
-class tartan : public logic_error {
+class tartan : public std::logic_error {
 public:
 	using logic_error::logic_error;
 	virtual ~tartan() = default;
@@ -37,7 +30,7 @@ public:
 class bad_set : public tartan {
 public:
 	bad_set(
-		const string& what_arg = "Can not produce piece set"
+		const std::string& what_arg = "Can not produce piece set"
 	) : tartan(what_arg) {};
 };
 
@@ -50,7 +43,7 @@ public:
 	 */
 	bad_piece(
 		const Piece* p, 
-		const string& what_arg = "Invalid piece"
+		const std::string& what_arg = "Invalid piece"
 	) : tartan(what_arg) { e_piece = p; }
 	/**
 	 * @brief Get the reported tt::Piece object
@@ -72,7 +65,7 @@ public:
 	 * @param what_arg message string
 	 */
 	null_piece(
-		const string what_arg = "Piece does not exists"
+		const std::string what_arg = "Piece does not exists"
 	) : bad_piece(nullptr, what_arg) {};
 	const Piece* piece() const = delete;
 };
@@ -92,7 +85,7 @@ public:
 	foreign_piece(
 		const Piece* p, 
 		const Board* b, 
-		const string& what_arg = "Piece does not belong to this board"
+		const std::string& what_arg = "Piece does not belong to this board"
 	) : bad_piece(p, what_arg) { e_board = b; };
 	/**
 	 * @brief Get the Board object
@@ -116,17 +109,17 @@ public:
 	 * @param what_arg message string
 	 */
 	bad_piece_spec(
-		const string& spec,
-		const string what_arg = "Invalid piece specification"
+		const std::string& spec,
+		const std::string what_arg = "Invalid piece specification"
 	) : bad_piece(nullptr, what_arg) { e_spec = spec; };  
 	/**
 	 * @brief Get the malformed spec string
 	 *
 	 * @return the bad spec string
 	 */
-	const string& spec() const { return e_spec; };
+	const std::string& spec() const { return e_spec; };
 private:
-	string e_spec;
+	std::string e_spec;
 };
 
 /**
@@ -137,7 +130,7 @@ class position_is_taken : public bad_piece {
 public:
 	position_is_taken(
 		const Piece* p, 
-		const string& what_arg = "Piece position is taken"
+		const std::string& what_arg = "Piece position is taken"
 	) : bad_piece(p, what_arg) {};
 };
 	
@@ -154,7 +147,7 @@ public:
 	 * @param what_arg message string
 	 */
 	illegal_move(const Piece* p, const Piece::Position& to, 
-							const string& what_arg = "Illegal move") : 
+							const std::string& what_arg = "Illegal move") : 
 		tartan(what_arg), e_piece(p), e_to(to) {
 	};
 	/**
@@ -191,7 +184,7 @@ public:
 	tile_is_empty(
 		const Piece::Position& from, 
 		const Piece::Position& to, 
-		const string& what_arg = "Selected tile is empty") 
+		const std::string& what_arg = "Selected tile is empty") 
 	:	illegal_move(nullptr, to, what_arg), e_from(from) {};
 	const Piece* piece() = delete;
 	/**
@@ -218,7 +211,7 @@ public:
 	piece_in_wrong_color(
 		const Piece* p, 
 		const Piece::Position& to, 
-		const string& what_arg = "Moved piece is in wrong color") 
+		const std::string& what_arg = "Moved piece is in wrong color") 
 	:	illegal_move(p, to, what_arg) {};
 };
 
@@ -236,7 +229,7 @@ public:
 	can_not_move(
 		const Piece* p,
 		const Piece::Position& to, 
-		const string& what_arg = "Selected piece can't move") 
+		const std::string& what_arg = "Selected piece can't move") 
 	:	illegal_move(p, to, what_arg) {};
 };
 
@@ -255,7 +248,7 @@ public:
 	no_such_move(
 		const Piece* p,
 		const Piece::Position& to, 
-		const string& what_arg = "Selected piece can't perform such move") 
+		const std::string& what_arg = "Selected piece can't perform such move") 
 	:	illegal_move(p, to, what_arg) {};
 };
 
@@ -268,7 +261,7 @@ public:
 	/**
 	 * @param what_arg message string
 	 */
-	illegal_turn(const string& what_arg) :
+	illegal_turn(const std::string& what_arg) :
 		tartan(what_arg) {};
 	illegal_turn(const char* what_arg) :
 		tartan(what_arg) {};
@@ -280,7 +273,7 @@ public:
  */
 class bad_piece_type : public tartan {
 public:
-	bad_piece_type(const string what_arg = "Piece type is illegal") :
+	bad_piece_type(const std::string what_arg = "Piece type is illegal") :
 		tartan(what_arg) {};
 };
 
