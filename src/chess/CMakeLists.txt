@@ -21,7 +21,6 @@ target_sources(chess
 			BASE_DIRS 
 				"include"
 )
-# target_compile_features(chess PUBLIC cxx_std_17)
 
 target_link_libraries(chess board)
 
