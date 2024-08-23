@@ -11,7 +11,9 @@ jobs:
         fetch_tags: true
         fetch-depth: 0
 
-    - uses: ssciwr/doxygen-install@v1
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: dia doxygen graphviz mscgen
 
     - name: Generate Docs
       run: |
