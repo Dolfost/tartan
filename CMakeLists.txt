@@ -12,9 +12,14 @@ project(tartan
 )
 
 add_subdirectory(src)
-add_subdirectory(doc)
 
-if (PROJECT_IS_TOP_LEVEL)
+if (NOT DEFINED TARTAN_DOCS AND 
+	PROJECT_IS_TOP_LEVEL OR TARTAN_DOCS)
+	add_subdirectory(doc)
+endif()
+
+if (NOT DEFINED TARTAN_TESTING AND 
+	PROJECT_IS_TOP_LEVEL OR TARTAN_TESTING)
 	enable_testing()
 	add_subdirectory(tests)
 endif()
