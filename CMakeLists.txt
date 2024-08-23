@@ -23,3 +23,5 @@ if (NOT DEFINED TARTAN_TESTING AND
 	enable_testing()
 	add_subdirectory(tests)
 endif()
+
+add_subdirectory(install)
