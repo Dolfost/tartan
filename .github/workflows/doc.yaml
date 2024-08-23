@@ -1,4 +1,4 @@
-name: Publish Doxygen Docs
+name: Publish Docs
 
 on: [ push ]
 jobs:
