@@ -6,3 +6,5 @@ colours, forming simple or complex rectangular patterns_
 
 Library that provides API for basic checkerboards and game pieces. Also the
 chess game is fully implemented.
+
+You can see full API documentation [here](https://dolfost.github.io/tartan/).
