@@ -17,7 +17,7 @@ jobs:
     - name: Install dependencies
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: dia doxygen graphviz mscgen
+        packages: dia doxygen graphviz mscgen bibtex perl
 
     - name: Generate
       run: |
