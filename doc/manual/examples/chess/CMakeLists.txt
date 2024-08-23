@@ -2,12 +2,12 @@ add_executable(complexGame
 	complexGame.cpp 
 )
 target_link_libraries(complexGame
-	board chess 
+	tt::board tt::chess 
 )
 
 add_executable(game
 	game.cpp 
 )
 target_link_libraries(game
-	board chess 
+	tt::board tt::chess 
 )

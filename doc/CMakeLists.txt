@@ -3,7 +3,7 @@ find_package(Doxygen
 	OPTIONAL_COMPONENTS mscgen dia
 )
 
-get_target_property(DOC_SRC tartan SOURCE_DIR)
+get_target_property(DOC_SRC tt_tartan SOURCE_DIR)
 
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_GENERATE_MAN NO)

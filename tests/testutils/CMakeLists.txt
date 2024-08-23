@@ -12,5 +12,5 @@ target_sources(testutils
 )
 
 target_link_libraries(testutils
-	chess
+	tt::chess
 )
