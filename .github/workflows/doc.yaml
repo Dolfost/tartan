@@ -6,16 +6,15 @@ jobs:
     runs-on: ubuntu-latest
 
   steps:
-    - uses: actions/checkout@v2
+  - uses: actions/checkout@v2
 
-    - name: Generate Docs
-      run: |
-        cmake -B build -S .
-        cmake --build build -t doc
+  - name: Generate Docs
+    run: |
+      cmake -B build -S .
+      cmake --build build -t doc
 
-    - name: Deploy Docs
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+  - name: Deploy Docs
+    uses: peaceiris/actions-gh-pages@v3
+    with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
       publish_dir: ./build/doc/html
-
