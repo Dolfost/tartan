@@ -29,7 +29,7 @@ ctest
 @subsection buildres Results
 The `tartan/build/` directory will contain next folders:
 - `doc` Documentation of library. You can open html documentation by
- opening `tartan/build/doc/html/index.htm` in your browser.
+ opening `tartan/build/doc/html/index.html` in your browser.
 - `board` Base board and piece API classes library (tt::Board, tt::Piece)
 - `chess` Chess game implemented (tt::chess)
 */
