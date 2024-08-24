@@ -1,8 +1,22 @@
 /**
 @page building Building
-
 Project have to be configured with `cmake` @cite cmake utillity. Install it on
-you'r system. Then get the project sources. To get the repo from github, you
+you'r system.
+
+@section demobuild Demo build 
+To build and run the demo of chess game (without documentation), you can: 
+```
+git clone https://github.com/Dolfost/tartan
+cd tartan
+mkdir build 
+cd build 
+cmake -B . -S .. -DTARTAN_DOCS=NO
+cmake --build . -t iplay
+```
+
+@section detailedbuild Detailed build
+@paragraph dbsources Getting the sources
+To get the repo from github, you
 can execute the 
 ```
 git clone https://github.com/Dolfost/tartan
@@ -13,23 +27,65 @@ cd tartan
 mkdir build 
 cd build 
 ```
+@paragraph dbconfig Build system configuration
+Configuring has a bit of flexibility. You can 
+use next cmake defines during configuration:
+
+Option           | Type | Fallback variabble   | Meaning
+:----------------|:----:|---------------------:|--------
+`TARTAN_DOCS`    | bool | PROJECT_IS_TOP_LEVEL | Find `doxygen` and tools for docs generation
+`TARTAN_TESTING` | bool | PROJECT_IS_TOP_LEVEL | Enable testing and build test executables
+
+Fallback varriable value is used when the corresponding Option
+is not defined.
+
 To configure a project, do the:
 ```
 cmake -B . -S .. 
 ```
-To actually build everything, you have to:
+from the `tartan/build` directory.
+To configure project to not build tests and documentation:
+```
+cmake -B . -S .. -DTARTAN_TESTING=NO -DTARTAN_DOCS=NO
+```
+
+@paragraph dbbuild Building
+To produce executables, you have to execute:
 ```
 cmake --build .
 ```
+That command will build all targets (that have not been disabled by @ref dbconfig options)
+
+Avaliable targets:
+Target name | Explanation
+:-----------|:----------:
+tt_board    | Board class and it's perefirals. (`tartan/board/`)
+tt_chess    | Chessboard class and it's perefirals (`tartan/chess/`)
+doc         | Documentation 
+iplay       | Interactive textual chess game implementation
+
+For example, to build `iplay` target, you can 
+```
+cmake --biuld . -t iplay
+```
+in the `tartan/build` directory.
+
+@paragraph dbtest Testing
 To test the produced executables, run the `ctest` tool in the `build`
 directory.
 ```
 ctest 
 ```
+Note that no test will be avaliable when the `TARTAN_TESTING` is set to false.
+
 @subsection buildres Results
-The `tartan/build/` directory will contain next folders:
+The `tartan/build/` directory will contain next folders (if You have not disabled some components 
+with options at @ref dbconfig):
 - `doc` Documentation of library. You can open html documentation by
  opening `tartan/build/doc/html/index.html` in your browser.
 - `board` Base board and piece API classes library (tt::Board, tt::Piece)
 - `chess` Chess game implemented (tt::chess)
+- `tests` Test executables. The `tests/interactivePlay` is a example chess implementation
+
+
 */
