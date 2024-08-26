@@ -1,0 +1,6 @@
+<map id="tt::ex::bad_piece_type" name="tt::ex::bad_piece_type">
+<area shape="rect" id="node1" title="Thrown when tt::Board::getPieceType() returns std::type_info that is not mentioned in its argument." alt="" coords="5,229,172,256"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="37,155,140,181"/>
+<area shape="rect" id="node3" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="29,80,148,107"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="31,5,146,32"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="tt::ex::bad_piece_spec" name="tt::ex::bad_piece_spec">
+<area shape="rect" id="node1" title="Thrown when Board::piece() can not recognize Piece specification." alt="" coords="5,304,172,331"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1bad__piece.html" title="Base class for exceptions about pieces." alt="" coords="23,229,154,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="37,155,140,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="29,80,148,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="31,5,146,32"/>
+</map>

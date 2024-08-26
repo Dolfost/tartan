@@ -1,0 +1,7 @@
+<map id="tt::ex::tile_is_empty" name="tt::ex::tile_is_empty">
+<area shape="rect" id="node1" title="Thrown when selected Piece location is empty of the Board." alt="" coords="5,304,157,331"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1illegal__move.html" title="Base class for Board::makeMove() function errors." alt="" coords="7,229,155,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="30,155,133,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="22,80,141,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="24,5,139,32"/>
+</map>

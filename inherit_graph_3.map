@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classtt_1_1Piece.html" title="Generic board memeber piece API." alt="" coords="5,132,80,159"/>
+<area shape="rect" id="node2" href="$classtt_1_1chess_1_1Bishop.html" title="Bishop chess Piece." alt="" coords="128,5,257,32"/>
+<area shape="rect" id="node3" href="$classtt_1_1chess_1_1King.html" title="King chess Piece." alt="" coords="135,56,250,83"/>
+<area shape="rect" id="node4" href="$classtt_1_1chess_1_1Knight.html" title="Knight chess Piece." alt="" coords="129,107,256,133"/>
+<area shape="rect" id="node5" href="$classtt_1_1chess_1_1Pawn.html" title="Pawn chess Piece." alt="" coords="133,157,252,184"/>
+<area shape="rect" id="node6" href="$classtt_1_1chess_1_1Queen.html" title="Queen chess Piece." alt="" coords="129,208,256,235"/>
+<area shape="rect" id="node7" href="$classtt_1_1chess_1_1Rook.html" title="Rook chess Piece." alt="" coords="133,259,252,285"/>
+</map>

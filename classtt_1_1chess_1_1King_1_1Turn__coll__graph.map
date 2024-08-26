@@ -1,0 +1,13 @@
+<map id="tt::chess::King::Turn" name="tt::chess::King::Turn">
+<area shape="rect" id="node1" title="King Turn." alt="" coords="481,236,630,263"/>
+<area shape="rect" id="node2" href="$classtt_1_1Piece_1_1Turn.html" title="Generic Piece Turn on Board." alt="" coords="236,119,347,145"/>
+<area shape="rect" id="node10" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/list.html" title=" " alt="" coords="476,170,635,211"/>
+<area shape="rect" id="node3" href="$classtt_1_1Piece.html" title="Generic board memeber piece API." alt="" coords="1022,135,1097,161"/>
+<area shape="rect" id="node11" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/forward_list.html" title=" " alt="" coords="1232,185,1371,226"/>
+<area shape="rect" id="node4" href="$classtt_1_1Piece_1_1Position.html" title="Piece position at the Board." alt="" coords="5,73,140,100"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="511,119,599,145"/>
+<area shape="rect" id="node6" href="$classtt_1_1Board.html" title="8x8 game board" alt="" coords="805,213,884,240"/>
+<area shape="rect" id="node7" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="521,353,589,380"/>
+<area shape="rect" id="node8" title=" " alt="" coords="272,353,311,380"/>
+<area shape="rect" id="node9" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/utility/functional/function.html" title=" " alt="" coords="460,287,651,329"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="tt::ex::can_not_move" name="tt::ex::can_not_move">
+<area shape="rect" id="node1" title="Thrown when Board::makeMove() is performed on Piece that can not make any moves." alt="" coords="5,304,164,331"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1illegal__move.html" title="Base class for Board::makeMove() function errors." alt="" coords="11,229,159,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="33,155,136,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="25,80,144,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="27,5,142,32"/>
+</map>

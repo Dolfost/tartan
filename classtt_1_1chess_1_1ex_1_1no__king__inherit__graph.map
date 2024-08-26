@@ -1,0 +1,6 @@
+<map id="tt::chess::ex::no_king" name="tt::chess::ex::no_king">
+<area shape="rect" id="node1" title="Thrown when tt::chess::Chessboard has no King object of certain tt::Piece::Color." alt="" coords="5,229,165,256"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="34,155,137,181"/>
+<area shape="rect" id="node3" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="26,80,145,107"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="28,5,143,32"/>
+</map>

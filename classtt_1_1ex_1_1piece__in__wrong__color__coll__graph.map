@@ -1,0 +1,7 @@
+<map id="tt::ex::piece_in_wrong_color" name="tt::ex::piece_in_wrong_color">
+<area shape="rect" id="node1" title="Thrown when trying to Board::makeMove() on Piece that has wrong Piece::Color." alt="" coords="5,304,171,345"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1illegal__move.html" title="Base class for Board::makeMove() function errors." alt="" coords="14,229,162,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="37,155,139,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="29,80,147,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="31,5,145,32"/>
+</map>

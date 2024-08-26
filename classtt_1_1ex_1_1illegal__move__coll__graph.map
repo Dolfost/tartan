@@ -1,0 +1,6 @@
+<map id="tt::ex::illegal_move" name="tt::ex::illegal_move">
+<area shape="rect" id="node1" title="Base class for Board::makeMove() function errors." alt="" coords="5,229,153,256"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="28,155,131,181"/>
+<area shape="rect" id="node3" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="20,80,139,107"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="22,5,137,32"/>
+</map>

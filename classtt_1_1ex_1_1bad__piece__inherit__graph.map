@@ -1,0 +1,11 @@
+<map id="tt::ex::bad_piece" name="tt::ex::bad_piece">
+<area shape="rect" id="node1" title="Base class for exceptions about pieces." alt="" coords="485,107,616,133"/>
+<area shape="rect" id="node5" href="$classtt_1_1chess_1_1ex_1_1duplicate__king.html" title="Thrown when inserted King is already provided." alt="" coords="664,5,868,32"/>
+<area shape="rect" id="node6" href="$classtt_1_1ex_1_1bad__piece__spec.html" title="Thrown when Board::piece() can not recognize Piece specification." alt="" coords="683,56,849,83"/>
+<area shape="rect" id="node7" href="$classtt_1_1ex_1_1foreign__piece.html" title="Thrown when piece does not belong to Board object in which it is being processed." alt="" coords="690,107,842,133"/>
+<area shape="rect" id="node8" href="$classtt_1_1ex_1_1null__piece.html" title="Thrown when Piece pointer is nullptr when it should not be." alt="" coords="701,157,831,184"/>
+<area shape="rect" id="node9" href="$classtt_1_1ex_1_1position__is__taken.html" title="Thrown when Piece Position on Board is occupied when it should not to." alt="" coords="699,209,833,250"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="335,107,437,133"/>
+<area shape="rect" id="node3" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="168,107,287,133"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="5,107,120,133"/>
+</map>

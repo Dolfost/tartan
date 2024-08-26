@@ -1,0 +1,9 @@
+<map id="tt::Piece::Turn" name="tt::Piece::Turn">
+<area shape="rect" id="node1" title="Generic Piece Turn on Board." alt="" coords="5,132,116,159"/>
+<area shape="rect" id="node2" href="$classtt_1_1chess_1_1Bishop_1_1Turn.html" title="Bishop Turn." alt="" coords="164,5,328,32"/>
+<area shape="rect" id="node3" href="$classtt_1_1chess_1_1King_1_1Turn.html" title="King Turn." alt="" coords="171,56,321,83"/>
+<area shape="rect" id="node4" href="$classtt_1_1chess_1_1Knight_1_1Turn.html" title="Knight Turn." alt="" coords="165,107,327,133"/>
+<area shape="rect" id="node5" href="$classtt_1_1chess_1_1Pawn_1_1Turn.html" title="Pawn Turn." alt="" coords="169,157,323,184"/>
+<area shape="rect" id="node6" href="$classtt_1_1chess_1_1Queen_1_1Turn.html" title="Queen Turn." alt="" coords="165,208,327,235"/>
+<area shape="rect" id="node7" href="$classtt_1_1chess_1_1Rook_1_1Turn.html" title="Rook Turn." alt="" coords="169,259,323,285"/>
+</map>

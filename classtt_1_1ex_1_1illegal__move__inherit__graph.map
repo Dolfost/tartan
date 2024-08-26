@@ -1,0 +1,12 @@
+<map id="tt::ex::illegal_move" name="tt::ex::illegal_move">
+<area shape="rect" id="node1" title="Base class for Board::makeMove() function errors." alt="" coords="485,107,633,133"/>
+<area shape="rect" id="node5" href="$classtt_1_1chess_1_1ex_1_1check.html" title="Thrown when turn cannot be perfomred because of King beeing in check." alt="" coords="691,5,837,32"/>
+<area shape="rect" id="node7" href="$classtt_1_1ex_1_1can__not__move.html" title="Thrown when Board::makeMove() is performed on Piece that can not make any moves." alt="" coords="685,56,843,83"/>
+<area shape="rect" id="node8" href="$classtt_1_1ex_1_1no__such__move.html" title="Thrown when piece moved with Board::makeMove() can not have such move." alt="" coords="683,107,845,133"/>
+<area shape="rect" id="node9" href="$classtt_1_1ex_1_1piece__in__wrong__color.html" title="Thrown when trying to Board::makeMove() on Piece that has wrong Piece::Color." alt="" coords="681,158,847,199"/>
+<area shape="rect" id="node10" href="$classtt_1_1ex_1_1tile__is__empty.html" title="Thrown when selected Piece location is empty of the Board." alt="" coords="688,224,840,251"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="335,107,437,133"/>
+<area shape="rect" id="node3" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="168,107,287,133"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="5,107,120,133"/>
+<area shape="rect" id="node6" href="$classtt_1_1chess_1_1ex_1_1checkmate.html" title="Thrown when turn cannot be perfomred because of King is under checkmate." alt="" coords="895,5,1076,32"/>
+</map>

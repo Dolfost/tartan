@@ -1,0 +1,4 @@
+<map id="tt::chess::Rook" name="tt::chess::Rook">
+<area shape="rect" id="node1" title="Rook chess Piece." alt="" coords="5,80,124,107"/>
+<area shape="rect" id="node2" href="$classtt_1_1Piece.html" title="Generic board memeber piece API." alt="" coords="27,5,102,32"/>
+</map>

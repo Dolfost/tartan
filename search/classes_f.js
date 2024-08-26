@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['packaged_5ftask_2012',['packaged_task',['https://en.cppreference.com/w/cpp/thread/packaged_task.html',1,'std']]],
+  ['pair_2013',['pair',['https://en.cppreference.com/w/cpp/utility/pair.html',1,'std']]],
+  ['pattern_2014',['pattern',['https://en.cppreference.com/w/cpp/locale/money_base.html',1,'std::money_base::pattern'],['https://en.cppreference.com/w/cpp/locale/money_base.html',1,'std::money_get::pattern'],['https://en.cppreference.com/w/cpp/locale/money_base.html',1,'std::money_put::pattern'],['https://en.cppreference.com/w/cpp/locale/money_base.html',1,'std::moneypunct::pattern'],['https://en.cppreference.com/w/cpp/locale/money_base.html',1,'std::moneypunct_byname::pattern']]],
+  ['pawn_2015',['Pawn',['../classtt_1_1chess_1_1Pawn.html',1,'tt::chess']]],
+  ['peta_2016',['peta',['https://en.cppreference.com/w/cpp/numeric/ratio/ratio.html',1,'std']]],
+  ['pico_2017',['pico',['https://en.cppreference.com/w/cpp/numeric/ratio/ratio.html',1,'std']]],
+  ['piece_2018',['Piece',['../classtt_1_1Piece.html',1,'tt']]],
+  ['piece_5fin_5fwrong_5fcolor_2019',['piece_in_wrong_color',['../classtt_1_1ex_1_1piece__in__wrong__color.html',1,'tt::ex']]],
+  ['piecewise_5fconstant_5fdistribution_2020',['piecewise_constant_distribution',['https://en.cppreference.com/w/cpp/numeric/random/piecewise_constant_distribution.html',1,'std']]],
+  ['piecewise_5fconstruct_5ft_2021',['piecewise_construct_t',['https://en.cppreference.com/w/cpp/utility/piecewise_construct_t.html',1,'std']]],
+  ['piecewise_5flinear_5fdistribution_2022',['piecewise_linear_distribution',['https://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution.html',1,'std']]],
+  ['placeholders_2023',['placeholders',['https://en.cppreference.com/w/cpp/utility/functional/placeholders.html',1,'std']]],
+  ['plus_2024',['plus',['https://en.cppreference.com/w/cpp/utility/functional/plus.html',1,'std']]],
+  ['pointer_5fsafety_2025',['pointer_safety',['https://en.cppreference.com/w/cpp/memory/gc/pointer_safety.html',1,'std']]],
+  ['pointer_5ftraits_2026',['pointer_traits',['https://en.cppreference.com/w/cpp/memory/pointer_traits.html',1,'std']]],
+  ['poisson_5fdistribution_2027',['poisson_distribution',['https://en.cppreference.com/w/cpp/numeric/random/poisson_distribution.html',1,'std']]],
+  ['position_2028',['Position',['../classtt_1_1Piece_1_1Position.html',1,'tt::Piece']]],
+  ['position_5fis_5ftaken_2029',['position_is_taken',['../classtt_1_1ex_1_1position__is__taken.html',1,'tt::ex']]],
+  ['priority_5fqueue_2030',['priority_queue',['https://en.cppreference.com/w/cpp/container/priority_queue.html',1,'std']]],
+  ['promise_2031',['promise',['https://en.cppreference.com/w/cpp/thread/promise.html',1,'std']]],
+  ['ptrdiff_5ft_2032',['ptrdiff_t',['https://en.cppreference.com/w/cpp/types/ptrdiff_t.html',1,'std']]]
+];

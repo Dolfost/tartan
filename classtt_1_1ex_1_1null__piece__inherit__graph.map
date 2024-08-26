@@ -1,0 +1,7 @@
+<map id="tt::ex::null_piece" name="tt::ex::null_piece">
+<area shape="rect" id="node1" title="Thrown when Piece pointer is nullptr when it should not be." alt="" coords="5,304,136,331"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1bad__piece.html" title="Base class for exceptions about pieces." alt="" coords="5,229,136,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="19,155,122,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="11,80,130,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="13,5,128,32"/>
+</map>

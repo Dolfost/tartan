@@ -1,0 +1,7 @@
+<map id="tt::ex::position_is_taken" name="tt::ex::position_is_taken">
+<area shape="rect" id="node1" title="Thrown when Piece Position on Board is occupied when it should not to." alt="" coords="5,304,140,345"/>
+<area shape="rect" id="node2" href="$classtt_1_1ex_1_1bad__piece.html" title="Base class for exceptions about pieces." alt="" coords="7,229,138,256"/>
+<area shape="rect" id="node3" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="21,155,124,181"/>
+<area shape="rect" id="node4" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="13,80,132,107"/>
+<area shape="rect" id="node5" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="15,5,130,32"/>
+</map>
