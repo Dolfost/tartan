@@ -460,7 +460,13 @@ public:
 	 */
 	bool castled() const { return k_castled; };
 private:
+	bool calculateCheck() const;
+	bool calculateCheckmate() const;
 	bool k_castled = false;
+	mutable bool k_check = false;
+	mutable bool k_checkmate = false;
+	mutable std::size_t k_checkTurnIndex = -1;
+	mutable std::size_t k_checkmateTurnIndex = -1;
 };
 
 }

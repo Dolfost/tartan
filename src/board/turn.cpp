@@ -1,3 +1,4 @@
+#include <iostream>
 #include <tartan/board.hpp>
 #include <tartan/board/exceptions.hpp>
 
@@ -26,7 +27,6 @@ void Turn::apply(int) {
 
 void Turn::undo() {
 	Board& cb = *t_piece->p_board;
-	cb.b_turnIndex--;
 
 	t_piece->move(t_from);
 

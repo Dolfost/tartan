@@ -72,6 +72,14 @@ TurnMap King::moveMap(int mode) const {
 }
 
 bool King::check() const {
+	if (k_checkTurnIndex != board()->turnIndex()) {
+		k_check = calculateCheck();
+		k_checkTurnIndex = board()->turnIndex();
+	}
+	return k_check;
+}
+
+bool King::calculateCheck() const {
 	for (auto& row : p_board->board()) {
 		for (auto& p : row) {
 			if (!p or p->color() == p_color)
@@ -97,7 +105,16 @@ bool King::check() const {
 	return false;
 }
 
+
 bool King::checkmate() const {
+	if (k_checkmateTurnIndex != board()->turnIndex()) {
+		k_checkmate = calculateCheckmate();
+		k_checkmateTurnIndex = board()->turnIndex();
+	}
+	return k_checkmate;
+}
+
+bool King::calculateCheckmate() const {
 	if (!check() or p_board->possibleMoves(this).possible())
 		return false;
 

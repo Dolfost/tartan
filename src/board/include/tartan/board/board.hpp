@@ -857,7 +857,8 @@ public:
 	 * @brief Turn index
 	 *
 	 * Underlying varriable gets inclremented 
-	 * on Turn::apply() and decremented on Turn::undo().
+	 * on Turn::apply(). 
+	 * Acts like a timestamp fo current Board state.
 	 *
 	 * @return last Piece::Turn index
 	 * @sa b_turnIndex
