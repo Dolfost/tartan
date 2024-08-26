@@ -856,6 +856,9 @@ public:
 	/**
 	 * @brief Turn index
 	 *
+	 * Underlying varriable gets inclremented 
+	 * on Turn::apply() and decremented on Turn::undo().
+	 *
 	 * @return last Piece::Turn index
 	 * @sa b_turnIndex
 	 */
@@ -978,14 +981,14 @@ public:
 	/**
 	 * @brief Equal to operator
 	 *
-	 * This is a bind to function `lhs.isEqua(rhs)`.
+	 * This is a bind to function `lhs.isEqual(rhs)`.
 	 * @sa isEqual()
 	 */
 	friend bool operator==(const Board& lhs, const Board& rhs);
 	/**
 	 * @brief Not equal to operator
 	 *
-	 * This is a bind to function `!lhs.isEqua(rhs)`.
+	 * This is a bind to function `!lhs.isEqual(rhs)`.
 	 * @sa isEqual()
 	 */
 	friend bool operator!=(const Board&, const Board&);
