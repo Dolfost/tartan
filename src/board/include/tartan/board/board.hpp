@@ -15,11 +15,10 @@ namespace tt {
 class Board;
 
 /**
- * @brief Generic board memeber piece API.
+ * @brief Generic board memeber API.
  *
- * This class should be inherited and used as
- * a way to describe chess piece in every board derived
- * from Board class.
+ * This class should be inherited and used
+ * to describe piece in new board.
  */
 class Piece {
 public:
@@ -107,7 +106,7 @@ public:
 		/**
 		 * @brief Copy constructor
 		 *
-		 * @note Copying does not copy the current mode.
+		 * @note Copying does not copy the current Position::mode.
 		 */
 		Position(const Position&);
 		/**
@@ -321,19 +320,19 @@ public:
 	 * @brief Generic Piece Turn on Board
 	 *
 	 * Class should be defined as derived from Piece::Turn in every class
-	 * derives from Piece.
+	 * derived from Piece.
 	 */
 	class Turn {
 	public:
 		/**
 		 * @brief Construct new Turn object
 		 *
-		 * @param tpiece turn piece. Piece that performs turn
-		 * @param to final location. Location where the `tpiece` 
-		 * will end up after the turn is applied
+		 * @param tpiece pointer to Piece that performs turn
+		 * @param to Location where of `tpiece` 
+		 * after the turn is applied
 		 * @param cap captured Piece. Should be provided if 
 		 * turn captures some pieces
-		 * @param possible `true`, if turn is possible, false otherwise
+		 * @param possible `true`, if turn is marked as possible, false otherwise
 		 */
 		Turn(const Piece* tpiece, 
 			 const Position& to, 
@@ -602,7 +601,7 @@ public:
 	 *
 	 * @note Developer had and intention 
 	 * that You will define unscoped enumeration for `mode`
-	 * in Your Board class. It's value will be passe 
+	 * in Your Board class. It's value will be passed
 	 * to function and influence
 	 * it's behaivor in some way.
 	 *
@@ -683,10 +682,9 @@ using BoardT = std::array<std::array<Piece*, 8>, 8>;
  *
  * This class is used to host Piece objects 
  * and should be inherited to use. Also You have
- * reimlemtent all pure virtual methods to use 
- * the class.
+ * reimlemtent all pure virtual methods to use it.
  *
- * Class exceptions are described in 
+ * Class exceptions are defined in 
  * tartan/board/exceptions.hpp.
  */
 class Board : private BoardT {
@@ -836,7 +834,7 @@ public:
 	*/
 	BoardT& board() { return static_cast<BoardT&>(*this); };
 	/**
-	 * @brief Turns history
+	 * @brief Turn history
 	 *
 	 * @return HistoryT data type object
 	 * @sa b_history
@@ -907,7 +905,7 @@ public:
 	 * string Piece specialization allocates new objects
 	 * with piece() function.
 	 *
-	 * The insertPiece() is used on each produces/recieved Piece object. 
+	 * The insertPiece() is used on each produced/recieved Piece object. 
 	 * This function throws corresponding exceptions on errors.
 	 *
 	 * @sa insertPiece(), piece()
@@ -1125,7 +1123,7 @@ protected:
 	 *
 	 * Pieces that have retired and have been removed from 
 	 * Board should go to this list. The default applyTurn()
-	 * function does that if turn catures something.
+	 * function does that if turn captures something.
 	 */
 	CapturedT b_capturedPieces;
 	/**

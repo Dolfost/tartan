@@ -282,7 +282,7 @@ protected:
 	King* c_currentEnemyKing = nullptr;
 };
 
- //! @brief Pawn chess Piece
+//! @brief Pawn chess Piece
 class Pawn : public Piece {
 public: 
 	using Piece::Piece;
@@ -319,7 +319,7 @@ public:
 	};
 };
 
- //! @brief Knight chess Piece
+//! @brief Knight chess Piece
 class Knight : public Piece {
 public: 
 	using Piece::Piece;
@@ -339,7 +339,7 @@ public:
 	};
 };
 
- //! @brief Bishop chess Piece
+//! @brief Bishop chess Piece
 class Bishop : public Piece {
 public: 
 	using Piece::Piece;
@@ -357,7 +357,7 @@ public:
 	};
 };
 
- //! @brief Rook chess Piece
+//! @brief Rook chess Piece
 class Rook : public Piece {
 public: 
 	using Piece::Piece;
@@ -375,7 +375,7 @@ public:
 	};
 };
 
- //! @brief Queen chess Piece
+//! @brief Queen chess Piece
 class Queen : public Piece {
 public: 
 	using Piece::Piece;
@@ -393,7 +393,7 @@ public:
 	};
 };
 
- //! @brief King chess Piece
+//! @brief King chess Piece
 class King : public Piece {
 public: 
 	using Piece::Piece;
