@@ -16,16 +16,19 @@ add_library(tt_chess STATIC
 add_library(tt::chess ALIAS tt_chess)
 
 set_target_properties(tt_chess PROPERTIES
-	OUTPUT_NAME chess
+	VERSION ${PROJECT_VERSION}
+	SOVERSION ${PROJECT_VERSION_MAJOR}
+	OUTPUT_NAME ttchess
 	EXPORT_NAME chess
 )
 
 target_sources(tt_chess
-	PUBLIC
-		FILE_SET tt_chess_headers
-			TYPE HEADERS 
-			BASE_DIRS 
-				"include"
+	PUBLIC FILE_SET HEADERS
+		BASE_DIRS "include"
+		FILES
+			include/tartan/chess.hpp
+			include/tartan/chess/chess.hpp
+			include/tartan/chess/exceptions.hpp
 )
 
 target_link_libraries(tt_chess tt_board)

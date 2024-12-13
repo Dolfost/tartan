@@ -8,17 +8,22 @@ add_library(tt_board STATIC
 add_library(tt::board ALIAS tt_board)
 
 set_target_properties(tt_board PROPERTIES
-	OUTPUT_NAME board
+	VERSION ${PROJECT_VERSION}
+	SOVERSION ${PROJECT_VERSION_MAJOR}
+	OUTPUT_NAME ttboard
 	EXPORT_NAME board
 )
 
 target_sources(tt_board
-	PUBLIC
-		FILE_SET tt_board_headers
-			TYPE HEADERS 
-			BASE_DIRS 
-				"${CMAKE_CURRENT_BINARY_DIR}"
-				"include"
+	PUBLIC FILE_SET HEADERS
+		BASE_DIRS 
+			"$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
+			"include"
+		FILES 
+			include/tartan/board.hpp
+			include/tartan/board/board.hpp
+			include/tartan/board/exceptions.hpp
+			"${CMAKE_CURRENT_BINARY_DIR}/tartan/version.hpp"
 )
 
 target_compile_features(tt_board PUBLIC cxx_std_${TARTAN_CXX_STANDARD})
