@@ -9,6 +9,7 @@ include(version)
 project(tartan
 	LANGUAGES CXX
 	VERSION ${GIT_VERSION_TAG}
+	DESCRIPTION "Chess API"
 )
 
 add_subdirectory(src)
@@ -25,3 +26,7 @@ if (NOT DEFINED TARTAN_TESTING AND
 endif()
 
 add_subdirectory(install)
+
+if(PROJECT_IS_TOP_LEVEL)
+	add_subdirectory(packaging)
+endif()
