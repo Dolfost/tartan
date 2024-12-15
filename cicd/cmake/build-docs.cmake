@@ -1,0 +1,13 @@
+message("==>> Configuring documentation...")
+execute_process( # configuration
+	COMMAND "${CMAKE_COMMAND}" -B build -S . -DTARTAN_DOCS=YES -DTARTAN_TESTING=NO
+	WORKING_DIRECTORY "$ENV{REPO}"
+)
+
+file(MAKE_DIRECTORY "$ENV{REPO}/build")
+
+message("==>> Building documentation...")
+execute_process( # building
+	COMMAND "${CMAKE_COMMAND}" --build build -t doc
+	WORKING_DIRECTORY "$ENV{REPO}"
+)

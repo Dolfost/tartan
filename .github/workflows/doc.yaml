@@ -1,4 +1,4 @@
-name: Docs
+name: Build and Deploy docs
 
 on:
   workflow_dispatch:
@@ -15,22 +15,8 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install dependencies
-      run: > 
-        sudo apt install dia doxygen graphviz mscgen texlive perl
-
-    - name: Generate
-      run: |
-        cmake -B build -S .
-        cmake --build build -t doc
-
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        path: |
-            ./build/doc/man
-            ./build/doc/html
-        name: docs
+    - name: Build
+      run: ./cicd/ubuntu.sh build-docs
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
