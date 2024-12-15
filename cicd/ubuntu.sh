@@ -5,8 +5,14 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
+case "$1" in
+	'docs'|'pack')
+		aptdeps+=" doxygen dia graphviz mscgen texlive perl"
+		;;
+esac
+
 # installing dependencies
-sudo apt install cmake git dia doxygen graphviz mscgen texlive perl
+sudo apt install cmake git $aptdeps
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 export REPO="$SCRIPT_DIR/.."
