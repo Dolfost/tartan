@@ -1,0 +1,96 @@
+name: Deploy
+
+on: 
+  push:
+    branches: 
+      - main
+  workflow_run:
+    workflows: ['Docs']
+    types: [completed]
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    outputs:
+        tag: ${{ steps.git.outputs.tag }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Windows",
+            os: windows-latest,
+          }
+        - {
+            name: "Ubuntu",
+            os: ubuntu-latest,
+          }
+        - {
+            name: "macOS",
+            os: macos-latest,
+          }
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get CMake and Ninja
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: "~3.25.0"  # most recent 3.25.x version
+        ninjaVersion: "^1.11.1"  # most recent 1.x version
+
+    - name: Configure
+      run: | 
+        mkdir build
+        cd build
+        cmake -B . -S .. -DTARTAN_DOCS=NO -DTARTAN_TESTING=NO
+
+    - name: Download docs 
+      uses: actions/download-artifact@v4
+      with:
+        name: docs
+        path: doc/
+
+    - name: Build
+      run: cmake --build .
+
+    - name: Download docs
+      uses: actions/download-artifact@v4
+      with:
+        name: docs
+        path: doc/
+
+    - name: Pack
+      run: cpack -B packed
+
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        pattern: ./packed/*
+        name: ${{ matrix.config.os }}-cd-packages
+
+  release:
+    if: contains(github.ref, 'tags/v')
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: releases
+
+    - name: List artifacts
+      run: ls releases
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ needs.build.outputs.tag }}
+        files: releases/*
+        draft: false
+        prerelease: false

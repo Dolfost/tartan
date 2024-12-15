@@ -24,6 +24,14 @@ jobs:
         cmake -B build -S .
         cmake --build build -t doc
 
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        path: |
+            ./build/doc/man
+            ./build/doc/html
+        name: docs
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
