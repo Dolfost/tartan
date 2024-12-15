@@ -1,4 +1,4 @@
-name: Build and Deploy docs
+name: Build and deploy documentation
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         fetch-depth: 0
 
     - name: Build
-      run: ./cicd/ubuntu.sh build-docs
+      run: ./cicd/ubuntu.sh docs
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
