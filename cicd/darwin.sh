@@ -7,12 +7,15 @@ fi
 
 case "$1" in
 	'docs'|'pack')
-		aptdeps+=" doxygen graphviz texlive perl"
+		brewdeps+=" doxygen graphviz mactex-no-gui"
 		;;
 esac
 
+# installing homebrew 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 # installing dependencies
-sudo apt install cmake git $aptdeps
+brew install cmake git $brewdeps
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 export REPO="$SCRIPT_DIR/.."
