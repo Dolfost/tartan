@@ -61,8 +61,8 @@ jobs:
       with:
         name: docs
         path: doc/
-        github-token: ${{ secrets.GH_PAT }}
-        repository: dolfost/tartan
+        run-id: ${{ github.event.workflow_run.id }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Pack
       run: cpack -B packed
