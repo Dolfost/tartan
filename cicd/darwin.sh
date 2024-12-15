@@ -15,7 +15,7 @@ esac
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # installing dependencies
-brew install cmake git $brewdeps
+brew install --formula cmake git $brewdeps
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 export REPO="$SCRIPT_DIR/.."
