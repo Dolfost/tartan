@@ -73,27 +73,27 @@ jobs:
         pattern: ./packed/*
         name: ${{ matrix.config.os }}-cd-packages
 
-  release:
-    if: contains(github.ref, 'tags/v')
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: Download artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: releases
-
-    - name: List artifacts
-      run: ls releases
-
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ needs.build.outputs.tag }}
-        files: releases/*
-        draft: false
-        prerelease: false
+  # release:
+  #   if: contains(github.ref, 'tags/v')
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #
+  #   steps:
+  #   - name: Download artifacts
+  #     uses: actions/download-artifact@v4
+  #     with:
+  #       path: releases
+  #
+  #   - name: List artifacts
+  #     run: ls releases
+  #
+  #   - name: Create Release
+  #     id: create_release
+  #     uses: softprops/action-gh-release@v2
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     with:
+  #       tag_name: v${{ needs.build.outputs.tag }}
+  #       files: releases/*
+  #       draft: false
+  #       prerelease: false
