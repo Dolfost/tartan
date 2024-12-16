@@ -11,7 +11,7 @@ case "$1" in
 		aptdeps="$aptdeps doxygen graphviz texlive perl"
 		;;
 esac
-echo "the deps: $aptdeps"
+
 # installing dependencies
 sudo apt install $aptdeps
 
