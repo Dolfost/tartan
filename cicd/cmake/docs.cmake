@@ -1,6 +1,7 @@
 message("==>> Configuring documentation...")
 execute_process( # configuration
-	COMMAND "${CMAKE_COMMAND}" -B build -S . -DTARTAN_DOCS=YES -DTARTAN_TESTING=NO
+	COMMAND "${CMAKE_COMMAND}" $ENV{TARTAN_CONFIGURATION_OPTIONS} -B build -S . 
+	-DTARTAN_DOCS=YES -DTARTAN_TESTING=NO -DTARTAN_TARTAN=NO
 	WORKING_DIRECTORY "$ENV{REPO}"
 )
 

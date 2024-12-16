@@ -19,5 +19,6 @@ SET "CXX=g++"
 
 SET "SCRIPT_DIR=%~dp0"
 SET "REPO=%SCRIPT_DIR%.."
+SET "TARTAN_CONFIGURATION_OPTIONS=-G MinGW Makefiles"
 
 cmake -P "%SCRIPT_DIR%cmake\%1.cmake"

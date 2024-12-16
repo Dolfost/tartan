@@ -12,7 +12,9 @@ project(tartan
 	DESCRIPTION "Chess API"
 )
 
-add_subdirectory(src)
+if (NOT DEFINED TARTAN_TARTAN OR TATAN_TARTAN)
+	add_subdirectory(src)
+endif()
 
 if (NOT DEFINED TARTAN_DOCS AND 
 	PROJECT_IS_TOP_LEVEL OR TARTAN_DOCS)
