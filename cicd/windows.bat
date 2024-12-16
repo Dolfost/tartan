@@ -6,7 +6,7 @@ REM install chocolatey
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 REM figure out dependencies
-SET "chocodeps= "
+SET "chocodeps="
 SET "needdoxygen=0"
 IF [%1] EQU "docs" SET "needdoxygen=1"
 IF [%1] EQU "pack" SET "needdoxygen=1"
@@ -18,7 +18,11 @@ IF [%1] EQU "test" SET "needmingw=1"
 IF %needmingw% EQU 1 SET "chocodeps=%chocodeps% mingw"
 
 REM install dependencies
-choco install %chocodeps%
+IF NOT "%chocodeps%"=="" (
+    choco install %chocodeps%
+) ELSE (
+    ECHO "No packages specified to install."
+)
 
 SET "SCRIPT_DIR=%~dp0"
 SET "REPO=%SCRIPT_DIR%.."

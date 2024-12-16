@@ -5,6 +5,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
+aptdeps="cmake git"
 case "$1" in
 	docs|pack)
 		aptdeps+=" doxygen graphviz texlive perl"
@@ -12,7 +13,7 @@ case "$1" in
 esac
 
 # installing dependencies
-sudo apt install cmake git $aptdeps
+sudo apt install $aptdeps
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 export REPO="$SCRIPT_DIR/.."
