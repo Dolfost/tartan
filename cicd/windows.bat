@@ -1,4 +1,4 @@
-REM ECHO OFF
+ECHO OFF
 
 IF [%1] == [] ECHO "No operation specified!" & EXIT 1
 
