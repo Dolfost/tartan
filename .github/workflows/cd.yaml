@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: ./build/packaging/out/*
-        name: ${{ matrix.config.os }}-cd-packages
+        name: ${{ matrix.os }}-packed-artifacts
 
   release:
     runs-on: ubuntu-latest
