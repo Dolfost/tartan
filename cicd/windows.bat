@@ -13,10 +13,6 @@ REM install chocolatey
 REM install dependencies
 choco install mingw
 
-:: this should ressemble MinGW
-SET "CC=gcc"
-SET "CXX=g++"
-
 SET "SCRIPT_DIR=%~dp0"
 SET "REPO=%SCRIPT_DIR%.."
 SET "TARTAN_CONFIGURATION_OPTIONS=-G MinGW Makefiles"
