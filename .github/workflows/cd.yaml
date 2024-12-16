@@ -32,7 +32,7 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        pattern: ./packed/*
+        path: ./build/packaging/out/*
         name: ${{ matrix.config.os }}-cd-packages
 
   release:
@@ -43,12 +43,12 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
-        path: releases
+        path: pakages
 
     - name: Make release
       uses: softprops/action-gh-release@v2
       with:
-        files: releases/*
+        files: pakages/*
         draft: false
         prerelease: false
         make_latest: true
