@@ -8,21 +8,20 @@ REM install chocolatey
 REM figure out dependencies
 SET "chocodeps= "
 SET "needdoxygen=0"
-IF [%1] EQU "docs" SET "needdoxygen=1"
-IF [%1] EQU "pack" SET "needdoxygen=1"
+IF "%1" == "docs" SET "needdoxygen=1"
+IF "%1" == "pack" SET "needdoxygen=1"
 IF %needdoxygen% EQU 1 SET "chocodeps=doxygen graphviz texlive strawberryperl"
 
 SET "needmingw=0"
-IF [%1] EQU "pack" SET "needmingw=1"
-IF [%1] EQU "test" SET "needmingw=1"
+IF "%1" == "pack" SET "needmingw=1"
+IF "%1" == "test" SET "needmingw=1"
 IF %needmingw% EQU 1 SET "chocodeps=%chocodeps% mingw"
 
-ECHO "DEPS: %chocodeps%"
 REM install dependencies
 IF [%chocodeps%] == [] (
-    ECHO "No packages specified to install."
+	ECHO "No packages specified to install."
 ) ELSE (
-    choco install %chocodeps%
+	choco install %chocodeps%
 )
 
 SET "SCRIPT_DIR=%~dp0"
