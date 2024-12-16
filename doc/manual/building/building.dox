@@ -33,6 +33,7 @@ use next cmake defines during configuration:
 
 Option           | Type | Fallback variabble   | Meaning
 :----------------|:----:|---------------------:|--------
+`TARTAN_TARTAN`  | bool | YES                  | Provide build and install rules for library
 `TARTAN_DOCS`    | bool | PROJECT_IS_TOP_LEVEL | Find `doxygen` and tools for docs generation
 `TARTAN_TESTING` | bool | PROJECT_IS_TOP_LEVEL | Enable testing and build test executables
 
