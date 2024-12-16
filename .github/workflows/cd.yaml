@@ -11,10 +11,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
-    outputs:
-        tag: ${{ steps.git.outputs.tag }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
