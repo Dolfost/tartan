@@ -87,6 +87,7 @@ with options at @ref dbconfig):
 - `board` Base board and piece API classes library (tt::Board, tt::Piece)
 - `chess` Chess game implemented (tt::chess)
 - `tests` Test executables. The `tests/interactivePlay` is a example chess implementation
+- `packaging/out` Path where `cpack` will wirte it's generated packages
 
 
 */
