@@ -20,7 +20,4 @@ SET "CXX=g++"
 SET "SCRIPT_DIR=%~dp0"
 SET "REPO=%SCRIPT_DIR%.."
 
-where gcc 
-
-EXIT 1
 cmake -P "%SCRIPT_DIR%cmake\%1.cmake"
