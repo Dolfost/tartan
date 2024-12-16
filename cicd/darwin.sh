@@ -7,15 +7,17 @@ fi
 
 case "$1" in
 	'docs'|'pack')
-		brewdeps+=" doxygen graphviz mactex-no-gui"
+		brewformulas+=" doxygen graphviz"
+		brewcasks+="mactex-no-gui"
 		;;
 esac
 
 # installing homebrew 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # installing dependencies
-brew install --formula cmake git $brewdeps
+brew install --formula cmake git $brewdeps --cask $brewcasks
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 export REPO="$SCRIPT_DIR/.."
