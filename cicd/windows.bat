@@ -18,7 +18,7 @@ IF "%1" == "test" SET "needmingw=1"
 IF %needmingw% EQU 1 SET "chocodeps=%chocodeps% mingw"
 
 REM install dependencies
-IF [%chocodeps%] == [] (
+IF "%chocodeps%" == "" (
 	ECHO "No packages specified to install."
 ) ELSE (
 	choco install %chocodeps%
