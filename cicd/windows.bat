@@ -10,7 +10,7 @@ SET "chocodeps= "
 SET "needdoxygen=0"
 IF "%1" == "docs" SET "needdoxygen=1"
 IF "%1" == "pack" SET "needdoxygen=1"
-IF %needdoxygen% EQU 1 SET "chocodeps=doxygen.install graphviz texlive strawberryperl"
+IF %needdoxygen% EQU 1 SET "chocodeps=doxygen.install graphviz"
 
 SET "needmingw=0"
 IF "%1" == "pack" SET "needmingw=1"

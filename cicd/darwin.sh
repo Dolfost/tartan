@@ -8,7 +8,7 @@ fi
 case "$1" in
 	'docs'|'pack')
 		brewformulas=" doxygen graphviz"
-		brewcasks="mactex-no-gui"
+		brewcasks=""
 		;;
 esac
 

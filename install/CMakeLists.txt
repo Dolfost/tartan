@@ -4,12 +4,14 @@ install(TARGETS tt_board tt_chess tt_tartan
 	EXPORT tartan
 	FILE_SET HEADERS
 )
-install(DIRECTORY "${CMAKE_BINARY_DIR}/doc/man/" 
-	TYPE MAN
-)
-install(DIRECTORY "${CMAKE_BINARY_DIR}/doc/html" 
+install(DIRECTORY "${CMAKE_BINARY_DIR}/doc/out/html" 
 	TYPE DOC
 )
+if(NOT WIN32)
+	install(DIRECTORY "${CMAKE_BINARY_DIR}/doc/out/man/" 
+		TYPE MAN
+	)
+endif()
 
 include(CMakePackageConfigHelpers)
 install(EXPORT tartan 

@@ -14,7 +14,7 @@ class King;
  * This class implements tt::Board pure virtual fucntions
  * and builds up the famous chess game. The game rules
  * which this class implements are described at
- * @cite chessWiki.
+ * [chess wikipedia page](https://en.wikipedia.org/wiki/Chess)
  *
  * Class exceptions are described in 
  * tartan/chess/exceptions.hpp.

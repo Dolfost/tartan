@@ -1,6 +1,6 @@
 /**
 @page building Building
-Project have to be configured with `cmake` @cite cmake utillity. Install it on
+Project have to be configured with `cmake` utillity. Install it on
 you'r system.
 
 @section demobuild Demo build 
