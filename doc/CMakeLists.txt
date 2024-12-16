@@ -3,8 +3,6 @@ find_package(Doxygen
 	OPTIONAL_COMPONENTS mscgen dia
 )
 
-get_target_property(DOC_SRC tt_tartan SOURCE_DIR)
-
 set(DOXYGEN_GENERATE_HTML YES)
 if(WIN32)
 	set(DOXYGEN_GENERATE_MAN NO)
@@ -34,7 +32,8 @@ set(DOXYGEN_TAGFILES
 	"cppreference-doxygen-web.tag.xml=https://en.cppreference.com/w/"
 )
 
-cmake_path(ABSOLUTE_PATH DOC_SRC
+set(DOCUMENTATION_SOURCE "../src")
+cmake_path(ABSOLUTE_PATH DOCUMENTATION_SOURCE
 	BASE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
 	OUTPUT_VARIABLE PSTRIP
 )
@@ -48,8 +47,10 @@ set(DOXYGEN_STRIP_FROM_PATH ${PSTRIP})
 # )
 
 doxygen_add_docs(doc ALL
-	"${DOC_SRC}" manual/
+	"${DOCUMENTATION_SOURCE}" manual/
 	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
 )
 
-add_subdirectory(manual/examples)
+if(TARTAN_TARTAN)
+	add_subdirectory(manual/examples)
+endif()

@@ -12,17 +12,28 @@ project(tartan
 	DESCRIPTION "Chess API"
 )
 
-if (NOT DEFINED TARTAN_TARTAN OR TATAN_TARTAN)
+option(TARTAN_TARTAN 
+	"Build library"
+	YES
+)
+option(TARTAN_DOCS
+	"Build library documentation"
+	${PROJECT_IS_TOP_LEVEL}
+)
+option(TARTAN_TESTING
+	"Build test scripts"
+	${PROJECT_IS_TOP_LEVEL}
+)
+
+if (TARTAN_TARTAN)
 	add_subdirectory(src)
 endif()
 
-if (NOT DEFINED TARTAN_DOCS AND 
-	PROJECT_IS_TOP_LEVEL OR TARTAN_DOCS)
+if (TARTAN_DOCS)
 	add_subdirectory(doc)
 endif()
 
-if (NOT DEFINED TARTAN_TESTING AND 
-	PROJECT_IS_TOP_LEVEL OR TARTAN_TESTING)
+if (TARTAN_TESTING)
 	enable_testing()
 	add_subdirectory(tests)
 endif()
