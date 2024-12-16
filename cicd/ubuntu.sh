@@ -8,10 +8,9 @@ fi
 aptdeps="cmake git"
 case "$1" in
 	'docs'|'pack')
-		aptdeps+=" doxygen graphviz texlive perl"
+		aptdeps="$aptdeps doxygen graphviz texlive perl"
 		;;
 esac
-
 # installing dependencies
 sudo apt install $aptdeps
 
