@@ -1,7 +1,6 @@
 message("==>> Configuring...")
 if(WIN32)
 	set(CONFIG "-G 'MinGW Makefiles'")
-	MinGW Makefiles
 endif()
 execute_process( # configuration
 	COMMAND "${CMAKE_COMMAND}" ${CONFIG} -B build -S . -DTARTAN_TESTING=YES -DTARTAN_DOCS=NO
