@@ -19,7 +19,7 @@ IF %needmingw% EQU 1 SET "chocodeps=%chocodeps% mingw"
 
 REM install dependencies
 IF NOT "%chocodeps%"=="" (
-    choco install %chocodeps%
+    choco install "%chocodeps%"
 ) ELSE (
     ECHO "No packages specified to install."
 )

@@ -7,7 +7,7 @@ fi
 
 aptdeps="cmake git"
 case "$1" in
-	docs|pack)
+	'docs'|'pack')
 		aptdeps+=" doxygen graphviz texlive perl"
 		;;
 esac
