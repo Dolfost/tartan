@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 case "$1" in
-	'docs'|'pack')
+	docs|pack)
 		aptdeps+=" doxygen graphviz texlive perl"
 		;;
 esac
