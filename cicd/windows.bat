@@ -12,4 +12,4 @@ SET "SCRIPT_DIR=%~dp0"
 
 SET "REPO=%SCRIPT_DIR%.."
 
-cmake -P "%SCRIPT_DIR%/cmake/$1.cmake"
+cmake -P "%SCRIPT_DIR%cmake\%1.cmake"
