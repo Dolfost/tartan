@@ -27,7 +27,7 @@ if(GIT_FOUND)
 		fallback(
 [[ 
 Git returned ${RESULT}. Maybe repository is clonned shallowly.
-Try to execute git pull --tags if so
+Try to execute git pull --tags if so.
 ]]
 		)
 	endif()
