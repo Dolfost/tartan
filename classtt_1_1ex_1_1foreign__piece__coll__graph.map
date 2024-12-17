@@ -1,0 +1,11 @@
+<map id="tt::ex::foreign_piece" name="tt::ex::foreign_piece">
+<area shape="rect" id="Node000001" title="Thrown when piece does not belong to Board object in which it is being processed." alt="" coords="5,299,157,324"/>
+<area shape="rect" id="Node000002" href="$classtt_1_1ex_1_1bad__piece.html" title="Base class for exceptions about pieces." alt="" coords="16,225,147,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,264,84,299,79,299,79,264"/>
+<area shape="rect" id="Node000003" href="$classtt_1_1ex_1_1tartan.html" title="Base class for all tartan exceptions." alt="" coords="30,152,133,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="84,191,84,225,79,225,79,191"/>
+<area shape="rect" id="Node000004" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="22,79,141,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="84,118,84,152,79,152,79,118"/>
+<area shape="rect" id="Node000005" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="24,5,139,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="84,44,84,79,79,79,79,44"/>
+</map>

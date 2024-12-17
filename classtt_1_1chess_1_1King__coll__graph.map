@@ -1,0 +1,27 @@
+<map id="tt::chess::King" name="tt::chess::King">
+<area shape="rect" id="Node000001" title="King chess Piece." alt="" coords="476,55,591,80"/>
+<area shape="rect" id="Node000002" href="$classtt_1_1Piece.html" title="Generic board memeber API." alt="" coords="288,127,363,152"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="375,120,495,78,497,83,377,125"/>
+<area shape="rect" id="Node000007" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/forward_list.html" title=" " alt="" coords="615,199,753,239"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="345,162,364,182,388,198,445,217,504,226,562,228,614,226,614,231,562,234,504,232,443,222,385,203,361,186,341,165"/>
+<area shape="rect" id="Node000009" href="$classtt_1_1Piece_1_1Turn.html" title="Generic Piece Turn on Board." alt="" coords="478,5,589,31"/>
+<area shape="poly" id="edge11_Node000009_Node000002" title=" " alt="" coords="352,116,385,94,419,80,450,64,462,52,474,40,495,28,498,33,478,44,466,56,454,68,421,85,388,99,355,121"/>
+<area shape="rect" id="Node000003" href="$classtt_1_1Piece_1_1Position.html" title="Piece position at the Board." alt="" coords="5,52,140,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,79,288,126,287,131,129,84"/>
+<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="154,54,477,21,478,26,154,59"/>
+<area shape="rect" id="Node000004" href="$classtt_1_1Board.html" title="8x8 game board" alt="" coords="1112,181,1191,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1098,190,1088,189,872,171,662,158,363,143,363,138,662,152,873,166,1088,183,1098,184"/>
+<area shape="rect" id="Node000005" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="839,104,907,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="921,115,1001,123,1046,132,1089,146,1116,162,1138,179,1135,183,1113,166,1087,151,1044,137,1000,128,920,120"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="514,104,553,129"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="566,114,839,114,839,119,566,119"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="767,212,1112,193,1112,199,767,218"/>
+<area shape="rect" id="Node000008" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/container/list.html" title=" " alt="" coords="793,19,952,59"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="966,59,1029,83,1090,117,1122,149,1145,180,1140,183,1118,152,1086,121,1027,88,964,64"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="602,20,793,32,793,37,602,25"/>
+<area shape="rect" id="Node000010" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/utility/functional/function.html" title=" " alt="" coords="777,267,968,307"/>
+<area shape="poly" id="edge12_Node000004_Node000010" title=" " alt="" coords="981,280,1035,269,1087,250,1116,229,1138,205,1142,209,1120,233,1089,255,1037,274,982,285"/>
+<area shape="rect" id="Node000011" href="/home/runner/work/tartan/tartan/doc/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="29,260,117,285"/>
+<area shape="poly" id="edge14_Node000002_Node000011" title=" " alt="" coords="109,251,299,150,301,154,111,256"/>
+<area shape="poly" id="edge13_Node000004_Node000011" title=" " alt="" coords="114,289,156,306,208,323,266,337,324,342,874,342,983,315,1087,284,1106,266,1122,245,1143,206,1147,208,1126,248,1110,269,1089,288,984,320,874,347,324,347,265,342,207,328,154,311,112,294"/>
+</map>

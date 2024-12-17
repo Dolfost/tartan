@@ -1,0 +1,25 @@
+var classtt_1_1Piece_1_1Turn =
+[
+    [ "Turn", "classtt_1_1Piece_1_1Turn.html#aa040df09aa65769ad6f7ab79a9fe8def", null ],
+    [ "apply", "classtt_1_1Piece_1_1Turn.html#ab36e974a521973881a6b5dcc8449bb83", null ],
+    [ "capture", "classtt_1_1Piece_1_1Turn.html#a629713ea5adbbc14f4892b1edbbfa7d6", null ],
+    [ "capture", "classtt_1_1Piece_1_1Turn.html#a8f3aca2538ad8a60ae9f1689f396db19", null ],
+    [ "clone", "classtt_1_1Piece_1_1Turn.html#ac07a1985044942f8cff1a49cb05fa1b3", null ],
+    [ "from", "classtt_1_1Piece_1_1Turn.html#a2d20acf7284e4449a38cff4fbe7d5028", null ],
+    [ "isEqual", "classtt_1_1Piece_1_1Turn.html#ae9ae7bf994b567b71b78cd7ca702247f", null ],
+    [ "piece", "classtt_1_1Piece_1_1Turn.html#a6013a025df7ac9f23b3c9656f3d85d90", null ],
+    [ "piece", "classtt_1_1Piece_1_1Turn.html#a12e2a60761e41918dd0deb27f3f3d2b3", null ],
+    [ "possible", "classtt_1_1Piece_1_1Turn.html#a2e43229e5fe084e44a50124ab3ee1748", null ],
+    [ "setPossible", "classtt_1_1Piece_1_1Turn.html#a9983a2f2f2f57c7744585d9c166af07b", null ],
+    [ "str", "classtt_1_1Piece_1_1Turn.html#a3f893be67f1e7efaf4dae57bc74ce8cc", null ],
+    [ "to", "classtt_1_1Piece_1_1Turn.html#a7824c8374195253370b123844e482e21", null ],
+    [ "undo", "classtt_1_1Piece_1_1Turn.html#a80f6cf01fdf2ec80cda603991b3cbf71", null ],
+    [ "operator!=", "classtt_1_1Piece_1_1Turn.html#a26ce3b7483ffc5fc519b53a456a76d2f", null ],
+    [ "operator<<", "classtt_1_1Piece_1_1Turn.html#a3a05508f626351866e62459ee811d2b9", null ],
+    [ "operator==", "classtt_1_1Piece_1_1Turn.html#a99c4572e8f4d608f10d44864f17d46d4", null ],
+    [ "t_capture", "classtt_1_1Piece_1_1Turn.html#a4a946ceced9c8632e7003e619d910edc", null ],
+    [ "t_from", "classtt_1_1Piece_1_1Turn.html#aba33ab104867d65d218d75fb66dbe7f3", null ],
+    [ "t_piece", "classtt_1_1Piece_1_1Turn.html#a87488ebe86e656eeae70d664e5716e70", null ],
+    [ "t_possible", "classtt_1_1Piece_1_1Turn.html#a5379212b61c0990ab7784447453b7e19", null ],
+    [ "t_to", "classtt_1_1Piece_1_1Turn.html#a4011b578623d776ab1902074c71deb94", null ]
+];

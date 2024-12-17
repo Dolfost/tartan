@@ -1,0 +1,15 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classtt_1_1Piece_1_1Turn.html" title="Generic Piece Turn on Board." alt="" coords="5,129,116,155"/>
+<area shape="rect" id="Node000001" href="$classtt_1_1chess_1_1Bishop_1_1Turn.html" title="Bishop Turn." alt="" coords="164,5,328,31"/>
+<area shape="poly" id="edge29_Node000000_Node000001" title=" " alt="" coords="78,117,115,77,163,40,188,28,190,33,165,44,118,81,82,120"/>
+<area shape="rect" id="Node000002" href="$classtt_1_1chess_1_1King_1_1Turn.html" title="King Turn." alt="" coords="171,55,321,80"/>
+<area shape="poly" id="edge30_Node000000_Node000002" title=" " alt="" coords="96,120,163,89,196,78,198,83,165,94,98,125"/>
+<area shape="rect" id="Node000003" href="$classtt_1_1chess_1_1Knight_1_1Turn.html" title="Knight Turn." alt="" coords="165,104,327,129"/>
+<area shape="poly" id="edge31_Node000000_Node000003" title=" " alt="" coords="129,130,164,125,165,130,130,135"/>
+<area shape="rect" id="Node000004" href="$classtt_1_1chess_1_1Pawn_1_1Turn.html" title="Pawn Turn." alt="" coords="169,153,323,179"/>
+<area shape="poly" id="edge32_Node000000_Node000004" title=" " alt="" coords="130,148,169,153,168,159,129,154"/>
+<area shape="rect" id="Node000005" href="$classtt_1_1chess_1_1Queen_1_1Turn.html" title="Queen Turn." alt="" coords="165,203,327,228"/>
+<area shape="poly" id="edge33_Node000000_Node000005" title=" " alt="" coords="100,159,165,188,201,200,199,205,163,192,98,163"/>
+<area shape="rect" id="Node000006" href="$classtt_1_1chess_1_1Rook_1_1Turn.html" title="Rook Turn." alt="" coords="169,252,323,277"/>
+<area shape="poly" id="edge34_Node000000_Node000006" title=" " alt="" coords="83,164,119,201,165,237,193,250,191,254,163,242,116,205,79,168"/>
+</map>

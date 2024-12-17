@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['nano_0',['nano',['https://en.cppreference.com/w/cpp/numeric/ratio/ratio.html',1,'std']]],
+  ['nanoseconds_1',['nanoseconds',['https://en.cppreference.com/w/cpp/chrono/duration.html',1,'std::chrono']]],
+  ['negate_2',['negate',['https://en.cppreference.com/w/cpp/utility/functional/negate.html',1,'std']]],
+  ['negative_5fbinomial_5fdistribution_3',['negative_binomial_distribution',['https://en.cppreference.com/w/cpp/numeric/random/negative_binomial_distribution.html',1,'std']]],
+  ['nested_5fexception_4',['nested_exception',['https://en.cppreference.com/w/cpp/error/nested_exception.html',1,'std']]],
+  ['new_5fhandler_5',['new_handler',['https://en.cppreference.com/w/cpp/memory/new/new_handler.html',1,'std']]],
+  ['no_5fking_6',['no_king',['../classtt_1_1chess_1_1ex_1_1no__king.html',1,'tt::chess::ex']]],
+  ['no_5fsuch_5fmove_7',['no_such_move',['../classtt_1_1ex_1_1no__such__move.html',1,'tt::ex']]],
+  ['normal_5fdistribution_8',['normal_distribution',['https://en.cppreference.com/w/cpp/numeric/random/normal_distribution.html',1,'std']]],
+  ['not_5fequal_5fto_9',['not_equal_to',['https://en.cppreference.com/w/cpp/utility/functional/not_equal_to.html',1,'std']]],
+  ['nothrow_5ft_10',['nothrow_t',['https://en.cppreference.com/w/cpp/memory/new/nothrow_t.html',1,'std']]],
+  ['null_5fpiece_11',['null_piece',['../classtt_1_1ex_1_1null__piece.html',1,'tt::ex']]],
+  ['nullptr_5ft_12',['nullptr_t',['https://en.cppreference.com/w/cpp/types/nullptr_t.html',1,'std']]],
+  ['num_5fget_13',['num_get',['https://en.cppreference.com/w/cpp/locale/num_get.html',1,'std']]],
+  ['num_5fput_14',['num_put',['https://en.cppreference.com/w/cpp/locale/num_put.html',1,'std']]],
+  ['numeric_5flimits_15',['numeric_limits',['https://en.cppreference.com/w/cpp/types/numeric_limits.html',1,'std']]],
+  ['numpunct_16',['numpunct',['https://en.cppreference.com/w/cpp/locale/numpunct.html',1,'std']]],
+  ['numpunct_5fbyname_17',['numpunct_byname',['https://en.cppreference.com/w/cpp/locale/numpunct_byname.html',1,'std']]]
+];
